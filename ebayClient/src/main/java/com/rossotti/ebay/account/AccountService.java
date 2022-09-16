@@ -2,8 +2,6 @@ package com.rossotti.ebay.account;
 
 import com.rossotti.ebay.config.WebClientProperties;
 import com.rossotti.ebay.model.Account;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -20,7 +18,6 @@ public class AccountService {
         return webClient
                 .get()
                 .uri(properties.getBaseUrl() + "/account")
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .retrieve()
                 .bodyToMono(Account.class)
                 .block();

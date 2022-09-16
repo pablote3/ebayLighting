@@ -5,6 +5,7 @@ import com.rossotti.ebay.config.WebClientProperties;
 import com.rossotti.ebay.model.Account;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,6 +18,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 @SpringBootTest
 public class AccountServiceTests {
@@ -39,9 +41,22 @@ public class AccountServiceTests {
     public static void tearDown() throws IOException {
         mockWebServer.shutdown();
     }
-
     @Test
-    void makesTheCorrectRequest() {
+    void getAccounts_requestSerialization() throws InterruptedException {
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .setBody(getJson("account-response.json"))
+        );
+        Account[] response = accountService.getAccounts();
+        RecordedRequest request = mockWebServer.takeRequest();
+
+        Assert.assertEquals("GET", request.getMethod());
+        Assert.assertEquals("/accounts", request.getPath());
+    }
+    @Test
+    void getAccounts_responseDeserialization() {
         mockWebServer.enqueue(
             new MockResponse()
                 .setResponseCode(200)
@@ -50,13 +65,9 @@ public class AccountServiceTests {
         );
         Account[] response = accountService.getAccounts();
 
-        Assert.assertTrue(response.length==9);
+        Assert.assertEquals(9, response.length);
+        Assert.assertEquals("Sincere@april.biz", Arrays.stream(response).findFirst().get().getEmail());
     }
-//    @Test
-//    void integrationTest() {
-//        User[] users = accountService.getUsers();
-//        Assert.assertTrue(users.length == 10);
-//    }
 
     private String getJson(String path) {
         try {

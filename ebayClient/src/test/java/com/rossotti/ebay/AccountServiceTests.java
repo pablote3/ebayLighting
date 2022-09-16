@@ -6,8 +6,8 @@ import com.rossotti.ebay.model.Account;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +19,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Objects;
 
 @SpringBootTest
 public class AccountServiceTests {
@@ -47,13 +48,13 @@ public class AccountServiceTests {
                 new MockResponse()
                         .setResponseCode(200)
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .setBody(getJson("account-response.json"))
+                        .setBody(getJson())
         );
-        Account[] response = accountService.getAccounts();
+        accountService.getAccounts();
         RecordedRequest request = mockWebServer.takeRequest();
 
-        Assert.assertEquals("GET", request.getMethod());
-        Assert.assertEquals("/accounts", request.getPath());
+        Assertions.assertEquals("GET", request.getMethod());
+        Assertions.assertEquals("/accounts", request.getPath());
     }
     @Test
     void getAccounts_responseDeserialization() {
@@ -61,17 +62,16 @@ public class AccountServiceTests {
             new MockResponse()
                 .setResponseCode(200)
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .setBody(getJson("account-response.json"))
+                .setBody(getJson())
         );
         Account[] response = accountService.getAccounts();
 
-        Assert.assertEquals(9, response.length);
-        Assert.assertEquals("Sincere@april.biz", Arrays.stream(response).findFirst().get().getEmail());
+        Assertions.assertEquals(9, response.length);
+        Assertions.assertEquals("Sincere@april.biz", Objects.requireNonNull(Arrays.stream(response).findFirst().orElse(null)).getEmail());
     }
 
-    private String getJson(String path) {
-        try {
-            InputStream jsonStream = this.getClass().getClassLoader().getResourceAsStream(path);
+    private String getJson() {
+        try (InputStream jsonStream = this.getClass().getClassLoader().getResourceAsStream("account-response.json")) {
             assert jsonStream != null;
             return new String(jsonStream.readAllBytes());
         } catch (IOException ex) {

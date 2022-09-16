@@ -1,0 +1,9 @@
+name: oauth-config
+
+sandbox-user:
+  username: <sandbox-username>
+  password: <sandbox-user-password>
+
+production-user:
+  username: <production-username>
+  password: <production-user-password>

@@ -10,4 +10,5 @@ import org.springframework.context.annotation.Configuration;
 @NoArgsConstructor
 public class WebClientProperties {
     private String baseUrl;
+    private String marketplaceId;
 }

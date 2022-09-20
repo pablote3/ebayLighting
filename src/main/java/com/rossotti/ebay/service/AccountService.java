@@ -17,7 +17,7 @@ public class AccountService {
     public Account getAccount() {
         return webClient
                 .get()
-                .uri(properties.getBaseUrl() + "/account")
+                .uri(properties.getBaseUrl() + "/account/1")
                 .retrieve()
                 .bodyToMono(Account.class)
                 .block();

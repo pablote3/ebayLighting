@@ -43,12 +43,38 @@ public class AccountServiceTests {
         mockWebServer.shutdown();
     }
     @Test
+    void getAccount_requestSerialization() throws InterruptedException {
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .setBody(getJson("account-response.json"))
+        );
+        accountService.getAccount();
+        RecordedRequest request = mockWebServer.takeRequest();
+
+        Assertions.assertEquals("GET", request.getMethod());
+        Assertions.assertEquals("/account/1", request.getPath());
+    }
+    @Test
+    void getAccount_responseDeserialization() {
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .setBody(getJson("account-response.json"))
+        );
+        Account response = accountService.getAccount();
+
+        Assertions.assertEquals("Sincere@april.biz", response.getEmail());
+    }
+    @Test
     void getAccounts_requestSerialization() throws InterruptedException {
         mockWebServer.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .setBody(getJson())
+                        .setBody(getJson("accounts-response.json"))
         );
         accountService.getAccounts();
         RecordedRequest request = mockWebServer.takeRequest();
@@ -62,7 +88,7 @@ public class AccountServiceTests {
             new MockResponse()
                 .setResponseCode(200)
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .setBody(getJson())
+                .setBody(getJson("accounts-response.json"))
         );
         Account[] response = accountService.getAccounts();
 
@@ -70,8 +96,8 @@ public class AccountServiceTests {
         Assertions.assertEquals("Sincere@april.biz", Objects.requireNonNull(Arrays.stream(response).findFirst().orElse(null)).getEmail());
     }
 
-    private String getJson() {
-        try (InputStream jsonStream = this.getClass().getClassLoader().getResourceAsStream("account-response.json")) {
+    private String getJson(String fileName) {
+        try (InputStream jsonStream = this.getClass().getClassLoader().getResourceAsStream(fileName)) {
             assert jsonStream != null;
             return new String(jsonStream.readAllBytes());
         } catch (IOException ex) {

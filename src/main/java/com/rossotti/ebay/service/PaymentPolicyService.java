@@ -19,10 +19,11 @@ public class PaymentPolicyService {
         this.properties = properties;
     }
 
-    public PaymentPoliciesResponse getPaymentPoliciesResponse() {
+    public PaymentPoliciesResponse getPaymentPolicies() {
         UriComponents uriComp = UriComponentsBuilder.newInstance()
-                .scheme("http")
-                .host(properties.getBaseUrl().substring(7, properties.getBaseUrl().length()-1))
+                .scheme(properties.getScheme())
+                .host(properties.getHost())
+                .port(properties.getPort())
                 .path(sellAccountUrl)
                 .path(paymentPolicyUrl)
                 .queryParam("marketplace_id", properties.getMarketplaceId())

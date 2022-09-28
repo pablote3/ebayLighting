@@ -1,4 +1,4 @@
-package com.rossotti.ebay;
+package com.rossotti.ebay.service;
 
 import com.rossotti.ebay.service.AccountService;
 import com.rossotti.ebay.config.WebClientProperties;

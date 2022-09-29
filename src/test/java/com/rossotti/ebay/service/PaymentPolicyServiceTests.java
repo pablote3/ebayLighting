@@ -1,7 +1,7 @@
 package com.rossotti.ebay.service;
 
 import com.rossotti.ebay.config.WebClientProperties;
-import com.rossotti.ebay.model.PaymentPoliciesResponse;
+import com.rossotti.ebay.model.PaymentPolicies;
 import com.rossotti.ebay.util.TestUtil;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -19,6 +19,7 @@ import java.io.IOException;
 
 @SpringBootTest
 public class PaymentPolicyServiceTests {
+    private static final String PAYMENT_POLICIES_JSON = "data/paymentPolicies.json";
     private static MockWebServer mockWebServer;
 
     @Autowired
@@ -40,7 +41,7 @@ public class PaymentPolicyServiceTests {
 
     @Test
     void getPaymentPolicies_requestSerialization() throws InterruptedException {
-        String str = TestUtil.readStringFromFile("paymentPolicies-response.json").orElse(null);
+        String str = TestUtil.readStringFromFile(PAYMENT_POLICIES_JSON).orElse(null);
         Assertions.assertNotNull(str);
         mockWebServer.enqueue(
                 new MockResponse()
@@ -57,16 +58,18 @@ public class PaymentPolicyServiceTests {
 
     @Test
     void getPaymentPolicies_responseDeserialization() {
-        String str = TestUtil.readStringFromFile("paymentPolicies-response.json").orElse(null);
-        Assertions.assertNotNull(str);
+        String json = TestUtil.readStringFromFile(PAYMENT_POLICIES_JSON).orElse(null);
+        Assertions.assertNotNull(json);
         mockWebServer.enqueue(
             new MockResponse()
                 .setResponseCode(200)
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .setBody(str)
+                .setBody(json)
         );
-        PaymentPoliciesResponse response = paymentPolicyService.getPaymentPolicies();
+        PaymentPolicies response = paymentPolicyService.getPaymentPolicies();
 
         Assertions.assertEquals(1, response.getTotal());
+        Assertions.assertEquals("eBay Payments EBAY_US PayPal", response.getPaymentPolicies().get(0).getName());
+        Assertions.assertEquals("eBay Payments EBAY_US PayPal", response.getPaymentPolicies().get(0).getName());
     }
 }

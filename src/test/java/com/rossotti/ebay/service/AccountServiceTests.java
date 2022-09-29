@@ -1,6 +1,5 @@
 package com.rossotti.ebay.service;
 
-import com.rossotti.ebay.service.AccountService;
 import com.rossotti.ebay.config.WebClientProperties;
 import com.rossotti.ebay.model.Account;
 import okhttp3.mockwebserver.MockResponse;
@@ -48,7 +47,7 @@ public class AccountServiceTests {
                 new MockResponse()
                         .setResponseCode(200)
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .setBody(getJson("account-response.json"))
+                        .setBody(getJson("data/account-response.json"))
         );
         accountService.getAccount();
         RecordedRequest request = mockWebServer.takeRequest();
@@ -62,7 +61,7 @@ public class AccountServiceTests {
                 new MockResponse()
                         .setResponseCode(200)
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .setBody(getJson("account-response.json"))
+                        .setBody(getJson("data/account-response.json"))
         );
         Account response = accountService.getAccount();
 
@@ -74,7 +73,7 @@ public class AccountServiceTests {
                 new MockResponse()
                         .setResponseCode(200)
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .setBody(getJson("accounts-response.json"))
+                        .setBody(getJson("data/accounts-response.json"))
         );
         accountService.getAccounts();
         RecordedRequest request = mockWebServer.takeRequest();
@@ -88,7 +87,7 @@ public class AccountServiceTests {
             new MockResponse()
                 .setResponseCode(200)
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .setBody(getJson("accounts-response.json"))
+                .setBody(getJson("data/accounts-response.json"))
         );
         Account[] response = accountService.getAccounts();
 

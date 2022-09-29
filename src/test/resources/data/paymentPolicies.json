@@ -1,0 +1,18 @@
+{
+  "total": 1,
+  "paymentPolicies": [
+    {
+      "name": "eBay Payments EBAY_US PayPal",
+      "description": "eBay Payments EBAY_US",
+      "marketplaceId": "EBAY_US",
+      "categoryTypes": [
+        {
+          "name": "ALL_EXCLUDING_MOTORS_VEHICLES",
+          "default": true
+        }
+      ],
+      "immediatePay": false,
+      "paymentPolicyId": "6196932000"
+    }
+  ]
+}

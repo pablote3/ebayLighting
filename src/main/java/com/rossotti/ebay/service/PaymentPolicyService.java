@@ -1,7 +1,7 @@
 package com.rossotti.ebay.service;
 
 import com.rossotti.ebay.config.WebClientProperties;
-import com.rossotti.ebay.model.PaymentPoliciesResponse;
+import com.rossotti.ebay.model.PaymentPolicies;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponents;
@@ -19,7 +19,7 @@ public class PaymentPolicyService {
         this.properties = properties;
     }
 
-    public PaymentPoliciesResponse getPaymentPolicies() {
+    public PaymentPolicies getPaymentPolicies() {
         UriComponents uriComp = UriComponentsBuilder.newInstance()
                 .scheme(properties.getScheme())
                 .host(properties.getHost())
@@ -33,7 +33,7 @@ public class PaymentPolicyService {
                 .get()
                 .uri(uriComp.toUriString())
                 .retrieve()
-                .bodyToMono(PaymentPoliciesResponse.class)
+                .bodyToMono(PaymentPolicies.class)
                 .block();
     }
 }

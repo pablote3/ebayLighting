@@ -71,6 +71,6 @@ public class PaymentPolicyServiceTests {
         Assertions.assertEquals(1, response.getTotal());
         Assertions.assertEquals("eBay Payments EBAY_US PayPal", response.getPaymentPolicies().get(0).getName());
         Assertions.assertEquals("ALL_EXCLUDING_MOTORS_VEHICLES", response.getPaymentPolicies().get(0).getCategoryTypes().get(0).getName());
-        //Assertions.assertTrue(response.getPaymentPolicies().get(0).getCategoryTypes().get(0).get_default());
+        Assertions.assertTrue(response.getPaymentPolicies().get(0).getCategoryTypes().get(0).getDefaultValue());
     }
 }

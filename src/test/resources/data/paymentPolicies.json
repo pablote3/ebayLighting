@@ -11,6 +11,11 @@
           "default": true
         }
       ],
+      "paymentMethods": [
+        {
+          "paymentMethodType": "PAYPAL"
+        }
+      ],
       "immediatePay": false,
       "paymentPolicyId": "6196932000"
     }

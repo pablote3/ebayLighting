@@ -10,7 +10,7 @@ public class PaymentPolicy {
     private String description;
     private String marketplaceId;
     private List<CategoryType> categoryTypes = new ArrayList<>();
-//    private List<PaymentMethod> paymentMethods = new ArrayList<PaymentMethod>();
+    private List<PaymentMethod> paymentMethods = new ArrayList<>();
 //    private FullPaymentDueIn fullPaymentDueIn;
     private Boolean immediatePay;
     private String paymentPolicyId;

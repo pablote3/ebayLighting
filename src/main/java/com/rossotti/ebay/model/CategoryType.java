@@ -7,5 +7,5 @@ public class CategoryType {
     public String name;
 
     @JsonProperty("default")
-    public Boolean defaultValue;
+    private Boolean defaultValue;
 }

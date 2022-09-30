@@ -74,5 +74,6 @@ public class PaymentPolicyServiceTests {
         Assertions.assertTrue(response.getPaymentPolicies().get(0).getCategoryTypes().get(0).getDefaultValue());
         Assertions.assertEquals("PAYPAL", response.getPaymentPolicies().get(0).getPaymentMethods().get(0).getPaymentMethodType());
         Assertions.assertEquals("PAYPAL_EMAIL", response.getPaymentPolicies().get(0).getPaymentMethods().get(0).getRecipientAccountReference().getReferenceType());
+        Assertions.assertEquals("DAY", response.getPaymentPolicies().get(0).getFullPaymentDueIn().getUnit());
     }
 }

@@ -73,5 +73,6 @@ public class PaymentPolicyServiceTests {
         Assertions.assertEquals("ALL_EXCLUDING_MOTORS_VEHICLES", response.getPaymentPolicies().get(0).getCategoryTypes().get(0).getName());
         Assertions.assertTrue(response.getPaymentPolicies().get(0).getCategoryTypes().get(0).getDefaultValue());
         Assertions.assertEquals("PAYPAL", response.getPaymentPolicies().get(0).getPaymentMethods().get(0).getPaymentMethodType());
+        Assertions.assertEquals("PAYPAL_EMAIL", response.getPaymentPolicies().get(0).getPaymentMethods().get(0).getRecipientAccountReference().getReferenceType());
     }
 }

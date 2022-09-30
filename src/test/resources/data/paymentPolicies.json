@@ -13,7 +13,11 @@
       ],
       "paymentMethods": [
         {
-          "paymentMethodType": "PAYPAL"
+          "paymentMethodType": "PAYPAL",
+          "recipientAccountReference": {
+            "referenceType": "PAYPAL_EMAIL",
+            "referenceId": "rossotti.paul@gmail.com"
+          }
         }
       ],
       "immediatePay": false,

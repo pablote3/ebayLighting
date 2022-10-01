@@ -1,0 +1,26 @@
+{
+  "name": "eBay Payments EBAY_US PayPal",
+  "description": "eBay Payments EBAY_US",
+  "marketplaceId": "EBAY_US",
+  "categoryTypes": [
+    {
+      "name": "ALL_EXCLUDING_MOTORS_VEHICLES",
+      "default": true
+    }
+  ],
+  "paymentMethods": [
+    {
+      "paymentMethodType": "PAYPAL",
+      "recipientAccountReference": {
+        "referenceType": "PAYPAL_EMAIL",
+        "referenceId": "rossotti.paul@gmail.com"
+      }
+    }
+  ],
+  "fullPaymentDueIn": {
+    "value": 7,
+    "unit": "DAY"
+  },
+  "immediatePay": false,
+  "paymentPolicyId": "6196932000"
+}

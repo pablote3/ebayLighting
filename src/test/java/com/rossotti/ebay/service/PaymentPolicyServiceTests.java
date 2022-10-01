@@ -1,8 +1,8 @@
 package com.rossotti.ebay.service;
 
 import com.rossotti.ebay.config.WebClientProperties;
-import com.rossotti.ebay.model.PaymentPolicies;
-import com.rossotti.ebay.model.PaymentPolicy;
+import com.rossotti.ebay.model.PaymentPolicy.PaymentPolicies;
+import com.rossotti.ebay.model.PaymentPolicy.PaymentPolicy;
 import com.rossotti.ebay.util.TestUtil;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;

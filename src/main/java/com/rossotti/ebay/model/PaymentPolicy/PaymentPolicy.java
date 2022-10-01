@@ -1,5 +1,6 @@
-package com.rossotti.ebay.model;
+package com.rossotti.ebay.model.PaymentPolicy;
 
+import com.rossotti.ebay.model.CategoryType;
 import lombok.Getter;
 import java.util.ArrayList;
 import java.util.List;

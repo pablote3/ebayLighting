@@ -9,9 +9,9 @@ public class FulfillmentPolicy {
     private String name;
     private String description;
     private String marketplaceId;
-//    private List<CategoryType> categoryTypes = null;
-//    private HandlingTime handlingTime;
-//    private List<ShippingOption> shippingOptions = null;
+    private List<CategoryType> categoryTypes = null;
+    private HandlingTime handlingTime;
+    private List<ShippingOption> shippingOptions = null;
     private Boolean globalShipping;
     private Boolean pickupDropOff;
     private Boolean freightShipping;

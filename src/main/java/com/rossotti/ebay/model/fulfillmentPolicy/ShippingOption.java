@@ -7,7 +7,7 @@ import lombok.Getter;
 public class ShippingOption {
     private String optionType;
     private String costType;
-//    private List<ShippingService> shippingServices = null;
+    private List<ShippingService> shippingServices = null;
     private Boolean insuranceOffered;
     private InsuranceFee insuranceFee;
 }

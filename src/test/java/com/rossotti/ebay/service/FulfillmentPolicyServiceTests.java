@@ -72,11 +72,12 @@ public class FulfillmentPolicyServiceTests {
         FulfillmentPolicy response = fulfillmentPolicyService.getFulfillmentPolicy("6196947000");
 
         Assertions.assertEquals("eBay Fulfillments EBAY_US", response.getName());
-//        Assertions.assertEquals("ALL_EXCLUDING_MOTORS_VEHICLES", response.getCategoryTypes().get(0).getName());
-//        Assertions.assertTrue(response.getCategoryTypes().get(0).getDefaultValue());
-//        Assertions.assertEquals("PAYPAL", response.getFulfillmentMethods().get(0).getFulfillmentMethodType());
-//        Assertions.assertEquals("PAYPAL_EMAIL", response.getFulfillmentMethods().get(0).getRecipientAccountReference().getReferenceType());
-//        Assertions.assertEquals("DAY", response.getFullFulfillmentDueIn().getUnit());
+        Assertions.assertEquals("ALL_EXCLUDING_MOTORS_VEHICLES", response.getCategoryTypes().get(0).getName());
+        Assertions.assertTrue(response.getCategoryTypes().get(0).getDefaultValue());
+        Assertions.assertEquals("DAY", response.getHandlingTime().getUnit());
+        Assertions.assertEquals("CALCULATED", response.getShippingOptions().get(0).getCostType());
+        Assertions.assertEquals("USPS", response.getShippingOptions().get(0).getShippingServices().get(0).getShippingCarrierCode());
+        Assertions.assertEquals("USD", response.getShippingOptions().get(0).getInsuranceFee().getCurrency());
     }
 
     @Test
@@ -110,10 +111,11 @@ public class FulfillmentPolicyServiceTests {
 
         Assertions.assertEquals(1, response.getTotal());
         Assertions.assertEquals("eBay Fulfillments EBAY_US", response.getFulfillmentPolicies().get(0).getName());
-//        Assertions.assertEquals("ALL_EXCLUDING_MOTORS_VEHICLES", response.getFulfillmentPolicies().get(0).getCategoryTypes().get(0).getName());
-//        Assertions.assertTrue(response.getFulfillmentPolicies().get(0).getCategoryTypes().get(0).getDefaultValue());
-//        Assertions.assertEquals("PAYPAL", response.getFulfillmentPolicies().get(0).getFulfillmentMethods().get(0).getFulfillmentMethodType());
-//        Assertions.assertEquals("PAYPAL_EMAIL", response.getFulfillmentPolicies().get(0).getFulfillmentMethods().get(0).getRecipientAccountReference().getReferenceType());
-//        Assertions.assertEquals("DAY", response.getFulfillmentPolicies().get(0).getFullFulfillmentDueIn().getUnit());
+        Assertions.assertEquals("ALL_EXCLUDING_MOTORS_VEHICLES", response.getFulfillmentPolicies().get(0).getCategoryTypes().get(0).getName());
+        Assertions.assertTrue(response.getFulfillmentPolicies().get(0).getCategoryTypes().get(0).getDefaultValue());
+        Assertions.assertEquals("DAY", response.getFulfillmentPolicies().get(0).getHandlingTime().getUnit());
+        Assertions.assertEquals("CALCULATED", response.getFulfillmentPolicies().get(0).getShippingOptions().get(0).getCostType());
+        Assertions.assertEquals("USPS", response.getFulfillmentPolicies().get(0).getShippingOptions().get(0).getShippingServices().get(0).getShippingCarrierCode());
+        Assertions.assertEquals("USD", response.getFulfillmentPolicies().get(0).getShippingOptions().get(0).getInsuranceFee().getCurrency());
     }
 }

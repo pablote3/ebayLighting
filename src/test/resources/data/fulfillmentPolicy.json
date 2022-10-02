@@ -2,6 +2,37 @@
     "name": "eBay Fulfillments EBAY_US",
     "description": "eBay Fulfillments EBAY_US",
     "marketplaceId": "EBAY_US",
+    "categoryTypes": [
+        {
+            "name": "ALL_EXCLUDING_MOTORS_VEHICLES",
+            "default": true
+        }
+    ],
+    "handlingTime": {
+        "value": 2,
+        "unit": "DAY"
+    },
+    "shippingOptions": [
+        {
+            "optionType": "DOMESTIC",
+            "costType": "CALCULATED",
+            "shippingServices": [
+                {
+                    "sortOrder": 1,
+                    "shippingCarrierCode": "USPS",
+                    "shippingServiceCode": "USPSPriority",
+                    "freeShipping": false,
+                    "buyerResponsibleForShipping": false,
+                    "buyerResponsibleForPickup": false
+                }
+            ],
+            "insuranceOffered": false,
+            "insuranceFee": {
+                "value": "0.0",
+                "currency": "USD"
+            }
+        }
+    ],
     "globalShipping": false,
     "pickupDropOff": false,
     "freightShipping": false,

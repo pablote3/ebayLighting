@@ -1,0 +1,25 @@
+{
+    "total": 1,
+    "returnPolicies": [
+        {
+            "name": "eBay Returns EBAY_US",
+            "description": "eBay Returns EBAY_US",
+            "marketplaceId": "EBAY_US",
+            "categoryTypes": [
+                {
+                    "name": "ALL_EXCLUDING_MOTORS_VEHICLES",
+                    "default": true
+                }
+            ],
+            "returnsAccepted": true,
+            "returnPeriod": {
+                "value": 30,
+                "unit": "DAY"
+            },
+            "refundMethod": "MONEY_BACK",
+            "returnMethod": "REPLACEMENT",
+            "returnShippingCostPayer": "BUYER",
+            "returnPolicyId": "6196944000"
+        }
+    ]
+}

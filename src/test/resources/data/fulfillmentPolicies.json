@@ -1,0 +1,14 @@
+{
+    "total": 1,
+    "fulfillmentPolicies": [
+        {
+            "name": "eBay Fulfillments EBAY_US",
+            "description": "eBay Fulfillments EBAY_US",
+            "marketplaceId": "EBAY_US",
+            "globalShipping": false,
+            "pickupDropOff": false,
+            "freightShipping": false,
+            "fulfillmentPolicyId": "6196947000"
+        }
+    ]
+}

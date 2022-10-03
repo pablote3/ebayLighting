@@ -1,4 +1,4 @@
-package com.rossotti.ebay.model.program;
+package com.rossotti.ebay.model.account.program;
 
 import lombok.Getter;
 import java.util.List;

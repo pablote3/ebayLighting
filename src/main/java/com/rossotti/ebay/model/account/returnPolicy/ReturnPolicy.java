@@ -1,4 +1,4 @@
-package com.rossotti.ebay.model.returnPolicy;
+package com.rossotti.ebay.model.account.returnPolicy;
 
 import com.rossotti.ebay.model.common.CategoryType;
 import lombok.Getter;

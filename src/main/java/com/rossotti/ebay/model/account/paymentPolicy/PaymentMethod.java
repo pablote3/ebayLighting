@@ -1,4 +1,4 @@
-package com.rossotti.ebay.model.paymentPolicy;
+package com.rossotti.ebay.model.account.paymentPolicy;
 
 import lombok.Getter;
 

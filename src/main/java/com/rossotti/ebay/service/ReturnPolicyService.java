@@ -1,8 +1,8 @@
 package com.rossotti.ebay.service;
 
 import com.rossotti.ebay.config.WebClientProperties;
-import com.rossotti.ebay.model.returnPolicy.ReturnPolicies;
-import com.rossotti.ebay.model.returnPolicy.ReturnPolicy;
+import com.rossotti.ebay.model.account.returnPolicy.ReturnPolicies;
+import com.rossotti.ebay.model.account.returnPolicy.ReturnPolicy;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponents;

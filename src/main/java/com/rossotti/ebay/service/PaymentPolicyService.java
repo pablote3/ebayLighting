@@ -1,8 +1,8 @@
 package com.rossotti.ebay.service;
 
 import com.rossotti.ebay.config.WebClientProperties;
-import com.rossotti.ebay.model.paymentPolicy.PaymentPolicies;
-import com.rossotti.ebay.model.paymentPolicy.PaymentPolicy;
+import com.rossotti.ebay.model.account.paymentPolicy.PaymentPolicies;
+import com.rossotti.ebay.model.account.paymentPolicy.PaymentPolicy;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponents;

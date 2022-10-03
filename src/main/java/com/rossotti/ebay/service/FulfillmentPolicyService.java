@@ -1,8 +1,8 @@
 package com.rossotti.ebay.service;
 
 import com.rossotti.ebay.config.WebClientProperties;
-import com.rossotti.ebay.model.fulfillmentPolicy.FulfillmentPolicy;
-import com.rossotti.ebay.model.fulfillmentPolicy.FulfillmentPolicies;
+import com.rossotti.ebay.model.account.fulfillmentPolicy.FulfillmentPolicy;
+import com.rossotti.ebay.model.account.fulfillmentPolicy.FulfillmentPolicies;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponents;

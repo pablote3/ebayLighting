@@ -1,4 +1,4 @@
-package com.rossotti.ebay.model.fulfillmentPolicy;
+package com.rossotti.ebay.model.account.fulfillmentPolicy;
 
 import java.util.List;
 import com.rossotti.ebay.model.common.CategoryType;

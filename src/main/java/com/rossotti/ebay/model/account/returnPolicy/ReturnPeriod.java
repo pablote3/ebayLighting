@@ -1,9 +1,9 @@
-package com.rossotti.ebay.model.fulfillmentPolicy;
+package com.rossotti.ebay.model.account.returnPolicy;
 
 import lombok.Getter;
 
 @Getter
-public class HandlingTime {
+public class ReturnPeriod {
     private Integer value;
     private String unit;
 }

@@ -1,32 +1,32 @@
-package com.rossotti.ebay.service;
+package com.rossotti.ebay.service.account;
 
 import com.rossotti.ebay.config.WebClientProperties;
-import com.rossotti.ebay.model.account.paymentPolicy.PaymentPolicies;
-import com.rossotti.ebay.model.account.paymentPolicy.PaymentPolicy;
+import com.rossotti.ebay.model.account.fulfillmentPolicy.FulfillmentPolicy;
+import com.rossotti.ebay.model.account.fulfillmentPolicy.FulfillmentPolicies;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
-public class PaymentPolicyService {
+public class FulfillmentPolicyService {
     private final WebClient webClient;
     private final WebClientProperties properties;
     private static final String sellAccountUrl = "sell/account/v1/";
-    private static final String paymentPolicyUrl = "payment_policy";
+    private static final String fulfillmentPolicyUrl = "fulfillment_policy";
 
-    public PaymentPolicyService(WebClient webClient, WebClientProperties properties) {
+    public FulfillmentPolicyService(WebClient webClient, WebClientProperties properties) {
         this.webClient = webClient;
         this.properties = properties;
     }
 
-    public PaymentPolicy getPaymentPolicy(String paymentPolicyId) {
+    public FulfillmentPolicy getFulfillmentPolicy(String paymentPolicyId) {
         UriComponents uriComp = UriComponentsBuilder.newInstance()
                 .scheme(properties.getScheme())
                 .host(properties.getHost())
                 .port(properties.getPort())
                 .path(sellAccountUrl)
-                .path(paymentPolicyUrl)
+                .path(fulfillmentPolicyUrl)
                 .path("/" + paymentPolicyId)
                 .queryParam("marketplace_id", properties.getMarketplaceId())
                 .build();
@@ -35,17 +35,17 @@ public class PaymentPolicyService {
                 .get()
                 .uri(uriComp.toUriString())
                 .retrieve()
-                .bodyToMono(PaymentPolicy.class)
+                .bodyToMono(FulfillmentPolicy.class)
                 .block();
     }
 
-    public PaymentPolicies getPaymentPolicies() {
+    public FulfillmentPolicies getFulfillmentPolicies() {
         UriComponents uriComp = UriComponentsBuilder.newInstance()
                 .scheme(properties.getScheme())
                 .host(properties.getHost())
                 .port(properties.getPort())
                 .path(sellAccountUrl)
-                .path(paymentPolicyUrl)
+                .path(fulfillmentPolicyUrl)
                 .queryParam("marketplace_id", properties.getMarketplaceId())
                 .build();
 
@@ -53,7 +53,7 @@ public class PaymentPolicyService {
                 .get()
                 .uri(uriComp.toUriString())
                 .retrieve()
-                .bodyToMono(PaymentPolicies.class)
+                .bodyToMono(FulfillmentPolicies.class)
                 .block();
     }
 }

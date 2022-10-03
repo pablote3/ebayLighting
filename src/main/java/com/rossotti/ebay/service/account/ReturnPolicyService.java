@@ -1,4 +1,4 @@
-package com.rossotti.ebay.service;
+package com.rossotti.ebay.service.account;
 
 import com.rossotti.ebay.config.WebClientProperties;
 import com.rossotti.ebay.model.account.returnPolicy.ReturnPolicies;

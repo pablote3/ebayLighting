@@ -75,11 +75,20 @@ public class InventoryItemServiceTests {
 
         Assertions.assertEquals("123", response.getSku());
         Assertions.assertEquals("en_US", response.getLocale());
-//        Assertions.assertEquals("ALL_EXCLUDING_MOTORS_VEHICLES", response.getCategoryTypes().get(0).getName());
-//        Assertions.assertTrue(response.getCategoryTypes().get(0).getDefaultValue());
-//        Assertions.assertEquals("PAYPAL", response.getPaymentMethods().get(0).getPaymentMethodType());
-//        Assertions.assertEquals("PAYPAL_EMAIL", response.getPaymentMethods().get(0).getRecipientAccountReference().getReferenceType());
-//        Assertions.assertEquals("DAY", response.getFullPaymentDueIn().getUnit());
+        Assertions.assertEquals("GoPro Hero4 Helmet Cam", response.getProduct().getTitle());
+        Assertions.assertEquals("GoPro", response.getProduct().getAspects().getBrand().get(0));
+        Assertions.assertEquals("Helmet/Action", response.getProduct().getAspects().getType().get(0));
+        Assertions.assertEquals("High Definition", response.getProduct().getAspects().getRecordingDefinition().get(0));
+        Assertions.assertEquals("10x", response.getProduct().getAspects().getOpticalZoom().get(0));
+        Assertions.assertEquals("Flash Drive (SSD)", response.getProduct().getAspects().getMediaFormat().get(0));
+        Assertions.assertEquals("Removable", response.getProduct().getAspects().getStorageType().get(0));
+        Assertions.assertEquals("https://i.ebayimg.com/images/g/ySgAAOSw4-hZsdNS/s-l1600.jpg", response.getProduct().getImageUrls().get(0));
+        Assertions.assertEquals("INCH", response.getPackageWeightAndSize().getDimensions().getUnit());
+        Assertions.assertEquals(Double.valueOf("1.16"), response.getPackageWeightAndSize().getDimensions().getLength());
+        Assertions.assertEquals("POUND", response.getPackageWeightAndSize().getWeight().getUnit());
+        Assertions.assertEquals(Double.valueOf("2.25"), response.getPackageWeightAndSize().getWeight().getValue());
+        Assertions.assertEquals(Integer.valueOf("50"), response.getAvailability().getShipToLocationAvailability().getQuantity());
+        Assertions.assertEquals(Integer.valueOf("50"), response.getAvailability().getShipToLocationAvailability().getAllocationByFormat().getFixedPrice());
     }
 
 //    @Test

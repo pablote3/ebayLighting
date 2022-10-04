@@ -20,7 +20,7 @@ import java.io.IOException;
 
 @SpringBootTest
 public class OptedInProgramsServiceTests {
-    private static final String OPTED_IN_PROGRAMS_JSON = "data/optedInPrograms.json";
+    private static final String OPTED_IN_PROGRAMS_JSON = "data/account/optedInPrograms.json";
     private static MockWebServer mockWebServer;
 
     @Autowired

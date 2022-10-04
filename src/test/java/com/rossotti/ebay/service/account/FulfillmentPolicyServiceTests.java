@@ -21,8 +21,8 @@ import java.io.IOException;
 
 @SpringBootTest
 public class FulfillmentPolicyServiceTests {
-    private static final String FULFILLMENT_POLICY_JSON = "data/fulfillmentPolicy.json";
-    private static final String FULFILLMENT_POLICIES_JSON = "data/fulfillmentPolicies.json";
+    private static final String FULFILLMENT_POLICY_JSON = "data/account/fulfillmentPolicy.json";
+    private static final String FULFILLMENT_POLICIES_JSON = "data/account/fulfillmentPolicies.json";
     private static MockWebServer mockWebServer;
 
     @Autowired

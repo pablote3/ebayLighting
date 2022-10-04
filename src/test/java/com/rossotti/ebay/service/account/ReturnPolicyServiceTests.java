@@ -21,8 +21,8 @@ import java.io.IOException;
 
 @SpringBootTest
 public class ReturnPolicyServiceTests {
-    private static final String RETURN_POLICY_JSON = "data/returnPolicy.json";
-    private static final String RETURN_POLICIES_JSON = "data/returnPolicies.json";
+    private static final String RETURN_POLICY_JSON = "data/account/returnPolicy.json";
+    private static final String RETURN_POLICIES_JSON = "data/account/returnPolicies.json";
     private static MockWebServer mockWebServer;
 
     @Autowired

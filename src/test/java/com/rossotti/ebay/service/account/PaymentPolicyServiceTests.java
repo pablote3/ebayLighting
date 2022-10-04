@@ -20,8 +20,8 @@ import java.io.IOException;
 
 @SpringBootTest
 public class PaymentPolicyServiceTests {
-    private static final String PAYMENT_POLICY_JSON = "data/paymentPolicy.json";
-    private static final String PAYMENT_POLICIES_JSON = "data/paymentPolicies.json";
+    private static final String PAYMENT_POLICY_JSON = "data/account/paymentPolicy.json";
+    private static final String PAYMENT_POLICIES_JSON = "data/account/paymentPolicies.json";
     private static MockWebServer mockWebServer;
 
     @Autowired

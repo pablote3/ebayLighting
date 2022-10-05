@@ -1,0 +1,34 @@
+{
+    "offerId": "8209815010",
+    "sku": "123",
+    "marketplaceId": "EBAY_US",
+    "format": "FIXED_PRICE",
+    "listingDescription": "GoPro Hero4 Helmet Cam - order description",
+    "availableQuantity": 10,
+    "pricingSummary": {
+        "price": {
+            "value": "272.17",
+            "currency": "USD"
+        }
+    },
+    "listingPolicies": {
+        "paymentPolicyId": "6196932000",
+        "returnPolicyId": "6196944000",
+        "fulfillmentPolicyId": "6196947000",
+        "eBayPlusIfEligible": false
+    },
+    "categoryId": "183593",
+    "merchantLocationKey": "warehouse",
+    "tax": {
+        "applyTax": false
+    },
+    "listing": {
+        "listingId": "110551471149",
+        "listingStatus": "ACTIVE",
+        "soldQuantity": 0
+    },
+    "status": "PUBLISHED",
+    "listingDuration": "GTC",
+    "includeCatalogProductDetails": true,
+    "hideBuyerDetails": false
+}

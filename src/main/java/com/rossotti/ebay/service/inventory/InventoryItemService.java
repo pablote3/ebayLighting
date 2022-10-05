@@ -12,8 +12,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class InventoryItemService {
     private final WebClient webClient;
     private final WebClientProperties properties;
-    private static final String sellInventoryUrl = "sell/inventory/v1/";
-    private static final String inventoryItemUrl = "inventory_item";
+    private static final String sellInventoryPath = "sell/inventory/v1/";
+    private static final String inventoryItemPath = "inventory_item";
 
     public InventoryItemService(WebClient webClient, WebClientProperties properties) {
         this.webClient = webClient;
@@ -25,8 +25,8 @@ public class InventoryItemService {
                 .scheme(properties.getScheme())
                 .host(properties.getHost())
                 .port(properties.getPort())
-                .path(sellInventoryUrl)
-                .path(inventoryItemUrl)
+                .path(sellInventoryPath)
+                .path(inventoryItemPath)
                 .path("/" + sku)
                 .build();
 
@@ -43,8 +43,8 @@ public class InventoryItemService {
                 .scheme(properties.getScheme())
                 .host(properties.getHost())
                 .port(properties.getPort())
-                .path(sellInventoryUrl)
-                .path(inventoryItemUrl)
+                .path(sellInventoryPath)
+                .path(inventoryItemPath)
                 .queryParam("limit", properties.getLimit())
                 .queryParam("offset", properties.getOffset())
                 .build();

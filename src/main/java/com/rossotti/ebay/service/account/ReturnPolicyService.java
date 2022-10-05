@@ -12,8 +12,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class ReturnPolicyService {
     private final WebClient webClient;
     private final WebClientProperties properties;
-    private static final String sellAccountUrl = "sell/account/v1/";
-    private static final String returnPolicyUrl = "return_policy";
+    private static final String sellAccountPath = "sell/account/v1/";
+    private static final String returnPolicyPath = "return_policy";
 
     public ReturnPolicyService(WebClient webClient, WebClientProperties properties) {
         this.webClient = webClient;
@@ -25,8 +25,8 @@ public class ReturnPolicyService {
                 .scheme(properties.getScheme())
                 .host(properties.getHost())
                 .port(properties.getPort())
-                .path(sellAccountUrl)
-                .path(returnPolicyUrl)
+                .path(sellAccountPath)
+                .path(returnPolicyPath)
                 .path("/" + returnPolicyId)
                 .queryParam("marketplace_id", properties.getMarketplaceId())
                 .build();
@@ -44,8 +44,8 @@ public class ReturnPolicyService {
                 .scheme(properties.getScheme())
                 .host(properties.getHost())
                 .port(properties.getPort())
-                .path(sellAccountUrl)
-                .path(returnPolicyUrl)
+                .path(sellAccountPath)
+                .path(returnPolicyPath)
                 .queryParam("marketplace_id", properties.getMarketplaceId())
                 .build();
 

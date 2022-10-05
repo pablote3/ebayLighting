@@ -11,8 +11,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class OptedInProgramsService {
     private final WebClient webClient;
     private final WebClientProperties properties;
-    private static final String sellAccountUrl = "sell/account/v1/";
-    private static final String optedInProgramsUrl = "program/get_opted_in_programs";
+    private static final String sellAccountPath = "sell/account/v1/";
+    private static final String optedInProgramsPath = "program/get_opted_in_programs";
 
     public OptedInProgramsService(WebClient webClient, WebClientProperties properties) {
         this.webClient = webClient;
@@ -24,8 +24,8 @@ public class OptedInProgramsService {
                 .scheme(properties.getScheme())
                 .host(properties.getHost())
                 .port(properties.getPort())
-                .path(sellAccountUrl)
-                .path(optedInProgramsUrl)
+                .path(sellAccountPath)
+                .path(optedInProgramsPath)
                 .build();
 
         return webClient

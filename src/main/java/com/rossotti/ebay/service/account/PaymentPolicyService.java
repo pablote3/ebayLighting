@@ -12,8 +12,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class PaymentPolicyService {
     private final WebClient webClient;
     private final WebClientProperties properties;
-    private static final String sellAccountUrl = "sell/account/v1/";
-    private static final String paymentPolicyUrl = "payment_policy";
+    private static final String sellAccountPath = "sell/account/v1/";
+    private static final String paymentPolicyPath = "payment_policy";
 
     public PaymentPolicyService(WebClient webClient, WebClientProperties properties) {
         this.webClient = webClient;
@@ -25,8 +25,8 @@ public class PaymentPolicyService {
                 .scheme(properties.getScheme())
                 .host(properties.getHost())
                 .port(properties.getPort())
-                .path(sellAccountUrl)
-                .path(paymentPolicyUrl)
+                .path(sellAccountPath)
+                .path(paymentPolicyPath)
                 .path("/" + paymentPolicyId)
                 .queryParam("marketplace_id", properties.getMarketplaceId())
                 .build();
@@ -44,8 +44,8 @@ public class PaymentPolicyService {
                 .scheme(properties.getScheme())
                 .host(properties.getHost())
                 .port(properties.getPort())
-                .path(sellAccountUrl)
-                .path(paymentPolicyUrl)
+                .path(sellAccountPath)
+                .path(paymentPolicyPath)
                 .queryParam("marketplace_id", properties.getMarketplaceId())
                 .build();
 

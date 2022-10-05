@@ -14,4 +14,6 @@ public class WebClientProperties {
     private String host;
     private Integer port;
     private String marketplaceId;
+    private Integer limit;
+    private Integer offset;
 }

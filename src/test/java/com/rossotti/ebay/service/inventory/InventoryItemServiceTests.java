@@ -1,10 +1,8 @@
 package com.rossotti.ebay.service.inventory;
 
 import com.rossotti.ebay.config.WebClientProperties;
-import com.rossotti.ebay.model.account.paymentPolicy.PaymentPolicies;
-import com.rossotti.ebay.model.account.paymentPolicy.PaymentPolicy;
 import com.rossotti.ebay.model.inventory.inventoryItem.InventoryItem;
-import com.rossotti.ebay.service.account.PaymentPolicyService;
+import com.rossotti.ebay.model.inventory.inventoryItem.InventoryItems;
 import com.rossotti.ebay.util.TestUtil;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -24,7 +22,7 @@ import java.io.IOException;
 @SpringBootTest
 public class InventoryItemServiceTests {
     private static final String INVENTORY_ITEM_JSON = "data/inventory/inventoryItem.json";
-//    private static final String PAYMENT_POLICIES_JSON = "data/account/paymentPolicies.json";
+    private static final String INVENTORY_ITEMS_JSON = "data/inventory/inventoryItems.json";
     private static MockWebServer mockWebServer;
 
     @Autowired
@@ -91,41 +89,49 @@ public class InventoryItemServiceTests {
         Assertions.assertEquals(Integer.valueOf("50"), response.getAvailability().getShipToLocationAvailability().getAllocationByFormat().getFixedPrice());
     }
 
-//    @Test
-//    void paymentPolicies_requestSerialization() throws InterruptedException {
-//        String str = TestUtil.readStringFromFile(PAYMENT_POLICIES_JSON).orElse(null);
-//        Assertions.assertNotNull(str);
-//        mockWebServer.enqueue(
-//                new MockResponse()
-//                        .setResponseCode(200)
-//                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-//                        .setBody(str)
-//        );
-//        inventoryItemService.getPaymentPolicies();
-//        RecordedRequest request = mockWebServer.takeRequest();
-//
-//        Assertions.assertEquals("GET", request.getMethod());
-//        Assertions.assertEquals("/sell/account/v1/payment_policy?marketplace_id=EBAY_US", request.getPath());
-//    }
-//
-//    @Test
-//    void paymentPolicies_responseDeserialization() {
-//        String json = TestUtil.readStringFromFile(PAYMENT_POLICIES_JSON).orElse(null);
-//        Assertions.assertNotNull(json);
-//        mockWebServer.enqueue(
-//                new MockResponse()
-//                        .setResponseCode(200)
-//                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-//                        .setBody(json)
-//        );
-//        PaymentPolicies response = inventoryItemService.getPaymentPolicies();
-//
-//        Assertions.assertEquals(1, response.getTotal());
-//        Assertions.assertEquals("eBay Payments EBAY_US PayPal", response.getPaymentPolicies().get(0).getName());
-//        Assertions.assertEquals("ALL_EXCLUDING_MOTORS_VEHICLES", response.getPaymentPolicies().get(0).getCategoryTypes().get(0).getName());
-//        Assertions.assertTrue(response.getPaymentPolicies().get(0).getCategoryTypes().get(0).getDefaultValue());
-//        Assertions.assertEquals("PAYPAL", response.getPaymentPolicies().get(0).getPaymentMethods().get(0).getPaymentMethodType());
-//        Assertions.assertEquals("PAYPAL_EMAIL", response.getPaymentPolicies().get(0).getPaymentMethods().get(0).getRecipientAccountReference().getReferenceType());
-//        Assertions.assertEquals("DAY", response.getPaymentPolicies().get(0).getFullPaymentDueIn().getUnit());
-//    }
+    @Test
+    void inventoryItems_requestSerialization() throws InterruptedException {
+        String str = TestUtil.readStringFromFile(INVENTORY_ITEMS_JSON).orElse(null);
+        Assertions.assertNotNull(str);
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .setBody(str)
+        );
+        inventoryItemService.getInventoryItems();
+        RecordedRequest request = mockWebServer.takeRequest();
+
+        Assertions.assertEquals("GET", request.getMethod());
+        Assertions.assertEquals("/sell/inventory/v1/inventory_item?limit=20&offset=0", request.getPath());
+    }
+
+    @Test
+    void inventoryItems_responseDeserialization() {
+        String json = TestUtil.readStringFromFile(INVENTORY_ITEMS_JSON).orElse(null);
+        Assertions.assertNotNull(json);
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .setBody(json)
+        );
+        InventoryItems response = inventoryItemService.getInventoryItems();
+
+        Assertions.assertEquals(1, response.getTotal());
+        Assertions.assertEquals(1, response.getSize());
+        Assertions.assertEquals("123", response.getInventoryItems().get(0).getSku());
+        Assertions.assertEquals("en_US", response.getInventoryItems().get(0).getLocale());
+        Assertions.assertEquals("GoPro Hero4 Helmet Cam", response.getInventoryItems().get(0).getProduct().getTitle());
+        Assertions.assertEquals("GoPro", response.getInventoryItems().get(0).getProduct().getAspects().getBrand().get(0));
+        Assertions.assertEquals("Helmet/Action", response.getInventoryItems().get(0).getProduct().getAspects().getType().get(0));
+        Assertions.assertEquals("High Definition", response.getInventoryItems().get(0).getProduct().getAspects().getRecordingDefinition().get(0));
+        Assertions.assertEquals("10x", response.getInventoryItems().get(0).getProduct().getAspects().getOpticalZoom().get(0));
+        Assertions.assertEquals("Flash Drive (SSD)", response.getInventoryItems().get(0).getProduct().getAspects().getMediaFormat().get(0));
+        Assertions.assertEquals("Removable", response.getInventoryItems().get(0).getProduct().getAspects().getStorageType().get(0));
+        Assertions.assertEquals("https://i.ebayimg.com/images/g/ySgAAOSw4-hZsdNS/s-l1600.jpg", response.getInventoryItems().get(0).getProduct().getImageUrls().get(0));
+        Assertions.assertNull(response.getInventoryItems().get(0).getPackageWeightAndSize());
+        Assertions.assertEquals(Integer.valueOf("50"), response.getInventoryItems().get(0).getAvailability().getShipToLocationAvailability().getQuantity());
+        Assertions.assertNull(response.getInventoryItems().get(0).getAvailability().getShipToLocationAvailability().getAllocationByFormat());
+    }
 }

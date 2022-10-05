@@ -2,6 +2,7 @@ package com.rossotti.ebay.service.inventory;
 
 import com.rossotti.ebay.config.WebClientProperties;
 import com.rossotti.ebay.model.inventory.inventoryItem.InventoryItem;
+import com.rossotti.ebay.model.inventory.inventoryItem.InventoryItems;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponents;
@@ -37,21 +38,22 @@ public class InventoryItemService {
                 .block();
     }
 
-//    public FulfillmentPolicies getFulfillmentPolicies() {
-//        UriComponents uriComp = UriComponentsBuilder.newInstance()
-//                .scheme(properties.getScheme())
-//                .host(properties.getHost())
-//                .port(properties.getPort())
-//                .path(sellInventoryUrl)
-//                .path(inventoryItemUrl)
-//                .queryParam("marketplace_id", properties.getMarketplaceId())
-//                .build();
-//
-//        return webClient
-//                .get()
-//                .uri(uriComp.toUriString())
-//                .retrieve()
-//                .bodyToMono(FulfillmentPolicies.class)
-//                .block();
-//    }
+    public InventoryItems getInventoryItems() {
+        UriComponents uriComp = UriComponentsBuilder.newInstance()
+                .scheme(properties.getScheme())
+                .host(properties.getHost())
+                .port(properties.getPort())
+                .path(sellInventoryUrl)
+                .path(inventoryItemUrl)
+                .queryParam("limit", properties.getLimit())
+                .queryParam("offset", properties.getOffset())
+                .build();
+
+        return webClient
+                .get()
+                .uri(uriComp.toUriString())
+                .retrieve()
+                .bodyToMono(InventoryItems.class)
+                .block();
+    }
 }

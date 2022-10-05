@@ -1,0 +1,53 @@
+{
+    "total": 1,
+    "size": 1,
+    "href": "/sell/inventory/v1/inventory_item?offset=0&limit=20",
+    "limit": 20,
+    "inventoryItems": [
+        {
+            "sku": "123",
+            "locale": "en_US",
+            "product": {
+                "title": "GoPro Hero4 Helmet Cam",
+                "aspects": {
+                    "Brand": [
+                        "GoPro"
+                    ],
+                    "Type": [
+                        "Helmet/Action"
+                    ],
+                    "Recording Definition": [
+                        "High Definition"
+                    ],
+                    "Optical Zoom": [
+                        "10x"
+                    ],
+                    "Media Format": [
+                        "Flash Drive (SSD)"
+                    ],
+                    "Storage Type": [
+                        "Removable"
+                    ]
+                },
+                "description": "New GoPro Hero4 Helmet Cam. Unopened box.",
+                "brand": "GoPro",
+                "mpn": "CHDHX-401",
+                "imageUrls": [
+                    "https://i.ebayimg.com/images/g/ySgAAOSw4-hZsdNS/s-l1600.jpg",
+                    "https://i.ebayimg.com/images/g/GS4AAOSwaOxZsdNM/s-l1600.jpg",
+                    "https://i.ebayimg.com/images/g/I0wAAOSwA2hZsdNP/s-l1600.jpg"
+                ]
+            },
+            "availability": {
+                "pickupAtLocationAvailability": [
+                    {
+                        "merchantLocationKey": "home"
+                    }
+                ],
+                "shipToLocationAvailability": {
+                    "quantity": 50
+                }
+            }
+        }
+    ]
+}

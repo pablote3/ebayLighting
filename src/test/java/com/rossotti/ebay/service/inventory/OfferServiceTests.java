@@ -2,6 +2,7 @@ package com.rossotti.ebay.service.inventory;
 
 import com.rossotti.ebay.config.WebClientProperties;
 import com.rossotti.ebay.model.inventory.offer.Offer;
+import com.rossotti.ebay.model.inventory.offer.Offers;
 import com.rossotti.ebay.util.TestUtil;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -78,49 +79,42 @@ public class OfferServiceTests {
         Assertions.assertEquals("ACTIVE", response.getListing().getListingStatus());
     }
 
-//    @Test
-//    void offers_requestSerialization() throws InterruptedException {
-//        String str = TestUtil.readStringFromFile(OFFERS_JSON).orElse(null);
-//        Assertions.assertNotNull(str);
-//        mockWebServer.enqueue(
-//                new MockResponse()
-//                        .setResponseCode(200)
-//                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-//                        .setBody(str)
-//        );
-//        .getInventoryItems();
-//        RecordedRequest request = mockWebServer.takeRequest();
-//
-//        Assertions.assertEquals("GET", request.getMethod());
-//        Assertions.assertEquals("/sell/inventory/v1/inventory_item?limit=20&offset=0", request.getPath());
-//    }
-//
-//    @Test
-//    void offers_responseDeserialization() {
-//        String json = TestUtil.readStringFromFile(OFFERS_JSON).orElse(null);
-//        Assertions.assertNotNull(json);
-//        mockWebServer.enqueue(
-//                new MockResponse()
-//                        .setResponseCode(200)
-//                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-//                        .setBody(json)
-//        );
-//        InventoryItems response = .getInventoryItems();
-//
-//        Assertions.assertEquals(1, response.getTotal());
-//        Assertions.assertEquals(1, response.getSize());
-//        Assertions.assertEquals("123", response.getInventoryItems().get(0).getSku());
-//        Assertions.assertEquals("en_US", response.getInventoryItems().get(0).getLocale());
-//        Assertions.assertEquals("GoPro Hero4 Helmet Cam", response.getInventoryItems().get(0).getProduct().getTitle());
-//        Assertions.assertEquals("GoPro", response.getInventoryItems().get(0).getProduct().getAspects().getBrand().get(0));
-//        Assertions.assertEquals("Helmet/Action", response.getInventoryItems().get(0).getProduct().getAspects().getType().get(0));
-//        Assertions.assertEquals("High Definition", response.getInventoryItems().get(0).getProduct().getAspects().getRecordingDefinition().get(0));
-//        Assertions.assertEquals("10x", response.getInventoryItems().get(0).getProduct().getAspects().getOpticalZoom().get(0));
-//        Assertions.assertEquals("Flash Drive (SSD)", response.getInventoryItems().get(0).getProduct().getAspects().getMediaFormat().get(0));
-//        Assertions.assertEquals("Removable", response.getInventoryItems().get(0).getProduct().getAspects().getStorageType().get(0));
-//        Assertions.assertEquals("https://i.ebayimg.com/images/g/ySgAAOSw4-hZsdNS/s-l1600.jpg", response.getInventoryItems().get(0).getProduct().getImageUrls().get(0));
-//        Assertions.assertNull(response.getInventoryItems().get(0).getPackageWeightAndSize());
-//        Assertions.assertEquals(Integer.valueOf("50"), response.getInventoryItems().get(0).getAvailability().getShipToLocationAvailability().getQuantity());
-//        Assertions.assertNull(response.getInventoryItems().get(0).getAvailability().getShipToLocationAvailability().getAllocationByFormat());
-//    }
+    @Test
+    void offers_requestSerialization() throws InterruptedException {
+        String str = TestUtil.readStringFromFile(OFFERS_JSON).orElse(null);
+        Assertions.assertNotNull(str);
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .setBody(str)
+        );
+        offerService.getOffersBySku("123");
+        RecordedRequest request = mockWebServer.takeRequest();
+
+        Assertions.assertEquals("GET", request.getMethod());
+        Assertions.assertEquals("/sell/inventory/v1/offer?sku=123&limit=20&offset=0", request.getPath());
+    }
+
+    @Test
+    void offers_responseDeserialization() {
+        String json = TestUtil.readStringFromFile(OFFERS_JSON).orElse(null);
+        Assertions.assertNotNull(json);
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .setBody(json)
+        );
+        Offers response = offerService.getOffersBySku("123");
+
+        Assertions.assertEquals(1, response.getTotal());
+        Assertions.assertEquals(1, response.getSize());
+        Assertions.assertEquals("8209815010", response.getOffers().get(0).getOfferId());
+        Assertions.assertEquals("123", response.getOffers().get(0).getSku());
+        Assertions.assertEquals("USD", response.getOffers().get(0).getPricingSummary().getPrice().getCurrency());
+        Assertions.assertEquals("6196947000", response.getOffers().get(0).getListingPolicies().getFulfillmentPolicyId());
+        Assertions.assertFalse(response.getOffers().get(0).getTax().getApplyTax());
+        Assertions.assertEquals("ACTIVE", response.getOffers().get(0).getListing().getListingStatus());
+    }
 }

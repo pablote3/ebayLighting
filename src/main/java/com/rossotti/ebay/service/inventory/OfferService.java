@@ -46,6 +46,8 @@ public class OfferService {
                 .path(sellInventoryPath)
                 .path(offerPath)
                 .queryParam("sku", sku)
+                .queryParam("limit", properties.getLimit())
+                .queryParam("offset", properties.getOffset())
                 .build();
 
         return webClient

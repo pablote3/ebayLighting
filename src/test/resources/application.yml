@@ -1,0 +1,4 @@
+server:
+  scheme: http
+  host: api.sandbox.ebay.com
+  port: 8080

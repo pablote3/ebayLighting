@@ -13,7 +13,6 @@ public class TestUtil {
         properties.setScheme(url.scheme());
         properties.setHost(url.host());
         properties.setPort(url.port());
-        properties.setMarketplaceId("EBAY_US");
         properties.setLimit(20);
         properties.setOffset(0);
         return properties;

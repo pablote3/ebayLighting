@@ -1,2 +1,6 @@
 ebay:
   marketplaceId: EBAY_US
+retryInfos:
+  default:
+    maxRetries: 3
+    retryBackoffInterval: 1000

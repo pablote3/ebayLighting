@@ -7,8 +7,19 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix="ebay")
+@Getter
 public class AppConfig {
-    @Value("ebay.marketplaceId")
-    @Getter
+    @Value("${ebay.marketplaceId}")
     private String marketplaceId;
+
+    @Value("${ebay.httpTimeOutMs}")
+    private int httpTimeOutMs;
+
+    @Value("${retry.maxRetries}")
+    private int maxRetries;
+
+    @Value("${retry.backoffInterval}")
+    private int backoffInterval;
+
+
 }

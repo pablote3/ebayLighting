@@ -2,7 +2,9 @@ server:
   scheme: http
   host: api.sandbox.ebay.com
   port: 8080
-retryInfos:
-  default:
-    maxRetries: 3
-    retryBackoffInterval: 1000
+ebay:
+  marketplaceId: EBAY_US
+  httpTimeOutMs: 60000
+retry:
+  maxRetries: 3
+  backoffInterval: 1000

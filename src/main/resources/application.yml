@@ -1,6 +1,14 @@
 ebay:
   marketplaceId: EBAY_US
-retryInfos:
-  default:
-    maxRetries: 3
-    retryBackoffInterval: 1000
+  httpTimeOutMs: 60000
+retry:
+  maxRetries: 3
+  backoffInterval: 1000
+spring:
+  config:
+    activate:
+      on-profile: LOCAL
+      server:
+        scheme: http
+        host: localhost
+        port: 8080

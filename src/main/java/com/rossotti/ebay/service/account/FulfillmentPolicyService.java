@@ -28,7 +28,7 @@ public class FulfillmentPolicyService {
                 .path(sellAccountPath)
                 .path(fulfillmentPolicyPath)
                 .path("/" + paymentPolicyId)
-                .queryParam("marketplace_id", properties.getMarketplaceId())
+                .queryParam("marketplace_id", "EBAY_US")
                 .build();
 
         return webClient
@@ -46,7 +46,7 @@ public class FulfillmentPolicyService {
                 .port(properties.getPort())
                 .path(sellAccountPath)
                 .path(fulfillmentPolicyPath)
-                .queryParam("marketplace_id", properties.getMarketplaceId())
+                .queryParam("marketplace_id", "EBAY_US")
                 .build();
 
         return webClient

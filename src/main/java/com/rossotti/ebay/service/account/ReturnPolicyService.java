@@ -28,7 +28,7 @@ public class ReturnPolicyService {
                 .path(sellAccountPath)
                 .path(returnPolicyPath)
                 .path("/" + returnPolicyId)
-                .queryParam("marketplace_id", properties.getMarketplaceId())
+                .queryParam("marketplace_id", "EBAY_US")
                 .build();
 
         return webClient
@@ -46,7 +46,7 @@ public class ReturnPolicyService {
                 .port(properties.getPort())
                 .path(sellAccountPath)
                 .path(returnPolicyPath)
-                .queryParam("marketplace_id", properties.getMarketplaceId())
+                .queryParam("marketplace_id", "EBAY_US")
                 .build();
 
         return webClient

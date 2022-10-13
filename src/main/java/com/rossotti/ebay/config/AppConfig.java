@@ -1,25 +1,19 @@
 package com.rossotti.ebay.config;
 
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+import java.util.Map;
 
-@Component
 @ConfigurationProperties(prefix="ebay")
+@ConfigurationPropertiesScan
 @Getter
+@Setter
 public class AppConfig {
-    @Value("${ebay.marketplaceId}")
     private String marketplaceId;
-
-    @Value("${ebay.httpTimeOutMs}")
     private int httpTimeOutMs;
-
-    @Value("${retry.maxRetries}")
     private int maxRetries;
-
-    @Value("${retry.backoffInterval}")
     private int backoffInterval;
-
-
+    private Map<String, String> resourceMap;
 }

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest
 public class AppConfigTests {
@@ -22,5 +23,14 @@ public class AppConfigTests {
     @Test
     public void getInt_NotExists() {
         assertEquals(0, appConfig.getHttpTimeOutMs());
+    }
+
+    @Test
+    public void getMap_Exists() {
+        assertEquals("sell/account/v1/payment_policy", appConfig.getResourceMap().get("payment_policy"));
+    }
+    @Test
+    public void getMap_NotExists() {
+        assertNull(appConfig.getResourceMap().get("lala"));
     }
 }

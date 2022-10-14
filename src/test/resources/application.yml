@@ -1,4 +1,6 @@
 ebay:
+  contentType: application/json
+  contentLanguage: en-US
   marketplaceId: EBAY_US
   maxRetries: 3
   backoffInterval: 1000

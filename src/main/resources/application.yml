@@ -1,4 +1,6 @@
 ebay:
+  contentType: application/json
+  contentLanguage: en-US
   marketplaceId: EBAY_US
   httpTimeOutMs: 60000
   maxRetries: 3

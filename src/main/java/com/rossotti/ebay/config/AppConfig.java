@@ -11,6 +11,8 @@ import java.util.Map;
 @Getter
 @Setter
 public class AppConfig {
+    private String contentType;
+    private String contentLanguage;
     private String marketplaceId;
     private int httpTimeOutMs;
     private int maxRetries;

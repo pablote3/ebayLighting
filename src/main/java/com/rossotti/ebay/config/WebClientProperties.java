@@ -21,8 +21,7 @@ public class WebClientProperties {
     private String baseUrl;
     private HttpMethod method;
     private HttpHeaders headers;
-    private String rootPath;
-    private String clientPath;
+    private String resourcePath;
     private Integer limit;
     private Integer offset;
 }

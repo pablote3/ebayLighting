@@ -1,7 +1,9 @@
 package com.rossotti.ebay.client;
 
+import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.WebClientProperties;
 import com.rossotti.ebay.model.account.paymentPolicy.PaymentPolicy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -16,6 +18,8 @@ public class PaymentPolicyClient extends BaseClient {
     private final WebClientProperties properties;
 
     private static final String pathKey = "payment_policy";
+    @Autowired
+    private AppConfig appConfig;
 
     public PaymentPolicyClient(WebClient webClient, WebClientProperties properties) {
         this.webClient = webClient;
@@ -30,16 +34,12 @@ public class PaymentPolicyClient extends BaseClient {
         }
         builder.queryParam("marketplace_id", getAppConfig().getMarketplaceId());
         builder.build();
-//        HttpHeaders headers = createHeaders(new PaymentPolicy());
+        HttpHeaders headers = createHeaders();
         return Optional.ofNullable(webClient
                 .get()
                 .uri(webClientProperties.getUri())
                 .retrieve()
                 .bodyToMono(PaymentPolicy.class)
                 .block());
-    }
-    private HttpHeaders createHeaders(final PaymentPolicy paymentPolicy) {
-        HttpHeaders headers = new HttpHeaders();
-        return headers;
     }
 }

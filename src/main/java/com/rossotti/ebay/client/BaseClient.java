@@ -6,6 +6,7 @@ import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -28,7 +29,7 @@ public abstract class BaseClient {
 //        public void throwScapiResponseException(String errorMessage, HttpStatus statusCode, Throwable t) { logger.throwScapiResponseException(createRestClientFailMsg() + " " + errorMessage, statusCode, t); }
 //        protected void throwRestClientException(final Exception exception, String... params) { logger.throwRestClientException(exception, tackOnRestClientFailMsg(params)); }
 
-    public UriComponentsBuilder baseUriComponentBuilder(WebClientProperties properties) {
+    protected UriComponentsBuilder baseUriComponentBuilder(WebClientProperties properties) {
         UriComponentsBuilder uriComp = UriComponentsBuilder.newInstance();
         uriComp.scheme(properties.getScheme());
         uriComp.host(properties.getHost());
@@ -50,8 +51,12 @@ public abstract class BaseClient {
                      .block()
         );
     }
-
     private void logRetryCount(long current, int max) {
         logger.info("Retry " + (current + 1) + " of " + max);
+    }
+    protected HttpHeaders createHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_TYPE, appConfig.getContentType());
+        return headers;
     }
 }

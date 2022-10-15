@@ -34,15 +34,15 @@ public abstract class BaseClient {
         uriComp.scheme(properties.getScheme());
         uriComp.host(properties.getHost());
         uriComp.port(properties.getPort());
-        uriComp.path(appConfig.getResourceMap().get(properties.getResourcePath()));
+        uriComp.path(properties.getResourcePath());
         return uriComp;
     }
 
-    protected <T> Optional<T> webClientCall(WebClientProperties webClientProperties, Class<T> responseClass) {
+    protected <T> Optional<T> webClientCall(WebClientProperties properties, Class<T> responseClass) {
         return Optional.ofNullable(
-            webClient.method(webClientProperties.getMethod())
-                     .uri(webClientProperties.getUri())
-                     .headers(h -> h.addAll(webClientProperties.getHeaders()))
+            webClient.method(properties.getMethod())
+                     .uri(properties.getUri())
+                     .headers(h -> h.addAll(properties.getHeaders()))
                      .retrieve()
                      .bodyToMono(responseClass)
                      .timeout(Duration.ofMillis(appConfig.getHttpTimeOutMs()))

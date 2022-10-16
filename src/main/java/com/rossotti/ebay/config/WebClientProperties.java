@@ -21,6 +21,7 @@ public class WebClientProperties {
     private HttpMethod method;
     private HttpHeaders headers;
     private String resourcePath;
+    private String contentType;
     private Integer limit;
     private Integer offset;
     private String marketplaceId;

@@ -13,8 +13,12 @@ public class AppConfigTests {
     AppConfig appConfig;
 
     @Test
-    public void getString_Valid() {
+    public void getString_Exists() {
         assertEquals("EBAY_US", appConfig.getMarketplaceId());
+    }
+    @Test
+    public void getString_NotExists() {
+        assertNull(appConfig.getContentLanguage());
     }
     @Test
     public void getInt_Exists() {

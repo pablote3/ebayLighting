@@ -2,6 +2,7 @@ ebay:
   contentType: application/json
   contentLanguage: en-US
   marketplaceId: EBAY_US
+  http-time-out-ms: 5000
   maxRetries: 3
   backoffInterval: 1000
   resourceMap:
@@ -22,5 +23,5 @@ spring:
       on-profile: SBOX
   server:
     scheme: http
-    host: localhost
+    host: sbox
     port: 8080

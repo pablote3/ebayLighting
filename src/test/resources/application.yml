@@ -6,11 +6,21 @@ ebay:
   backoffInterval: 1000
   resourceMap:
     payment_policy: sell/account/v1/payment_policy
-  spring:
-    config:
-      activate:
-        on-profile: LOCAL
-        server:
-          scheme: http
-          host: localhost
-          port: 8080
+---
+spring:
+  config:
+    activate:
+      on-profile: LOCAL
+server:
+  scheme: http
+  host: localhost
+  port: 8080
+---
+spring:
+  config:
+    activate:
+      on-profile: SBOX
+  server:
+    scheme: http
+    host: localhost
+    port: 8080

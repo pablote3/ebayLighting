@@ -18,10 +18,13 @@ public class WebClientProperties {
     private String host;
     private Integer port;
     private URI uri;
-    private String baseUrl;
     private HttpMethod method;
     private HttpHeaders headers;
     private String resourcePath;
     private Integer limit;
     private Integer offset;
+    private String marketplaceId;
+    private int httpTimeOutMs;
+    private int maxRetries;
+    private int backoffInterval;
 }

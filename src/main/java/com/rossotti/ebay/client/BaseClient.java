@@ -1,6 +1,7 @@
 package com.rossotti.ebay.client;
 
 import com.rossotti.ebay.config.AppConfig;
+import com.rossotti.ebay.config.ServerConfig;
 import com.rossotti.ebay.config.WebClientProperties;
 import lombok.Getter;
 import org.slf4j.Logger;
@@ -21,6 +22,8 @@ public abstract class BaseClient {
     private Logger logger = LoggerFactory.getLogger(BaseClient.class);
     @Autowired
     private AppConfig appConfig;
+    @Autowired
+    private ServerConfig serverConfig;
 
     @Autowired
     protected WebClient webClient;
@@ -29,6 +32,15 @@ public abstract class BaseClient {
 //        public void throwScapiResponseException(String errorMessage, HttpStatus statusCode, Throwable t) { logger.throwScapiResponseException(createRestClientFailMsg() + " " + errorMessage, statusCode, t); }
 //        protected void throwRestClientException(final Exception exception, String... params) { logger.throwRestClientException(exception, tackOnRestClientFailMsg(params)); }
 
+    protected WebClientProperties createWebClientProperties() {
+        WebClientProperties properties = new WebClientProperties();
+        properties.setScheme(serverConfig.getScheme());
+        properties.setHost(serverConfig.getHost());
+        properties.setPort(serverConfig.getPort());
+        properties.setLimit(20);
+        properties.setOffset(0);
+        return properties;
+    }
     protected UriComponentsBuilder baseUriComponentBuilder(WebClientProperties properties) {
         UriComponentsBuilder uriComp = UriComponentsBuilder.newInstance();
         uriComp.scheme(properties.getScheme());
@@ -54,9 +66,9 @@ public abstract class BaseClient {
     private void logRetryCount(long current, int max) {
         logger.info("Retry " + (current + 1) + " of " + max);
     }
-    protected HttpHeaders createHeaders() {
+    protected HttpHeaders createHeaders(WebClientProperties properties) {
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_TYPE, appConfig.getContentType());
+        headers.add(HttpHeaders.CONTENT_TYPE, properties.getContentType());
         return headers;
     }
 }

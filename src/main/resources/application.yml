@@ -21,7 +21,7 @@ spring:
   config:
     activate:
       on-profile: SBOX
-  server:
-    scheme: http
-    host: sbox
-    port: 8080
+server:
+  scheme: http
+  host: sbox
+  port: 8080

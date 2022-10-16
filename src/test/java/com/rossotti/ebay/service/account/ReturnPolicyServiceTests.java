@@ -1,5 +1,6 @@
 package com.rossotti.ebay.service.account;
 
+import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.WebClientProperties;
 import com.rossotti.ebay.model.account.returnPolicy.ReturnPolicies;
 import com.rossotti.ebay.model.account.returnPolicy.ReturnPolicy;
@@ -28,12 +29,14 @@ public class ReturnPolicyServiceTests {
     @Autowired
     WebClient webClient;
     @Autowired
+    private AppConfig appConfig;
+    @Autowired
     private ReturnPolicyService returnPolicyService;
 
     @BeforeEach
     public void setup() {
         mockWebServer = new MockWebServer();
-        WebClientProperties properties = TestUtil.createWebClientProperties(mockWebServer.url("/"));
+        WebClientProperties properties = TestUtil.createWebClientProperties(mockWebServer.url("/"), appConfig, "payment_policy");
         returnPolicyService = new ReturnPolicyService(WebClient.create(), properties);
     }
 

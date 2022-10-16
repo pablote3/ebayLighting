@@ -1,5 +1,6 @@
 package com.rossotti.ebay.service.inventory;
 
+import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.WebClientProperties;
 import com.rossotti.ebay.model.inventory.inventoryItem.InventoryItem;
 import com.rossotti.ebay.model.inventory.inventoryItem.InventoryItems;
@@ -28,12 +29,14 @@ public class InventoryItemServiceTests {
     @Autowired
     WebClient webClient;
     @Autowired
+    private AppConfig appConfig;
+    @Autowired
     private InventoryItemService inventoryItemService;
 
     @BeforeEach
     public void setup() {
         mockWebServer = new MockWebServer();
-        WebClientProperties properties = TestUtil.createWebClientProperties(mockWebServer.url("/"));
+        WebClientProperties properties = TestUtil.createWebClientProperties(mockWebServer.url("/"), appConfig, "payment_policy");
         inventoryItemService = new InventoryItemService(WebClient.create(), properties);
     }
 

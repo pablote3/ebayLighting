@@ -1,5 +1,6 @@
 package com.rossotti.ebay.service.account;
 
+import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.WebClientProperties;
 import com.rossotti.ebay.model.account.fulfillmentPolicy.FulfillmentPolicies;
 import com.rossotti.ebay.model.account.fulfillmentPolicy.FulfillmentPolicy;
@@ -28,12 +29,14 @@ public class FulfillmentPolicyServiceTests {
     @Autowired
     WebClient webClient;
     @Autowired
+    private AppConfig appConfig;
+    @Autowired
     private FulfillmentPolicyService fulfillmentPolicyService;
 
     @BeforeEach
     public void setup() {
         mockWebServer = new MockWebServer();
-        WebClientProperties properties = TestUtil.createWebClientProperties(mockWebServer.url("/"));
+        WebClientProperties properties = TestUtil.createWebClientProperties(mockWebServer.url("/"), appConfig, "payment_policy");
         fulfillmentPolicyService = new FulfillmentPolicyService(WebClient.create(), properties);
     }
 

@@ -1,5 +1,6 @@
 package com.rossotti.ebay.service.account;
 
+import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.WebClientProperties;
 import com.rossotti.ebay.model.account.program.Programs;
 import com.rossotti.ebay.util.TestUtil;
@@ -26,12 +27,14 @@ public class OptedInProgramsServiceTests {
     @Autowired
     WebClient webClient;
     @Autowired
+    private AppConfig appConfig;
+    @Autowired
     private OptedInProgramsService optedInProgramsService;
 
     @BeforeEach
     public void setup() {
         mockWebServer = new MockWebServer();
-        WebClientProperties properties = TestUtil.createWebClientProperties(mockWebServer.url("/"));
+        WebClientProperties properties = TestUtil.createWebClientProperties(mockWebServer.url("/"), appConfig, "payment_policy");
         optedInProgramsService = new OptedInProgramsService(WebClient.create(), properties);
     }
 

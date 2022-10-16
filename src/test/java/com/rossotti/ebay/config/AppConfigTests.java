@@ -17,18 +17,9 @@ public class AppConfigTests {
         assertEquals("EBAY_US", appConfig.getMarketplaceId());
     }
     @Test
-    public void getString_NotExists() {
-        assertNull(appConfig.getContentLanguage());
-    }
-    @Test
     public void getInt_Exists() {
         assertEquals(3, appConfig.getMaxRetries());
     }
-    @Test
-    public void getInt_NotExists() {
-        assertEquals(0, appConfig.getHttpTimeOutMs());
-    }
-
     @Test
     public void getMap_Exists() {
         assertEquals("sell/account/v1/payment_policy", appConfig.getResourceMap().get("payment_policy"));

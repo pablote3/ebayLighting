@@ -22,7 +22,7 @@ public class AppConfigTests {
     }
     @Test
     public void getMap_Exists() {
-        assertEquals("sell/account/v1/payment_policy", appConfig.getResourceMap().get("payment_policy"));
+        assertEquals("/sell/account/v1/payment_policy", appConfig.getResourceMap().get("payment_policy"));
     }
     @Test
     public void getMap_NotExists() {

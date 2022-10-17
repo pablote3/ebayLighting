@@ -17,7 +17,7 @@ public class TestUtil {
         properties.setPort(url.port());
         properties.setContentType(appConfig.getContentType());
         properties.setMarketplaceId(appConfig.getMarketplaceId());
-        properties.setUri(URI.create(appConfig.getResourceMap().get(pathKey)));
+        properties.setPath(appConfig.getResourceMap().get(pathKey));
         properties.setLimit(20);
         properties.setOffset(0);
         return properties;

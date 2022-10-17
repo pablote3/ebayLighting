@@ -20,7 +20,7 @@ public class WebClientProperties {
     private URI uri;
     private HttpMethod method;
     private HttpHeaders headers;
-    private String resourcePath;
+    private String path;
     private String contentType;
     private Integer limit;
     private Integer offset;

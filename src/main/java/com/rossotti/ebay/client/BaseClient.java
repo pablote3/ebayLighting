@@ -46,7 +46,7 @@ public abstract class BaseClient {
         uriComp.scheme(properties.getScheme());
         uriComp.host(properties.getHost());
         uriComp.port(properties.getPort());
-        uriComp.path(properties.getResourcePath());
+        uriComp.path(properties.getUri().getPath());
         return uriComp;
     }
 

@@ -19,12 +19,12 @@ import java.util.Optional;
 @Component
 @Getter
 public abstract class BaseClient {
-    @Autowired
-    protected ServerConfig serverConfig;
+
     @Autowired
     protected WebClient webClient;
 
     protected AppConfig appConfig;
+    protected ServerConfig serverConfig;
 
     private Logger logger = LoggerFactory.getLogger(BaseClient.class);
 
@@ -32,11 +32,14 @@ public abstract class BaseClient {
 //        public void throwScapiResponseException(String errorMessage, HttpStatus statusCode, Throwable t) { logger.throwScapiResponseException(createRestClientFailMsg() + " " + errorMessage, statusCode, t); }
 //        protected void throwRestClientException(final Exception exception, String... params) { logger.throwRestClientException(exception, tackOnRestClientFailMsg(params)); }
 
-    protected WebClientProperties createWebClientProperties() {
+    protected WebClientProperties createWebClientProperties(String pathKey) {
         WebClientProperties properties = new WebClientProperties();
         properties.setScheme(serverConfig.getScheme());
         properties.setHost(serverConfig.getHost());
         properties.setPort(serverConfig.getPort());
+        properties.setContentType(appConfig.getContentType());
+        properties.setMarketplaceId(appConfig.getMarketplaceId());
+        properties.setPath(appConfig.getResourceMap().get(pathKey));
         properties.setLimit(20);
         properties.setOffset(0);
         return properties;

@@ -1,6 +1,7 @@
 package com.rossotti.ebay.client;
 
 import com.rossotti.ebay.config.AppConfig;
+import com.rossotti.ebay.config.ServerConfig;
 import com.rossotti.ebay.config.WebClientProperties;
 import com.rossotti.ebay.model.account.paymentPolicy.PaymentPolicy;
 import com.rossotti.ebay.util.TestUtil;
@@ -39,7 +40,8 @@ public class PaymentPolicyClientTests {
     public void setup() {
         mockWebServer = new MockWebServer();
         WebClientProperties properties = TestUtil.createWebClientProperties(mockWebServer.url("/"), appConfig, pathKey);
-        paymentPolicyClient = new PaymentPolicyClient(WebClient.create(), properties, appConfig);
+        ServerConfig serverConfig = TestUtil.createServerConfig(mockWebServer.url("/"));
+        paymentPolicyClient = new PaymentPolicyClient(WebClient.create(), properties, appConfig, serverConfig);
     }
 
     @AfterAll
@@ -101,7 +103,7 @@ public class PaymentPolicyClientTests {
 //        assertEquals("GET", request.getMethod());
 //        assertEquals("/sell/account/v1/payment_policy?marketplace_id=EBAY_US", request.getPath());
 //    }
-//
+
 //    @Test
 //    void paymentPolicies_responseDeserialization() {
 //        String json = TestUtil.readStringFromFile(PAYMENT_POLICIES_JSON).orElse(null);

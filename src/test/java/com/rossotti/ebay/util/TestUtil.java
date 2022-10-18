@@ -2,6 +2,7 @@ package com.rossotti.ebay.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rossotti.ebay.config.AppConfig;
+import com.rossotti.ebay.config.ServerConfig;
 import com.rossotti.ebay.config.WebClientProperties;
 import okhttp3.HttpUrl;
 import java.io.InputStream;
@@ -20,6 +21,14 @@ public class TestUtil {
         properties.setLimit(20);
         properties.setOffset(0);
         return properties;
+    }
+
+    public static ServerConfig createServerConfig(HttpUrl url) {
+        ServerConfig serverConfig = new ServerConfig();
+        serverConfig.setScheme(url.scheme());
+        serverConfig.setHost(url.host());
+        serverConfig.setPort(url.port());
+        return serverConfig;
     }
 
     public static <T> T createFromJson(Class<T> type, String fileName) {

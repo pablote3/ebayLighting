@@ -1,6 +1,7 @@
 package com.rossotti.ebay.client;
 
 import com.rossotti.ebay.config.AppConfig;
+import com.rossotti.ebay.config.ServerConfig;
 import com.rossotti.ebay.config.WebClientProperties;
 import com.rossotti.ebay.model.account.paymentPolicy.PaymentPolicy;
 import org.slf4j.Logger;
@@ -19,10 +20,11 @@ public class PaymentPolicyClient extends BaseClient {
     private final WebClientProperties properties;
     private static final Logger logger = LoggerFactory.getLogger(PaymentPolicyClient.class);
 
-    public PaymentPolicyClient(WebClient webClient, WebClientProperties properties, AppConfig appConfig) {
+    public PaymentPolicyClient(WebClient webClient, WebClientProperties properties, AppConfig appConfig, ServerConfig serverConfig) {
         this.webClient = webClient;
         this.properties = properties;
         this.appConfig = appConfig;
+        this.serverConfig = serverConfig;
     }
 
     public Optional<PaymentPolicy> retrieveByPaymentPolicyId(final String paymentPolicyId) {

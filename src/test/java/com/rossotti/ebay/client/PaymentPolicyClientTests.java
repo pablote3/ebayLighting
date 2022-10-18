@@ -20,6 +20,10 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.io.IOException;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 @SpringBootTest
 public class PaymentPolicyClientTests {
     private static final String PAYMENT_POLICY_JSON = "data/account/paymentPolicy.json";
@@ -35,7 +39,7 @@ public class PaymentPolicyClientTests {
     public void setup() {
         mockWebServer = new MockWebServer();
         WebClientProperties properties = TestUtil.createWebClientProperties(mockWebServer.url("/"), appConfig, pathKey);
-        paymentPolicyClient = new PaymentPolicyClient(WebClient.create(), properties);
+        paymentPolicyClient = new PaymentPolicyClient(WebClient.create(), properties, appConfig);
     }
 
     @AfterAll
@@ -46,7 +50,7 @@ public class PaymentPolicyClientTests {
     @Test
     void paymentPolicy_requestSerialization() throws InterruptedException {
         String str = TestUtil.readStringFromFile(PAYMENT_POLICY_JSON).orElse(null);
-        Assertions.assertNotNull(str);
+        assertNotNull(str);
         mockWebServer.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
@@ -56,8 +60,8 @@ public class PaymentPolicyClientTests {
         paymentPolicyClient.retrieveByPaymentPolicyId("6196932000");
         RecordedRequest request = mockWebServer.takeRequest();
 
-        Assertions.assertEquals("GET", request.getMethod());
-        Assertions.assertEquals("/sell/account/v1/payment_policy/6196932000?marketplace_id=EBAY_US", request.getPath());
+        assertEquals("GET", request.getMethod());
+        assertEquals("/sell/account/v1/payment_policy/6196932000?marketplace_id=EBAY_US", request.getPath());
     }
 
     @Test
@@ -72,19 +76,19 @@ public class PaymentPolicyClientTests {
         );
         Optional<PaymentPolicy> response = paymentPolicyClient.retrieveByPaymentPolicyId("6196932000");
 
-
-        Assertions.assertEquals("eBay Payments EBAY_US PayPal", response.get().getName());
-        Assertions.assertEquals("ALL_EXCLUDING_MOTORS_VEHICLES", response.get().getCategoryTypes().get(0).getName());
-        Assertions.assertTrue(response.get().getCategoryTypes().get(0).getDefaultValue());
-        Assertions.assertEquals("PAYPAL", response.get().getPaymentMethods().get(0).getPaymentMethodType());
-        Assertions.assertEquals("PAYPAL_EMAIL", response.get().getPaymentMethods().get(0).getRecipientAccountReference().getReferenceType());
-        Assertions.assertEquals("DAY", response.get().getFullPaymentDueIn().getUnit());
+        assertTrue(response.isPresent());
+        assertEquals("eBay Payments EBAY_US PayPal", response.get().getName());
+        assertEquals("ALL_EXCLUDING_MOTORS_VEHICLES", response.get().getCategoryTypes().get(0).getName());
+        assertTrue(response.get().getCategoryTypes().get(0).getDefaultValue());
+        assertEquals("PAYPAL", response.get().getPaymentMethods().get(0).getPaymentMethodType());
+        assertEquals("PAYPAL_EMAIL", response.get().getPaymentMethods().get(0).getRecipientAccountReference().getReferenceType());
+        assertEquals("DAY", response.get().getFullPaymentDueIn().getUnit());
     }
 
 //    @Test
 //    void paymentPolicies_requestSerialization() throws InterruptedException {
 //        String str = TestUtil.readStringFromFile(PAYMENT_POLICIES_JSON).orElse(null);
-//        Assertions.assertNotNull(str);
+//        assertNotNull(str);
 //        mockWebServer.enqueue(
 //                new MockResponse()
 //                        .setResponseCode(200)
@@ -94,14 +98,14 @@ public class PaymentPolicyClientTests {
 //        paymentPolicyClient.getPaymentPolicies();
 //        RecordedRequest request = mockWebServer.takeRequest();
 //
-//        Assertions.assertEquals("GET", request.getMethod());
-//        Assertions.assertEquals("/sell/account/v1/payment_policy?marketplace_id=EBAY_US", request.getPath());
+//        assertEquals("GET", request.getMethod());
+//        assertEquals("/sell/account/v1/payment_policy?marketplace_id=EBAY_US", request.getPath());
 //    }
 //
 //    @Test
 //    void paymentPolicies_responseDeserialization() {
 //        String json = TestUtil.readStringFromFile(PAYMENT_POLICIES_JSON).orElse(null);
-//        Assertions.assertNotNull(json);
+//        assertNotNull(json);
 //        mockWebServer.enqueue(
 //                new MockResponse()
 //                        .setResponseCode(200)
@@ -110,12 +114,13 @@ public class PaymentPolicyClientTests {
 //        );
 //        PaymentPolicies response = paymentPolicyClient.getPaymentPolicies();
 //
-//        Assertions.assertEquals(1, response.getTotal());
-//        Assertions.assertEquals("eBay Payments EBAY_US PayPal", response.getPaymentPolicies().get(0).getName());
-//        Assertions.assertEquals("ALL_EXCLUDING_MOTORS_VEHICLES", response.getPaymentPolicies().get(0).getCategoryTypes().get(0).getName());
-//        Assertions.assertTrue(response.getPaymentPolicies().get(0).getCategoryTypes().get(0).getDefaultValue());
-//        Assertions.assertEquals("PAYPAL", response.getPaymentPolicies().get(0).getPaymentMethods().get(0).getPaymentMethodType());
-//        Assertions.assertEquals("PAYPAL_EMAIL", response.getPaymentPolicies().get(0).getPaymentMethods().get(0).getRecipientAccountReference().getReferenceType());
-//        Assertions.assertEquals("DAY", response.getPaymentPolicies().get(0).getFullPaymentDueIn().getUnit());
+//        assertTrue(response.isPresent());
+//        assertEquals(1, response.getTotal());
+//        assertEquals("eBay Payments EBAY_US PayPal", response.getPaymentPolicies().get(0).getName());
+//        assertEquals("ALL_EXCLUDING_MOTORS_VEHICLES", response.getPaymentPolicies().get(0).getCategoryTypes().get(0).getName());
+//        assertTrue(response.getPaymentPolicies().get(0).getCategoryTypes().get(0).getDefaultValue());
+//        assertEquals("PAYPAL", response.getPaymentPolicies().get(0).getPaymentMethods().get(0).getPaymentMethodType());
+//        assertEquals("PAYPAL_EMAIL", response.getPaymentPolicies().get(0).getPaymentMethods().get(0).getRecipientAccountReference().getReferenceType());
+//        assertEquals("DAY", response.getPaymentPolicies().get(0).getFullPaymentDueIn().getUnit());
 //    }
 }

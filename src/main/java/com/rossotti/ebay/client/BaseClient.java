@@ -19,14 +19,14 @@ import java.util.Optional;
 @Component
 @Getter
 public abstract class BaseClient {
-    private Logger logger = LoggerFactory.getLogger(BaseClient.class);
     @Autowired
-    private AppConfig appConfig;
-    @Autowired
-    private ServerConfig serverConfig;
-
+    protected ServerConfig serverConfig;
     @Autowired
     protected WebClient webClient;
+
+    protected AppConfig appConfig;
+
+    private Logger logger = LoggerFactory.getLogger(BaseClient.class);
 
 //        public void throwScapiResponseException(String errorMessage) { throwScapiResponseException(errorMessage, HttpStatus.BAD_REQUEST, null); }
 //        public void throwScapiResponseException(String errorMessage, HttpStatus statusCode, Throwable t) { logger.throwScapiResponseException(createRestClientFailMsg() + " " + errorMessage, statusCode, t); }

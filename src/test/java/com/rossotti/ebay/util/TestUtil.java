@@ -5,7 +5,6 @@ import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.WebClientProperties;
 import okhttp3.HttpUrl;
 import java.io.InputStream;
-import java.net.URI;
 import java.util.Optional;
 
 public class TestUtil {

@@ -3,6 +3,7 @@ package com.rossotti.ebay.client;
 import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.ServerConfig;
 import com.rossotti.ebay.config.WebClientProperties;
+import com.rossotti.ebay.model.account.paymentPolicy.PaymentPolicies;
 import com.rossotti.ebay.model.account.paymentPolicy.PaymentPolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +28,7 @@ public class PaymentPolicyClient extends BaseClient {
         this.serverConfig = serverConfig;
     }
 
-    public Optional<PaymentPolicy> retrieveByPaymentPolicyId(final String paymentPolicyId) {
+    public Optional<PaymentPolicy> getByPaymentPolicyId(final String paymentPolicyId) {
         UriComponentsBuilder builder = baseUriComponentBuilder(properties);
         if (isNotBlank(paymentPolicyId)) {
             builder.path("/" + paymentPolicyId);
@@ -38,5 +39,15 @@ public class PaymentPolicyClient extends BaseClient {
         logger.info(builder.build().toUriString());
         properties.setHeaders(createHeaders(properties));
         return webClientCall(properties, PaymentPolicy.class);
+    }
+
+    public Optional<PaymentPolicies> getPaymentPolicies() {
+        UriComponentsBuilder builder = baseUriComponentBuilder(properties);
+        builder.queryParam("marketplace_id", properties.getMarketplaceId());
+        properties.setUri(builder.build().toUri());
+        properties.setMethod(HttpMethod.GET);
+        logger.info(builder.build().toUriString());
+        properties.setHeaders(createHeaders(properties));
+        return webClientCall(properties, PaymentPolicies.class);
     }
 }

@@ -3,6 +3,7 @@ package com.rossotti.ebay.client;
 import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.ServerConfig;
 import com.rossotti.ebay.config.WebClientProperties;
+import com.rossotti.ebay.model.account.paymentPolicy.PaymentPolicies;
 import com.rossotti.ebay.model.account.paymentPolicy.PaymentPolicy;
 import com.rossotti.ebay.util.TestUtil;
 import okhttp3.mockwebserver.MockResponse;
@@ -59,7 +60,7 @@ public class PaymentPolicyClientTests {
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .setBody(str)
         );
-        paymentPolicyClient.retrieveByPaymentPolicyId("6196932000");
+        paymentPolicyClient.getByPaymentPolicyId("6196932000");
         RecordedRequest request = mockWebServer.takeRequest();
 
         assertEquals("GET", request.getMethod());
@@ -76,7 +77,7 @@ public class PaymentPolicyClientTests {
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .setBody(json)
         );
-        Optional<PaymentPolicy> response = paymentPolicyClient.retrieveByPaymentPolicyId("6196932000");
+        Optional<PaymentPolicy> response = paymentPolicyClient.getByPaymentPolicyId("6196932000");
 
         assertTrue(response.isPresent());
         assertEquals("eBay Payments EBAY_US PayPal", response.get().getName());
@@ -87,42 +88,42 @@ public class PaymentPolicyClientTests {
         assertEquals("DAY", response.get().getFullPaymentDueIn().getUnit());
     }
 
-//    @Test
-//    void paymentPolicies_requestSerialization() throws InterruptedException {
-//        String str = TestUtil.readStringFromFile(PAYMENT_POLICIES_JSON).orElse(null);
-//        assertNotNull(str);
-//        mockWebServer.enqueue(
-//                new MockResponse()
-//                        .setResponseCode(200)
-//                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-//                        .setBody(str)
-//        );
-//        paymentPolicyClient.getPaymentPolicies();
-//        RecordedRequest request = mockWebServer.takeRequest();
-//
-//        assertEquals("GET", request.getMethod());
-//        assertEquals("/sell/account/v1/payment_policy?marketplace_id=EBAY_US", request.getPath());
-//    }
+    @Test
+    void paymentPolicies_requestSerialization() throws InterruptedException {
+        String str = TestUtil.readStringFromFile(PAYMENT_POLICIES_JSON).orElse(null);
+        assertNotNull(str);
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .setBody(str)
+        );
+        paymentPolicyClient.getPaymentPolicies();
+        RecordedRequest request = mockWebServer.takeRequest();
 
-//    @Test
-//    void paymentPolicies_responseDeserialization() {
-//        String json = TestUtil.readStringFromFile(PAYMENT_POLICIES_JSON).orElse(null);
-//        assertNotNull(json);
-//        mockWebServer.enqueue(
-//                new MockResponse()
-//                        .setResponseCode(200)
-//                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-//                        .setBody(json)
-//        );
-//        PaymentPolicies response = paymentPolicyClient.getPaymentPolicies();
-//
-//        assertTrue(response.isPresent());
-//        assertEquals(1, response.getTotal());
-//        assertEquals("eBay Payments EBAY_US PayPal", response.getPaymentPolicies().get(0).getName());
-//        assertEquals("ALL_EXCLUDING_MOTORS_VEHICLES", response.getPaymentPolicies().get(0).getCategoryTypes().get(0).getName());
-//        assertTrue(response.getPaymentPolicies().get(0).getCategoryTypes().get(0).getDefaultValue());
-//        assertEquals("PAYPAL", response.getPaymentPolicies().get(0).getPaymentMethods().get(0).getPaymentMethodType());
-//        assertEquals("PAYPAL_EMAIL", response.getPaymentPolicies().get(0).getPaymentMethods().get(0).getRecipientAccountReference().getReferenceType());
-//        assertEquals("DAY", response.getPaymentPolicies().get(0).getFullPaymentDueIn().getUnit());
-//    }
+        assertEquals("GET", request.getMethod());
+        assertEquals("/sell/account/v1/payment_policy?marketplace_id=EBAY_US", request.getPath());
+    }
+
+    @Test
+    void paymentPolicies_responseDeserialization() {
+        String json = TestUtil.readStringFromFile(PAYMENT_POLICIES_JSON).orElse(null);
+        assertNotNull(json);
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .setBody(json)
+        );
+        Optional<PaymentPolicies> response = paymentPolicyClient.getPaymentPolicies();
+
+        assertTrue(response.isPresent());
+        assertEquals(1, response.get().getTotal());
+        assertEquals("eBay Payments EBAY_US PayPal", response.get().getPaymentPolicies().get(0).getName());
+        assertEquals("ALL_EXCLUDING_MOTORS_VEHICLES", response.get().getPaymentPolicies().get(0).getCategoryTypes().get(0).getName());
+        assertTrue(response.get().getPaymentPolicies().get(0).getCategoryTypes().get(0).getDefaultValue());
+        assertEquals("PAYPAL", response.get().getPaymentPolicies().get(0).getPaymentMethods().get(0).getPaymentMethodType());
+        assertEquals("PAYPAL_EMAIL", response.get().getPaymentPolicies().get(0).getPaymentMethods().get(0).getRecipientAccountReference().getReferenceType());
+        assertEquals("DAY", response.get().getPaymentPolicies().get(0).getFullPaymentDueIn().getUnit());
+    }
 }

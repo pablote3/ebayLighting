@@ -1,5 +1,6 @@
-package com.rossotti.ebay.client;
+package com.rossotti.ebay.client.account;
 
+import com.rossotti.ebay.client.BaseClient;
 import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.ServerConfig;
 import com.rossotti.ebay.config.WebClientProperties;

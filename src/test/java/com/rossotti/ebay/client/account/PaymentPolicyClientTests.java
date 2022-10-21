@@ -1,9 +1,7 @@
 package com.rossotti.ebay.client.account;
 
-import com.rossotti.ebay.client.account.PaymentPolicyClient;
 import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.ServerConfig;
-import com.rossotti.ebay.config.WebClientProperties;
 import com.rossotti.ebay.model.account.paymentPolicy.PaymentPolicies;
 import com.rossotti.ebay.model.account.paymentPolicy.PaymentPolicy;
 import com.rossotti.ebay.util.TestUtil;
@@ -31,7 +29,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class PaymentPolicyClientTests {
     private static final String PAYMENT_POLICY_JSON = "data/account/paymentPolicy.json";
     private static final String PAYMENT_POLICIES_JSON = "data/account/paymentPolicies.json";
-    private static final String pathKey = "payment_policy";
     private static MockWebServer mockWebServer;
     @Autowired
     private AppConfig appConfig;
@@ -41,9 +38,8 @@ public class PaymentPolicyClientTests {
     @BeforeEach
     public void setup() {
         mockWebServer = new MockWebServer();
-        WebClientProperties properties = TestUtil.createWebClientProperties(mockWebServer.url("/"), appConfig, pathKey);
         ServerConfig serverConfig = TestUtil.createServerConfig(mockWebServer.url("/"));
-        paymentPolicyClient = new PaymentPolicyClient(WebClient.create(), properties, appConfig, serverConfig);
+        paymentPolicyClient = new PaymentPolicyClient(WebClient.create(), appConfig, serverConfig);
     }
 
     @AfterAll

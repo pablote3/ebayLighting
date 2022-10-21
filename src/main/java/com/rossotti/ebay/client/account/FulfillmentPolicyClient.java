@@ -19,17 +19,18 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @Component
 public class FulfillmentPolicyClient extends BaseClient {
-    private final WebClientProperties properties;
+    private WebClientProperties properties;
+    private static final String pathKey = "fulfillment_policy";
     private static final Logger logger = LoggerFactory.getLogger(FulfillmentPolicyClient.class);
 
-    public FulfillmentPolicyClient(WebClient webClient, WebClientProperties properties, AppConfig appConfig, ServerConfig serverConfig) {
+    public FulfillmentPolicyClient(WebClient webClient, AppConfig appConfig, ServerConfig serverConfig) {
         this.webClient = webClient;
-        this.properties = properties;
         this.appConfig = appConfig;
         this.serverConfig = serverConfig;
     }
 
     public Optional<FulfillmentPolicy> getByFulfillmentPolicyId(final String fulfillmentPolicyId) {
+        properties = createWebClientProperties(pathKey);
         UriComponentsBuilder builder = baseUriComponentBuilder(properties);
         if (isNotBlank(fulfillmentPolicyId)) {
             builder.path("/" + fulfillmentPolicyId);
@@ -43,6 +44,7 @@ public class FulfillmentPolicyClient extends BaseClient {
     }
 
     public Optional<FulfillmentPolicies> getFulfillmentPolicies() {
+        properties = createWebClientProperties(pathKey);
         UriComponentsBuilder builder = baseUriComponentBuilder(properties);
         builder.queryParam("marketplace_id", properties.getMarketplaceId());
         properties.setUri(builder.build().toUri());

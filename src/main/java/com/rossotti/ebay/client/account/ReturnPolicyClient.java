@@ -19,17 +19,18 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @Component
 public class ReturnPolicyClient extends BaseClient {
-    private final WebClientProperties properties;
+    private WebClientProperties properties;
+    private static final String pathKey = "return_policy";
     private static final Logger logger = LoggerFactory.getLogger(ReturnPolicyClient.class);
 
-    public ReturnPolicyClient(WebClient webClient, WebClientProperties properties, AppConfig appConfig, ServerConfig serverConfig) {
+    public ReturnPolicyClient(WebClient webClient, AppConfig appConfig, ServerConfig serverConfig) {
         this.webClient = webClient;
-        this.properties = properties;
         this.appConfig = appConfig;
         this.serverConfig = serverConfig;
     }
 
     public Optional<ReturnPolicy> getByReturnPolicyId(final String returnPolicyId) {
+        properties = createWebClientProperties(pathKey);
         UriComponentsBuilder builder = baseUriComponentBuilder(properties);
         if (isNotBlank(returnPolicyId)) {
             builder.path("/" + returnPolicyId);
@@ -43,6 +44,7 @@ public class ReturnPolicyClient extends BaseClient {
     }
 
     public Optional<ReturnPolicies> getReturnPolicies() {
+        properties = createWebClientProperties(pathKey);
         UriComponentsBuilder builder = baseUriComponentBuilder(properties);
         builder.queryParam("marketplace_id", properties.getMarketplaceId());
         properties.setUri(builder.build().toUri());

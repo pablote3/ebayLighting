@@ -1,9 +1,7 @@
 package com.rossotti.ebay.client.account;
 
-import com.rossotti.ebay.client.account.OptedInProgramClient;
 import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.ServerConfig;
-import com.rossotti.ebay.config.WebClientProperties;
 import com.rossotti.ebay.model.account.program.Programs;
 import com.rossotti.ebay.util.TestUtil;
 import okhttp3.mockwebserver.MockResponse;
@@ -29,7 +27,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest
 public class OptedInProgramClientTests {
     private static final String OPTED_IN_PROGRAMS_JSON = "data/account/optedInPrograms.json";
-    private static final String pathKey = "opted_in_program";
     private static MockWebServer mockWebServer;
     @Autowired
     private AppConfig appConfig;
@@ -39,9 +36,8 @@ public class OptedInProgramClientTests {
     @BeforeEach
     public void setup() {
         mockWebServer = new MockWebServer();
-        WebClientProperties properties = TestUtil.createWebClientProperties(mockWebServer.url("/"), appConfig, pathKey);
         ServerConfig serverConfig = TestUtil.createServerConfig(mockWebServer.url("/"));
-        optedInProgramClient = new OptedInProgramClient(WebClient.create(), properties, appConfig, serverConfig);
+        optedInProgramClient = new OptedInProgramClient(WebClient.create(), appConfig, serverConfig);
     }
 
     @AfterAll

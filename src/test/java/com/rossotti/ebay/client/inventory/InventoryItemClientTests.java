@@ -1,9 +1,7 @@
 package com.rossotti.ebay.client.inventory;
 
-import com.rossotti.ebay.client.inventory.InventoryItemClient;
 import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.ServerConfig;
-import com.rossotti.ebay.config.WebClientProperties;
 import com.rossotti.ebay.model.inventory.inventoryItem.InventoryItem;
 import com.rossotti.ebay.model.inventory.inventoryItem.InventoryItems;
 import com.rossotti.ebay.util.TestUtil;
@@ -32,7 +30,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class InventoryItemClientTests {
     private static final String INVENTORY_ITEM_JSON = "data/inventory/inventoryItem.json";
     private static final String INVENTORY_ITEMS_JSON = "data/inventory/inventoryItems.json";
-    private static final String pathKey = "inventory_item";
     private static MockWebServer mockWebServer;
     @Autowired
     private AppConfig appConfig;
@@ -42,9 +39,8 @@ public class InventoryItemClientTests {
     @BeforeEach
     public void setup() {
         mockWebServer = new MockWebServer();
-        WebClientProperties properties = TestUtil.createWebClientProperties(mockWebServer.url("/"), appConfig, pathKey);
         ServerConfig serverConfig = TestUtil.createServerConfig(mockWebServer.url("/"));
-        inventoryItemClient = new InventoryItemClient(WebClient.create(), properties, appConfig, serverConfig);
+        inventoryItemClient = new InventoryItemClient(WebClient.create(), appConfig, serverConfig);
     }
 
     @AfterAll

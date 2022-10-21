@@ -16,17 +16,17 @@ import java.util.Optional;
 
 @Component
 public class OptedInProgramClient extends BaseClient {
-    private final WebClientProperties properties;
+    private static final String pathKey = "opted_in_program";
     private static final Logger logger = LoggerFactory.getLogger(OptedInProgramClient.class);
 
-    public OptedInProgramClient(WebClient webClient, WebClientProperties properties, AppConfig appConfig, ServerConfig serverConfig) {
+    public OptedInProgramClient(WebClient webClient, AppConfig appConfig, ServerConfig serverConfig) {
         this.webClient = webClient;
-        this.properties = properties;
         this.appConfig = appConfig;
         this.serverConfig = serverConfig;
     }
 
     public Optional<Programs> getOptedInPrograms() {
+        WebClientProperties properties = createWebClientProperties(pathKey);
         UriComponentsBuilder builder = baseUriComponentBuilder(properties);
         properties.setUri(builder.build().toUri());
         properties.setMethod(HttpMethod.GET);

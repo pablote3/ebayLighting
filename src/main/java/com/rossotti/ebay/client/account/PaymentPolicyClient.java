@@ -19,17 +19,18 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @Component
 public class PaymentPolicyClient extends BaseClient {
-    private final WebClientProperties properties;
+    private WebClientProperties properties;
+    private static final String pathKey = "payment_policy";
     private static final Logger logger = LoggerFactory.getLogger(PaymentPolicyClient.class);
 
-    public PaymentPolicyClient(WebClient webClient, WebClientProperties properties, AppConfig appConfig, ServerConfig serverConfig) {
+    public PaymentPolicyClient(WebClient webClient, AppConfig appConfig, ServerConfig serverConfig) {
         this.webClient = webClient;
-        this.properties = properties;
         this.appConfig = appConfig;
         this.serverConfig = serverConfig;
     }
 
     public Optional<PaymentPolicy> getByPaymentPolicyId(final String paymentPolicyId) {
+        properties = createWebClientProperties(pathKey);
         UriComponentsBuilder builder = baseUriComponentBuilder(properties);
         if (isNotBlank(paymentPolicyId)) {
             builder.path("/" + paymentPolicyId);
@@ -43,6 +44,7 @@ public class PaymentPolicyClient extends BaseClient {
     }
 
     public Optional<PaymentPolicies> getPaymentPolicies() {
+        properties = createWebClientProperties(pathKey);
         UriComponentsBuilder builder = baseUriComponentBuilder(properties);
         builder.queryParam("marketplace_id", properties.getMarketplaceId());
         properties.setUri(builder.build().toUri());

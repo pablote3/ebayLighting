@@ -1,9 +1,7 @@
 package com.rossotti.ebay.client.account;
 
-import com.rossotti.ebay.client.account.FulfillmentPolicyClient;
 import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.ServerConfig;
-import com.rossotti.ebay.config.WebClientProperties;
 import com.rossotti.ebay.model.account.fulfillmentPolicy.FulfillmentPolicies;
 import com.rossotti.ebay.model.account.fulfillmentPolicy.FulfillmentPolicy;
 import com.rossotti.ebay.util.TestUtil;
@@ -31,7 +29,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class FulfillmentPolicyClientTests {
     private static final String FULFILLMENT_POLICY_JSON = "data/account/fulfillmentPolicy.json";
     private static final String FULFILLMENT_POLICIES_JSON = "data/account/fulfillmentPolicies.json";
-    private static final String pathKey = "fulfillment_policy";
     private static MockWebServer mockWebServer;
     @Autowired
     private AppConfig appConfig;
@@ -41,9 +38,8 @@ public class FulfillmentPolicyClientTests {
     @BeforeEach
     public void setup() {
         mockWebServer = new MockWebServer();
-        WebClientProperties properties = TestUtil.createWebClientProperties(mockWebServer.url("/"), appConfig, pathKey);
         ServerConfig serverConfig = TestUtil.createServerConfig(mockWebServer.url("/"));
-        fulfillmentPolicyClient = new FulfillmentPolicyClient(WebClient.create(), properties, appConfig, serverConfig);
+        fulfillmentPolicyClient = new FulfillmentPolicyClient(WebClient.create(), appConfig, serverConfig);
     }
 
     @AfterAll

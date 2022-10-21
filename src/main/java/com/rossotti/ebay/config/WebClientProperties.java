@@ -3,13 +3,11 @@ package com.rossotti.ebay.config;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 
 import java.net.URI;
 
-@Configuration
 @Getter
 @Setter
 @NoArgsConstructor

@@ -19,17 +19,18 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @Component
 public class InventoryItemClient extends BaseClient {
-    private final WebClientProperties properties;
+    private WebClientProperties properties;
+    private static final String pathKey = "inventory_item";
     private static final Logger logger = LoggerFactory.getLogger(InventoryItemClient.class);
 
-    public InventoryItemClient(WebClient webClient, WebClientProperties properties, AppConfig appConfig, ServerConfig serverConfig) {
+    public InventoryItemClient(WebClient webClient, AppConfig appConfig, ServerConfig serverConfig) {
         this.webClient = webClient;
-        this.properties = properties;
         this.appConfig = appConfig;
         this.serverConfig = serverConfig;
     }
 
     public Optional<InventoryItem> getByInventoryItemSku(final String sku) {
+        properties = createWebClientProperties(pathKey);
         UriComponentsBuilder builder = baseUriComponentBuilder(properties);
         if (isNotBlank(sku)) {
             builder.path("/" + sku);
@@ -42,6 +43,7 @@ public class InventoryItemClient extends BaseClient {
     }
 
     public Optional<InventoryItems> getInventoryItems() {
+        properties = createWebClientProperties(pathKey);
         UriComponentsBuilder builder = baseUriComponentBuilder(properties);
         builder.queryParam("limit", properties.getLimit());
         builder.queryParam("offset", properties.getOffset());

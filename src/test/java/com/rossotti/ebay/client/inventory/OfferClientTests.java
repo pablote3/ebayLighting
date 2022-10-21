@@ -2,7 +2,6 @@ package com.rossotti.ebay.client.inventory;
 
 import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.ServerConfig;
-import com.rossotti.ebay.config.WebClientProperties;
 import com.rossotti.ebay.model.inventory.offer.Offer;
 import com.rossotti.ebay.model.inventory.offer.Offers;
 import com.rossotti.ebay.util.TestUtil;
@@ -28,7 +27,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class OfferClientTests {
     private static final String OFFER_JSON = "data/inventory/offer.json";
     private static final String OFFERS_JSON = "data/inventory/offers.json";
-    private static final String pathKey = "offer";
     private static MockWebServer mockWebServer;
     @Autowired
     private AppConfig appConfig;
@@ -38,9 +36,8 @@ public class OfferClientTests {
     @BeforeEach
     public void setup() {
         mockWebServer = new MockWebServer();
-        WebClientProperties properties = TestUtil.createWebClientProperties(mockWebServer.url("/"), appConfig, pathKey);
         ServerConfig serverConfig = TestUtil.createServerConfig(mockWebServer.url("/"));
-        offerClient = new OfferClient(WebClient.create(), properties, appConfig, serverConfig);
+        offerClient = new OfferClient(WebClient.create(), appConfig, serverConfig);
     }
 
     @AfterAll

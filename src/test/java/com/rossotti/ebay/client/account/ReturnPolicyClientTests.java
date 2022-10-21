@@ -1,9 +1,7 @@
 package com.rossotti.ebay.client.account;
 
-import com.rossotti.ebay.client.account.ReturnPolicyClient;
 import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.ServerConfig;
-import com.rossotti.ebay.config.WebClientProperties;
 import com.rossotti.ebay.model.account.returnPolicy.ReturnPolicies;
 import com.rossotti.ebay.model.account.returnPolicy.ReturnPolicy;
 import com.rossotti.ebay.util.TestUtil;
@@ -31,7 +29,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ReturnPolicyClientTests {
     private static final String RETURN_POLICY_JSON = "data/account/returnPolicy.json";
     private static final String RETURN_POLICIES_JSON = "data/account/returnPolicies.json";
-    private static final String pathKey = "return_policy";
     private static MockWebServer mockWebServer;
     @Autowired
     private AppConfig appConfig;
@@ -41,9 +38,8 @@ public class ReturnPolicyClientTests {
     @BeforeEach
     public void setup() {
         mockWebServer = new MockWebServer();
-        WebClientProperties properties = TestUtil.createWebClientProperties(mockWebServer.url("/"), appConfig, pathKey);
         ServerConfig serverConfig = TestUtil.createServerConfig(mockWebServer.url("/"));
-        returnPolicyClient = new ReturnPolicyClient(WebClient.create(), properties, appConfig, serverConfig);
+        returnPolicyClient = new ReturnPolicyClient(WebClient.create(), appConfig, serverConfig);
     }
 
     @AfterAll

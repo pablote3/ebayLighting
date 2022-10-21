@@ -19,17 +19,18 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @Component
 public class OfferClient extends BaseClient {
-    private final WebClientProperties properties;
+    private WebClientProperties properties;
+    private static final String pathKey = "offer";
     private static final Logger logger = LoggerFactory.getLogger(OfferClient.class);
 
-    public OfferClient(WebClient webClient, WebClientProperties properties, AppConfig appConfig, ServerConfig serverConfig) {
+    public OfferClient(WebClient webClient, AppConfig appConfig, ServerConfig serverConfig) {
         this.webClient = webClient;
-        this.properties = properties;
         this.appConfig = appConfig;
         this.serverConfig = serverConfig;
     }
 
     public Optional<Offer> getByOfferOfferId(final String offerId) {
+        properties = createWebClientProperties(pathKey);
         UriComponentsBuilder builder = baseUriComponentBuilder(properties);
         if (isNotBlank(offerId)) {
             builder.path("/" + offerId);
@@ -42,6 +43,7 @@ public class OfferClient extends BaseClient {
     }
 
     public Optional<Offers> getOffersBySku(final String sku) {
+        properties = createWebClientProperties(pathKey);
         UriComponentsBuilder builder = baseUriComponentBuilder(properties);
         builder.queryParam("sku", sku);
         builder.queryParam("limit", properties.getLimit());

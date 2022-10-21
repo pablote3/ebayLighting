@@ -2,7 +2,6 @@ package com.rossotti.ebay.client;
 
 import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.ServerConfig;
-import com.rossotti.ebay.config.WebClientProperties;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

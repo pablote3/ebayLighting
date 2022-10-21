@@ -3,7 +3,7 @@ package com.rossotti.ebay.client.account;
 import com.rossotti.ebay.client.BaseClient;
 import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.ServerConfig;
-import com.rossotti.ebay.config.WebClientProperties;
+import com.rossotti.ebay.client.WebClientProperties;
 import com.rossotti.ebay.model.account.fulfillmentPolicy.FulfillmentPolicies;
 import com.rossotti.ebay.model.account.fulfillmentPolicy.FulfillmentPolicy;
 import org.slf4j.Logger;

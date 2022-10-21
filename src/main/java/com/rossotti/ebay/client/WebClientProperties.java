@@ -1,7 +1,6 @@
-package com.rossotti.ebay.config;
+package com.rossotti.ebay.client;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -10,7 +9,6 @@ import java.net.URI;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class WebClientProperties {
     private String scheme;
     private String host;

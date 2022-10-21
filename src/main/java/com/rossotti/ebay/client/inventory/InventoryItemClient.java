@@ -3,7 +3,7 @@ package com.rossotti.ebay.client.inventory;
 import com.rossotti.ebay.client.BaseClient;
 import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.ServerConfig;
-import com.rossotti.ebay.config.WebClientProperties;
+import com.rossotti.ebay.client.WebClientProperties;
 import com.rossotti.ebay.model.inventory.inventoryItem.InventoryItem;
 import com.rossotti.ebay.model.inventory.inventoryItem.InventoryItems;
 import org.slf4j.Logger;

@@ -3,7 +3,7 @@ package com.rossotti.ebay.util;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.ServerConfig;
-import com.rossotti.ebay.config.WebClientProperties;
+import com.rossotti.ebay.client.WebClientProperties;
 import okhttp3.HttpUrl;
 import java.io.InputStream;
 import java.util.Optional;

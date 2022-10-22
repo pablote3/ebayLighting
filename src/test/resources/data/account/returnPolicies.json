@@ -1,9 +1,9 @@
 {
-    "total": 1,
+    "total": 2,
     "returnPolicies": [
         {
-            "name": "eBay Returns EBAY_US",
-            "description": "eBay Returns EBAY_US",
+            "name": "eBay Returns EXCHANGE",
+            "description": "eBay Returns - Exchange",
             "marketplaceId": "EBAY_US",
             "categoryTypes": [
                 {
@@ -17,9 +17,29 @@
                 "unit": "DAY"
             },
             "refundMethod": "MONEY_BACK",
-            "returnMethod": "REPLACEMENT",
+            "returnMethod": "EXCHANGE",
             "returnShippingCostPayer": "BUYER",
-            "returnPolicyId": "6196944000"
+            "returnPolicyId": "6198147000"
+        },
+        {
+            "name": "eBay Returns REPLACEMENT",
+            "description": "eBay Returns - Replacement",
+            "marketplaceId": "EBAY_US",
+            "categoryTypes": [
+                {
+                    "name": "ALL_EXCLUDING_MOTORS_VEHICLES",
+                    "default": false
+                }
+            ],
+            "returnsAccepted": true,
+            "returnPeriod": {
+                "value": 30,
+                "unit": "DAY"
+            },
+            "refundMethod": "MONEY_BACK",
+            "returnMethod": "REPLACEMENT",
+            "returnShippingCostPayer": "SELLER",
+            "returnPolicyId": "6198148000"
         }
     ]
 }

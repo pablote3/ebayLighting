@@ -24,6 +24,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @SpringBootTest
 public class ReturnPolicyClientTests {
@@ -117,14 +118,22 @@ public class ReturnPolicyClientTests {
         Optional<ReturnPolicies> response = returnPolicyClient.getReturnPolicies();
 
         assertTrue(response.isPresent());
-        assertEquals(1, response.get().getTotal());
-        assertEquals("eBay Returns EBAY_US", response.get().getReturnPolicies().get(0).getName());
+        assertEquals(2, response.get().getTotal());
+        assertEquals("eBay Returns EXCHANGE", response.get().getReturnPolicies().get(0).getName());
         assertEquals("All Excluding Motors Vehicles", response.get().getReturnPolicies().get(0).getCategoryTypes().get(0).getName().getCode());
         assertTrue(response.get().getReturnPolicies().get(0).getCategoryTypes().get(0).getDefaultValue());
         assertEquals("Day", response.get().getReturnPolicies().get(0).getReturnPeriod().getUnit().getCode());
         assertTrue(response.get().getReturnPolicies().get(0).getReturnsAccepted());
         assertEquals("Money Back", response.get().getReturnPolicies().get(0).getRefundMethod().getCode());
-        assertEquals("Replacement", response.get().getReturnPolicies().get(0).getReturnMethod().getCode());
+        assertEquals("Exchange", response.get().getReturnPolicies().get(0).getReturnMethod().getCode());
         assertEquals("Buyer", response.get().getReturnPolicies().get(0).getReturnShippingCostPayer().getCode());
+        assertEquals("eBay Returns REPLACEMENT", response.get().getReturnPolicies().get(1).getName());
+        assertEquals("All Excluding Motors Vehicles", response.get().getReturnPolicies().get(1).getCategoryTypes().get(0).getName().getCode());
+        assertFalse(response.get().getReturnPolicies().get(1).getCategoryTypes().get(0).getDefaultValue());
+        assertEquals("Day", response.get().getReturnPolicies().get(1).getReturnPeriod().getUnit().getCode());
+        assertTrue(response.get().getReturnPolicies().get(1).getReturnsAccepted());
+        assertEquals("Money Back", response.get().getReturnPolicies().get(1).getRefundMethod().getCode());
+        assertEquals("Replacement", response.get().getReturnPolicies().get(1).getReturnMethod().getCode());
+        assertEquals("Seller", response.get().getReturnPolicies().get(1).getReturnShippingCostPayer().getCode());
     }
 }

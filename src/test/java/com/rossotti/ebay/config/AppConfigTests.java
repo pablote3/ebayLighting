@@ -14,7 +14,7 @@ public class AppConfigTests {
 
     @Test
     public void getString_Exists() {
-        assertEquals("EBAY_US", appConfig.getMarketplaceId());
+        assertEquals("en-US", appConfig.getContentLanguage());
     }
     @Test
     public void getInt_Exists() {

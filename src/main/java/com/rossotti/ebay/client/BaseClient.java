@@ -37,7 +37,7 @@ public abstract class BaseClient {
         properties.setHost(serverConfig.getHost());
         properties.setPort(serverConfig.getPort());
         properties.setContentType(appConfig.getContentType());
-        properties.setMarketplaceId(appConfig.getMarketplaceId());
+        properties.setMarketplaceId(appConfig.getMarketplaceId().getCode());
         properties.setPath(appConfig.getResourceMap().get(pathKey));
         properties.setLimit(20);
         properties.setOffset(0);

@@ -1,12 +1,13 @@
 package com.rossotti.ebay.model.inventory.offer;
 
+import com.rossotti.ebay.helper.enumeration.MarketplaceIdEnum;
 import lombok.Getter;
 
 @Getter
 public class Offer {
     private String offerId;
     private String sku;
-    private String marketplaceId;
+    private MarketplaceIdEnum marketplaceId;
     private String format;
     private String listingDescription;
     private Integer availableQuantity;

@@ -1,6 +1,8 @@
 package com.rossotti.ebay.model.account.fulfillmentPolicy;
 
 import java.util.List;
+
+import com.rossotti.ebay.helper.enumeration.MarketplaceIdEnum;
 import com.rossotti.ebay.model.common.CategoryType;
 import lombok.Getter;
 
@@ -8,7 +10,7 @@ import lombok.Getter;
 public class FulfillmentPolicy {
     private String name;
     private String description;
-    private String marketplaceId;
+    private MarketplaceIdEnum marketplaceId;
     private List<CategoryType> categoryTypes = null;
     private HandlingTime handlingTime;
     private List<ShippingOption> shippingOptions = null;

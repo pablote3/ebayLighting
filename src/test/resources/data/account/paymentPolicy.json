@@ -1,6 +1,6 @@
 {
-  "name": "eBay Payments EBAY_US PayPal",
-  "description": "eBay Payments EBAY_US",
+  "name": "eBay Payments PAYPAL",
+  "description": "eBay Payments - Paypal",
   "marketplaceId": "EBAY_US",
   "categoryTypes": [
     {
@@ -14,7 +14,12 @@
       "recipientAccountReference": {
         "referenceType": "PAYPAL_EMAIL",
         "referenceId": "rossotti.paul@gmail.com"
-      }
+      },
+      "brands": [
+        "AMERICAN_EXPRESS",
+        "VISA",
+        "MASTERCARD"
+      ]
     }
   ],
   "fullPaymentDueIn": {

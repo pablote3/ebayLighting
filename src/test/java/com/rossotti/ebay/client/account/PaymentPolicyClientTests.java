@@ -77,11 +77,13 @@ public class PaymentPolicyClientTests {
         Optional<PaymentPolicy> response = paymentPolicyClient.getByPaymentPolicyId("6196932000");
 
         assertTrue(response.isPresent());
-        assertEquals("eBay Payments EBAY_US PayPal", response.get().getName());
+        assertEquals("eBay Payments PAYPAL", response.get().getName());
         assertEquals("ALL_EXCLUDING_MOTORS_VEHICLES", response.get().getCategoryTypes().get(0).getName());
         assertTrue(response.get().getCategoryTypes().get(0).getDefaultValue());
         assertEquals("PAYPAL", response.get().getPaymentMethods().get(0).getPaymentMethodType());
         assertEquals("PAYPAL_EMAIL", response.get().getPaymentMethods().get(0).getRecipientAccountReference().getReferenceType());
+        assertEquals(3, response.get().getPaymentMethods().get(0).getBrands().size());
+        assertEquals("American Express", response.get().getPaymentMethods().get(0).getBrands().get(0).getCode());
         assertEquals("DAY", response.get().getFullPaymentDueIn().getUnit());
     }
 

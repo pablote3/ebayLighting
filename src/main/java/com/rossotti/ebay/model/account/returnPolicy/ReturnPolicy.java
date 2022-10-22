@@ -1,6 +1,7 @@
 package com.rossotti.ebay.model.account.returnPolicy;
 
 import com.rossotti.ebay.helper.enumeration.MarketplaceIdEnum;
+import com.rossotti.ebay.helper.enumeration.ReturnMethodEnum;
 import com.rossotti.ebay.model.common.CategoryType;
 import lombok.Getter;
 import java.util.List;
@@ -14,7 +15,7 @@ public class ReturnPolicy {
     private Boolean returnsAccepted;
     private ReturnPeriod returnPeriod;
     private String refundMethod;
-    private String returnMethod;
+    private ReturnMethodEnum returnMethod;
     private String returnShippingCostPayer;
     private String returnPolicyId;
 }

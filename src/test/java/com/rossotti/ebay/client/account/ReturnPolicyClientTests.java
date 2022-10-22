@@ -80,10 +80,11 @@ public class ReturnPolicyClientTests {
         assertEquals("eBay Returns EBAY_US", response.get().getName());
         assertEquals("All Excluding Motors Vehicles", response.get().getCategoryTypes().get(0).getName().getCode());
         assertTrue(response.get().getCategoryTypes().get(0).getDefaultValue());
-        assertEquals("eBay Returns EBAY_US", response.get().getName());
-        assertEquals("All Excluding Motors Vehicles", response.get().getCategoryTypes().get(0).getName().getCode());
-        assertTrue(response.get().getCategoryTypes().get(0).getDefaultValue());
+        assertTrue(response.get().getReturnsAccepted());
         assertEquals("Day", response.get().getReturnPeriod().getUnit().getCode());
+        assertEquals("MONEY_BACK", response.get().getRefundMethod());
+        assertEquals("Replacement", response.get().getReturnMethod().getCode());
+        assertEquals("BUYER", response.get().getReturnShippingCostPayer());
     }
 
     @Test
@@ -116,10 +117,14 @@ public class ReturnPolicyClientTests {
         Optional<ReturnPolicies> response = returnPolicyClient.getReturnPolicies();
 
         assertTrue(response.isPresent());
-        Assertions.assertEquals(1, response.get().getTotal());
-        Assertions.assertEquals("eBay Returns EBAY_US", response.get().getReturnPolicies().get(0).getName());
-        Assertions.assertEquals("All Excluding Motors Vehicles", response.get().getReturnPolicies().get(0).getCategoryTypes().get(0).getName().getCode());
-        Assertions.assertTrue(response.get().getReturnPolicies().get(0).getCategoryTypes().get(0).getDefaultValue());
-        Assertions.assertEquals("Day", response.get().getReturnPolicies().get(0).getReturnPeriod().getUnit().getCode());
+        assertEquals(1, response.get().getTotal());
+        assertEquals("eBay Returns EBAY_US", response.get().getReturnPolicies().get(0).getName());
+        assertEquals("All Excluding Motors Vehicles", response.get().getReturnPolicies().get(0).getCategoryTypes().get(0).getName().getCode());
+        assertTrue(response.get().getReturnPolicies().get(0).getCategoryTypes().get(0).getDefaultValue());
+        assertEquals("Day", response.get().getReturnPolicies().get(0).getReturnPeriod().getUnit().getCode());
+        assertTrue(response.get().getReturnPolicies().get(0).getReturnsAccepted());
+        assertEquals("MONEY_BACK", response.get().getReturnPolicies().get(0).getRefundMethod());
+        assertEquals("Replacement", response.get().getReturnPolicies().get(0).getReturnMethod().getCode());
+        assertEquals("BUYER", response.get().getReturnPolicies().get(0).getReturnShippingCostPayer());
     }
 }

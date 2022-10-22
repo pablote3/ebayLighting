@@ -78,7 +78,7 @@ public class PaymentPolicyClientTests {
 
         assertTrue(response.isPresent());
         assertEquals("eBay Payments PAYPAL", response.get().getName());
-        assertEquals("ALL_EXCLUDING_MOTORS_VEHICLES", response.get().getCategoryTypes().get(0).getName());
+        assertEquals("All Excluding Motors Vehicles", response.get().getCategoryTypes().get(0).getName().getCode());
         assertTrue(response.get().getCategoryTypes().get(0).getDefaultValue());
         assertEquals("Paypal", response.get().getPaymentMethods().get(0).getPaymentMethodType().getCode());
         assertEquals("PAYPAL_EMAIL", response.get().getPaymentMethods().get(0).getRecipientAccountReference().getReferenceType());
@@ -119,7 +119,7 @@ public class PaymentPolicyClientTests {
         assertTrue(response.isPresent());
         assertEquals(2, response.get().getTotal());
         assertEquals("eBay Payments CREDIT_CARD", response.get().getPaymentPolicies().get(0).getName());
-        assertEquals("ALL_EXCLUDING_MOTORS_VEHICLES", response.get().getPaymentPolicies().get(0).getCategoryTypes().get(0).getName());
+        assertEquals("All Excluding Motors Vehicles", response.get().getPaymentPolicies().get(0).getCategoryTypes().get(0).getName().getCode());
         assertTrue(response.get().getPaymentPolicies().get(0).getCategoryTypes().get(0).getDefaultValue());
         assertEquals("Credit Card", response.get().getPaymentPolicies().get(0).getPaymentMethods().get(0).getPaymentMethodType().getCode());
         assertEquals("Visa", response.get().getPaymentPolicies().get(0).getPaymentMethods().get(0).getBrands().get(1).getCode());

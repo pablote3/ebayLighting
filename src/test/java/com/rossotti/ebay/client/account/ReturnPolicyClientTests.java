@@ -78,10 +78,10 @@ public class ReturnPolicyClientTests {
 
         assertTrue(response.isPresent());
         assertEquals("eBay Returns EBAY_US", response.get().getName());
-        assertEquals("ALL_EXCLUDING_MOTORS_VEHICLES", response.get().getCategoryTypes().get(0).getName());
+        assertEquals("All Excluding Motors Vehicles", response.get().getCategoryTypes().get(0).getName().getCode());
         assertTrue(response.get().getCategoryTypes().get(0).getDefaultValue());
         assertEquals("eBay Returns EBAY_US", response.get().getName());
-        assertEquals("ALL_EXCLUDING_MOTORS_VEHICLES", response.get().getCategoryTypes().get(0).getName());
+        assertEquals("All Excluding Motors Vehicles", response.get().getCategoryTypes().get(0).getName().getCode());
         assertTrue(response.get().getCategoryTypes().get(0).getDefaultValue());
         assertEquals("Day", response.get().getReturnPeriod().getUnit().getCode());
     }
@@ -118,7 +118,7 @@ public class ReturnPolicyClientTests {
         assertTrue(response.isPresent());
         Assertions.assertEquals(1, response.get().getTotal());
         Assertions.assertEquals("eBay Returns EBAY_US", response.get().getReturnPolicies().get(0).getName());
-        Assertions.assertEquals("ALL_EXCLUDING_MOTORS_VEHICLES", response.get().getReturnPolicies().get(0).getCategoryTypes().get(0).getName());
+        Assertions.assertEquals("All Excluding Motors Vehicles", response.get().getReturnPolicies().get(0).getCategoryTypes().get(0).getName().getCode());
         Assertions.assertTrue(response.get().getReturnPolicies().get(0).getCategoryTypes().get(0).getDefaultValue());
         Assertions.assertEquals("Day", response.get().getReturnPolicies().get(0).getReturnPeriod().getUnit().getCode());
     }

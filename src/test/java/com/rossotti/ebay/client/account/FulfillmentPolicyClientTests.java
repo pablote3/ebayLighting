@@ -78,7 +78,7 @@ public class FulfillmentPolicyClientTests {
 
         assertTrue(response.isPresent());
         assertEquals("eBay Fulfillments EBAY_US", response.get().getName());
-        assertEquals("ALL_EXCLUDING_MOTORS_VEHICLES", response.get().getCategoryTypes().get(0).getName());
+        assertEquals("All Excluding Motors Vehicles", response.get().getCategoryTypes().get(0).getName().getCode());
         assertTrue(response.get().getCategoryTypes().get(0).getDefaultValue());
         assertEquals("Day", response.get().getHandlingTime().getUnit().getCode());
         assertEquals("CALCULATED", response.get().getShippingOptions().get(0).getCostType());
@@ -118,7 +118,7 @@ public class FulfillmentPolicyClientTests {
         assertTrue(response.isPresent());
         assertEquals(1, response.get().getTotal());
         assertEquals("eBay Fulfillments EBAY_US", response.get().getFulfillmentPolicies().get(0).getName());
-        assertEquals("ALL_EXCLUDING_MOTORS_VEHICLES", response.get().getFulfillmentPolicies().get(0).getCategoryTypes().get(0).getName());
+        assertEquals("All Excluding Motors Vehicles", response.get().getFulfillmentPolicies().get(0).getCategoryTypes().get(0).getName().getCode());
         assertTrue(response.get().getFulfillmentPolicies().get(0).getCategoryTypes().get(0).getDefaultValue());
         assertEquals("Day", response.get().getFulfillmentPolicies().get(0).getHandlingTime().getUnit().getCode());
         assertEquals("CALCULATED", response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getCostType());

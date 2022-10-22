@@ -117,12 +117,15 @@ public class PaymentPolicyClientTests {
         Optional<PaymentPolicies> response = paymentPolicyClient.getPaymentPolicies();
 
         assertTrue(response.isPresent());
-        assertEquals(1, response.get().getTotal());
-        assertEquals("eBay Payments EBAY_US PayPal", response.get().getPaymentPolicies().get(0).getName());
+        assertEquals(2, response.get().getTotal());
+        assertEquals("eBay Payments CREDIT_CARD", response.get().getPaymentPolicies().get(0).getName());
         assertEquals("ALL_EXCLUDING_MOTORS_VEHICLES", response.get().getPaymentPolicies().get(0).getCategoryTypes().get(0).getName());
         assertTrue(response.get().getPaymentPolicies().get(0).getCategoryTypes().get(0).getDefaultValue());
-        assertEquals("Paypal", response.get().getPaymentPolicies().get(0).getPaymentMethods().get(0).getPaymentMethodType().getCode());
-        assertEquals("PAYPAL_EMAIL", response.get().getPaymentPolicies().get(0).getPaymentMethods().get(0).getRecipientAccountReference().getReferenceType());
+        assertEquals("Credit Card", response.get().getPaymentPolicies().get(0).getPaymentMethods().get(0).getPaymentMethodType().getCode());
+        assertEquals("Visa", response.get().getPaymentPolicies().get(0).getPaymentMethods().get(0).getBrands().get(1).getCode());
         assertEquals("Day", response.get().getPaymentPolicies().get(0).getFullPaymentDueIn().getUnit().getCode());
+        assertEquals("eBay Payments PAYPAL", response.get().getPaymentPolicies().get(1).getName());
+        assertEquals("Paypal", response.get().getPaymentPolicies().get(1).getPaymentMethods().get(0).getPaymentMethodType().getCode());
+        assertEquals("PAYPAL_EMAIL", response.get().getPaymentPolicies().get(1).getPaymentMethods().get(0).getRecipientAccountReference().getReferenceType());
     }
 }

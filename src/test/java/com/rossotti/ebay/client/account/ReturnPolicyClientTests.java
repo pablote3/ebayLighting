@@ -84,7 +84,7 @@ public class ReturnPolicyClientTests {
         assertEquals("Day", response.get().getReturnPeriod().getUnit().getCode());
         assertEquals("Money Back", response.get().getRefundMethod().getCode());
         assertEquals("Replacement", response.get().getReturnMethod().getCode());
-        assertEquals("BUYER", response.get().getReturnShippingCostPayer());
+        assertEquals("Buyer", response.get().getReturnShippingCostPayer().getCode());
     }
 
     @Test
@@ -125,6 +125,6 @@ public class ReturnPolicyClientTests {
         assertTrue(response.get().getReturnPolicies().get(0).getReturnsAccepted());
         assertEquals("Money Back", response.get().getReturnPolicies().get(0).getRefundMethod().getCode());
         assertEquals("Replacement", response.get().getReturnPolicies().get(0).getReturnMethod().getCode());
-        assertEquals("BUYER", response.get().getReturnPolicies().get(0).getReturnShippingCostPayer());
+        assertEquals("Buyer", response.get().getReturnPolicies().get(0).getReturnShippingCostPayer().getCode());
     }
 }

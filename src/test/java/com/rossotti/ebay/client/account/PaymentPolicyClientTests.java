@@ -84,7 +84,7 @@ public class PaymentPolicyClientTests {
         assertEquals("PAYPAL_EMAIL", response.get().getPaymentMethods().get(0).getRecipientAccountReference().getReferenceType());
         assertEquals(3, response.get().getPaymentMethods().get(0).getBrands().size());
         assertEquals("American Express", response.get().getPaymentMethods().get(0).getBrands().get(0).getCode());
-        assertEquals("DAY", response.get().getFullPaymentDueIn().getUnit());
+        assertEquals("Day", response.get().getFullPaymentDueIn().getUnit().getCode());
     }
 
     @Test
@@ -123,6 +123,6 @@ public class PaymentPolicyClientTests {
         assertTrue(response.get().getPaymentPolicies().get(0).getCategoryTypes().get(0).getDefaultValue());
         assertEquals("Paypal", response.get().getPaymentPolicies().get(0).getPaymentMethods().get(0).getPaymentMethodType().getCode());
         assertEquals("PAYPAL_EMAIL", response.get().getPaymentPolicies().get(0).getPaymentMethods().get(0).getRecipientAccountReference().getReferenceType());
-        assertEquals("DAY", response.get().getPaymentPolicies().get(0).getFullPaymentDueIn().getUnit());
+        assertEquals("Day", response.get().getPaymentPolicies().get(0).getFullPaymentDueIn().getUnit().getCode());
     }
 }

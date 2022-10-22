@@ -83,7 +83,7 @@ public class ReturnPolicyClientTests {
         assertEquals("eBay Returns EBAY_US", response.get().getName());
         assertEquals("ALL_EXCLUDING_MOTORS_VEHICLES", response.get().getCategoryTypes().get(0).getName());
         assertTrue(response.get().getCategoryTypes().get(0).getDefaultValue());
-        assertEquals("DAY", response.get().getReturnPeriod().getUnit());
+        assertEquals("Day", response.get().getReturnPeriod().getUnit().getCode());
     }
 
     @Test
@@ -120,6 +120,6 @@ public class ReturnPolicyClientTests {
         Assertions.assertEquals("eBay Returns EBAY_US", response.get().getReturnPolicies().get(0).getName());
         Assertions.assertEquals("ALL_EXCLUDING_MOTORS_VEHICLES", response.get().getReturnPolicies().get(0).getCategoryTypes().get(0).getName());
         Assertions.assertTrue(response.get().getReturnPolicies().get(0).getCategoryTypes().get(0).getDefaultValue());
-        Assertions.assertEquals("DAY", response.get().getReturnPolicies().get(0).getReturnPeriod().getUnit());
+        Assertions.assertEquals("Day", response.get().getReturnPolicies().get(0).getReturnPeriod().getUnit().getCode());
     }
 }

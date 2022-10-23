@@ -82,8 +82,10 @@ public class FulfillmentPolicyClientTests {
         assertTrue(response.get().getCategoryTypes().get(0).getDefaultValue());
         assertEquals("Day", response.get().getHandlingTime().getUnit().getCode());
         assertEquals("Calculated", response.get().getShippingOptions().get(0).getCostType().getCode());
+        assertEquals("0.00", response.get().getShippingOptions().get(0).getPackageHandlingCost().getValue());
+        assertEquals("United States Dollar", response.get().getShippingOptions().get(0).getPackageHandlingCost().getCurrency().getCode());
         assertEquals("USPS", response.get().getShippingOptions().get(0).getShippingServices().get(0).getShippingCarrierCode());
-        assertEquals("USD", response.get().getShippingOptions().get(0).getInsuranceFee().getCurrency());
+        assertEquals("United States Dollar", response.get().getShippingOptions().get(0).getInsuranceFee().getCurrency().getCode());
     }
 
     @Test
@@ -122,7 +124,9 @@ public class FulfillmentPolicyClientTests {
         assertTrue(response.get().getFulfillmentPolicies().get(0).getCategoryTypes().get(0).getDefaultValue());
         assertEquals("Day", response.get().getFulfillmentPolicies().get(0).getHandlingTime().getUnit().getCode());
         assertEquals("Calculated", response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getCostType().getCode());
+        assertEquals("0.00", response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getPackageHandlingCost().getValue());
+        assertEquals("United States Dollar", response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getPackageHandlingCost().getCurrency().getCode());
         assertEquals("USPS", response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getShippingServices().get(0).getShippingCarrierCode());
-        assertEquals("USD", response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getInsuranceFee().getCurrency());
+        assertEquals("United States Dollar", response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getInsuranceFee().getCurrency().getCode());
     }
 }

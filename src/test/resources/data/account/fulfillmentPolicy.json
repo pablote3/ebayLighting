@@ -16,11 +16,19 @@
         {
             "optionType": "DOMESTIC",
             "costType": "CALCULATED",
+            "packageHandlingCost": {
+                "currency": "USD",
+                "value": "0.00"
+            },
             "shippingServices": [
                 {
                     "sortOrder": 1,
                     "shippingCarrierCode": "USPS",
                     "shippingServiceCode": "USPSPriority",
+                    "shippingCost": {
+                        "currency": "USD",
+                        "value": "0.00"
+                    },
                     "freeShipping": false,
                     "buyerResponsibleForShipping": false,
                     "buyerResponsibleForPickup": false

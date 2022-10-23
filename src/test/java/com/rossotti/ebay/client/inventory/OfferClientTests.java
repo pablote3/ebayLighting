@@ -77,7 +77,7 @@ public class OfferClientTests {
         assertTrue(response.isPresent());
         Assertions.assertEquals("8209815010", response.get().getOfferId());
         Assertions.assertEquals("123", response.get().getSku());
-        Assertions.assertEquals("USD", response.get().getPricingSummary().getPrice().getCurrency());
+        Assertions.assertEquals("United States Dollar", response.get().getPricingSummary().getPrice().getCurrency().getCode());
         Assertions.assertEquals("6196947000", response.get().getListingPolicies().getFulfillmentPolicyId());
         Assertions.assertFalse(response.get().getTax().getApplyTax());
         Assertions.assertEquals("ACTIVE", response.get().getListing().getListingStatus());
@@ -117,7 +117,7 @@ public class OfferClientTests {
         Assertions.assertEquals(1, response.get().getSize());
         Assertions.assertEquals("8209815010", response.get().getOffers().get(0).getOfferId());
         Assertions.assertEquals("123", response.get().getOffers().get(0).getSku());
-        Assertions.assertEquals("USD", response.get().getOffers().get(0).getPricingSummary().getPrice().getCurrency());
+        Assertions.assertEquals("United States Dollar", response.get().getOffers().get(0).getPricingSummary().getPrice().getCurrency().getCode());
         Assertions.assertEquals("6196947000", response.get().getOffers().get(0).getListingPolicies().getFulfillmentPolicyId());
         Assertions.assertFalse(response.get().getOffers().get(0).getTax().getApplyTax());
         Assertions.assertEquals("ACTIVE", response.get().getOffers().get(0).getListing().getListingStatus());

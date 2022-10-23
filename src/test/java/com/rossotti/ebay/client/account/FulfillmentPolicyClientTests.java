@@ -81,7 +81,7 @@ public class FulfillmentPolicyClientTests {
         assertEquals("All Excluding Motors Vehicles", response.get().getCategoryTypes().get(0).getName().getCode());
         assertTrue(response.get().getCategoryTypes().get(0).getDefaultValue());
         assertEquals("Day", response.get().getHandlingTime().getUnit().getCode());
-        assertEquals("CALCULATED", response.get().getShippingOptions().get(0).getCostType());
+        assertEquals("Calculated", response.get().getShippingOptions().get(0).getCostType().getCode());
         assertEquals("USPS", response.get().getShippingOptions().get(0).getShippingServices().get(0).getShippingCarrierCode());
         assertEquals("USD", response.get().getShippingOptions().get(0).getInsuranceFee().getCurrency());
     }
@@ -121,7 +121,7 @@ public class FulfillmentPolicyClientTests {
         assertEquals("All Excluding Motors Vehicles", response.get().getFulfillmentPolicies().get(0).getCategoryTypes().get(0).getName().getCode());
         assertTrue(response.get().getFulfillmentPolicies().get(0).getCategoryTypes().get(0).getDefaultValue());
         assertEquals("Day", response.get().getFulfillmentPolicies().get(0).getHandlingTime().getUnit().getCode());
-        assertEquals("CALCULATED", response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getCostType());
+        assertEquals("Calculated", response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getCostType().getCode());
         assertEquals("USPS", response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getShippingServices().get(0).getShippingCarrierCode());
         assertEquals("USD", response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getInsuranceFee().getCurrency());
     }

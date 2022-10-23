@@ -1,6 +1,6 @@
 {
-    "name": "eBay Returns EBAY_US",
-    "description": "eBay Returns EBAY_US",
+    "name": "eBay Returns REPLACEMENT",
+    "description": "eBay Returns - Replacement",
     "marketplaceId": "EBAY_US",
     "categoryTypes": [
         {

@@ -78,7 +78,7 @@ public class ReturnPolicyClientTests {
         Optional<ReturnPolicy> response = returnPolicyClient.getByReturnPolicyId("6196944000");
 
         assertTrue(response.isPresent());
-        assertEquals("eBay Returns EBAY_US", response.get().getName());
+        assertEquals("eBay Returns REPLACEMENT", response.get().getName());
         assertEquals("All Excluding Motors Vehicles", response.get().getCategoryTypes().get(0).getName().getCode());
         assertTrue(response.get().getCategoryTypes().get(0).getDefaultValue());
         assertTrue(response.get().getReturnsAccepted());

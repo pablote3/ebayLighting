@@ -25,7 +25,6 @@ import static org.hamcrest.Matchers.comparesEqualTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import static com.rossotti.ebay.helper.enumeration.CategoryTypeEnum.ALL_EXCLUDING_MOTORS_VEHICLES;
@@ -39,6 +38,8 @@ public class FulfillmentPolicyClientTests {
     private static final String FULFILLMENT_POLICY_JSON = "data/account/fulfillmentPolicy.json";
     private static final String FULFILLMENT_POLICIES_JSON = "data/account/fulfillmentPolicies.json";
     private static final String GET = "GET";
+    private static final String USPS = "USPS";
+    private static final String USPS_PRIORITY = "USPSPriority";
     private static MockWebServer mockWebServer;
     @Autowired
     private AppConfig appConfig;
@@ -95,7 +96,10 @@ public class FulfillmentPolicyClientTests {
         assertThat(response.get().getShippingOptions().get(0).getPackageHandlingCost().getValue(), comparesEqualTo(BigDecimal.ZERO));
         assertThat(response.get().getShippingOptions().get(0).getPackageHandlingCost().getCurrency(), is(USD));
         assertThat(response.get().getShippingOptions().get(0).getOptionType(), is(DOMESTIC));
-        assertEquals("USPS", response.get().getShippingOptions().get(0).getShippingServices().get(0).getShippingCarrierCode());
+        assertThat(response.get().getShippingOptions().get(0).getShippingServices().get(0).getShippingCost().getValue(), comparesEqualTo(BigDecimal.ZERO));
+        assertThat(response.get().getShippingOptions().get(0).getShippingServices().get(0).getShippingCost().getCurrency(), is(USD));
+        assertThat(response.get().getShippingOptions().get(0).getShippingServices().get(0).getShippingCarrierCode(), is(USPS));
+        assertThat(response.get().getShippingOptions().get(0).getShippingServices().get(0).getShippingServiceCode(), is(USPS_PRIORITY));
         assertThat(response.get().getShippingOptions().get(0).getInsuranceFee().getValue(), comparesEqualTo(BigDecimal.ZERO));
         assertThat(response.get().getShippingOptions().get(0).getInsuranceFee().getCurrency(), is(USD));
     }
@@ -140,7 +144,8 @@ public class FulfillmentPolicyClientTests {
         assertThat(response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getPackageHandlingCost().getValue(), comparesEqualTo(BigDecimal.ZERO));
         assertThat(response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getPackageHandlingCost().getCurrency(), is(USD));
         assertThat(response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getOptionType(), is(DOMESTIC));
-        assertEquals("USPS", response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getShippingServices().get(0).getShippingCarrierCode());
+        assertThat(response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getShippingServices().get(0).getShippingCarrierCode(), is(USPS));
+        assertThat(response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getShippingServices().get(0).getShippingServiceCode(), is(USPS_PRIORITY));
         assertThat(response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getInsuranceFee().getValue(), comparesEqualTo(BigDecimal.ZERO));
         assertThat(response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getInsuranceFee().getCurrency(), is(USD));
     }

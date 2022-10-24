@@ -28,8 +28,10 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import static com.rossotti.ebay.helper.enumeration.ShippingCostTypeEnum.CALCULATED;
+import static com.rossotti.ebay.helper.enumeration.CategoryTypeEnum.ALL_EXCLUDING_MOTORS_VEHICLES;
 import static com.rossotti.ebay.helper.enumeration.CurrencyCodeEnum.USD;
+import static com.rossotti.ebay.helper.enumeration.OptionTypeEnum.DOMESTIC;
+import static com.rossotti.ebay.helper.enumeration.ShippingCostTypeEnum.CALCULATED;
 import static com.rossotti.ebay.helper.enumeration.TimeDurationUnitEnum.DAY;
 
 @SpringBootTest
@@ -86,13 +88,15 @@ public class FulfillmentPolicyClientTests {
 
         assertThat(response.isPresent(), is(true));
         assertThat(response.get().getName(), is("eBay Fulfillments EBAY_US"));
-        assertThat(response.get().getCategoryTypes().get(0).getName().getCode(), is("All Excluding Motors Vehicles"));
+        assertThat(response.get().getCategoryTypes().get(0).getName(), is(ALL_EXCLUDING_MOTORS_VEHICLES));
         assertThat(response.get().getCategoryTypes().get(0).getDefaultValue(), is(true));
         assertThat(response.get().getHandlingTime().getUnit(), is(DAY));
         assertThat(response.get().getShippingOptions().get(0).getCostType(), is(CALCULATED));
         assertThat(response.get().getShippingOptions().get(0).getPackageHandlingCost().getValue(), comparesEqualTo(BigDecimal.ZERO));
         assertThat(response.get().getShippingOptions().get(0).getPackageHandlingCost().getCurrency(), is(USD));
+        assertThat(response.get().getShippingOptions().get(0).getOptionType(), is(DOMESTIC));
         assertEquals("USPS", response.get().getShippingOptions().get(0).getShippingServices().get(0).getShippingCarrierCode());
+        assertThat(response.get().getShippingOptions().get(0).getInsuranceFee().getValue(), comparesEqualTo(BigDecimal.ZERO));
         assertThat(response.get().getShippingOptions().get(0).getInsuranceFee().getCurrency(), is(USD));
     }
 
@@ -129,13 +133,15 @@ public class FulfillmentPolicyClientTests {
         assertThat(response.get().getFulfillmentPolicies(), hasSize(1));
         assertThat(response.get().getTotal(), is(1));
         assertThat(response.get().getFulfillmentPolicies().get(0).getName(), is("eBay Fulfillments EBAY_US"));
-        assertThat(response.get().getFulfillmentPolicies().get(0).getCategoryTypes().get(0).getName().getCode(), is("All Excluding Motors Vehicles"));
+        assertThat(response.get().getFulfillmentPolicies().get(0).getCategoryTypes().get(0).getName(), is(ALL_EXCLUDING_MOTORS_VEHICLES));
         assertThat(response.get().getFulfillmentPolicies().get(0).getCategoryTypes().get(0).getDefaultValue(), is(true));
         assertThat(response.get().getFulfillmentPolicies().get(0).getHandlingTime().getUnit(), is(DAY));
         assertThat(response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getCostType(), is(CALCULATED));
         assertThat(response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getPackageHandlingCost().getValue(), comparesEqualTo(BigDecimal.ZERO));
         assertThat(response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getPackageHandlingCost().getCurrency(), is(USD));
+        assertThat(response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getOptionType(), is(DOMESTIC));
         assertEquals("USPS", response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getShippingServices().get(0).getShippingCarrierCode());
+        assertThat(response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getInsuranceFee().getValue(), comparesEqualTo(BigDecimal.ZERO));
         assertThat(response.get().getFulfillmentPolicies().get(0).getShippingOptions().get(0).getInsuranceFee().getCurrency(), is(USD));
     }
 }

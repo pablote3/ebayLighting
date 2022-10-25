@@ -2,13 +2,13 @@
   "total": 2,
   "paymentPolicies": [
     {
-      "name": "eBay Payments CREDIT_CARD",
-      "description": "eBay Payments - Credit Card",
+      "name": "CreditCard",
+      "description": "CreditCard",
       "marketplaceId": "EBAY_US",
       "categoryTypes": [
         {
           "name": "ALL_EXCLUDING_MOTORS_VEHICLES",
-          "default": true
+          "default": false
         }
       ],
       "paymentMethods": [
@@ -26,16 +26,16 @@
         "unit": "DAY"
       },
       "immediatePay": false,
-      "paymentPolicyId": "6198145000"
+      "paymentPolicyId": "6198218000"
     },
     {
-      "name": "eBay Payments PAYPAL",
-      "description": "eBay Payments - Paypal",
+      "name": "Paypal",
+      "description": "Paypal",
       "marketplaceId": "EBAY_US",
       "categoryTypes": [
         {
           "name": "ALL_EXCLUDING_MOTORS_VEHICLES",
-          "default": false
+          "default": true
         }
       ],
       "paymentMethods": [
@@ -52,7 +52,7 @@
         "unit": "DAY"
       },
       "immediatePay": false,
-      "paymentPolicyId": "6198146000"
+      "paymentPolicyId": "6198217000"
     }
   ]
 }

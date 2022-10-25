@@ -9,7 +9,6 @@ import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +20,26 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.io.IOException;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static com.rossotti.ebay.helper.enumeration.CategoryTypeEnum.ALL_EXCLUDING_MOTORS_VEHICLES;
+import static com.rossotti.ebay.helper.enumeration.MarketplaceIdEnum.EBAY_US;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import static com.rossotti.ebay.helper.enumeration.PaymentInstrumentBrandEnum.AMERICAN_EXPRESS;
+import static com.rossotti.ebay.helper.enumeration.PaymentInstrumentBrandEnum.MASTERCARD;
+import static com.rossotti.ebay.helper.enumeration.PaymentInstrumentBrandEnum.VISA;
+import static com.rossotti.ebay.helper.enumeration.PaymentMethodTypeEnum.PAYPAL;
+import static com.rossotti.ebay.helper.enumeration.PaymentMethodTypeEnum.CREDIT_CARD;
+import static com.rossotti.ebay.helper.enumeration.RecipientAccountReferenceTypeEnum.PAYPAL_EMAIL;
+import static com.rossotti.ebay.helper.enumeration.TimeDurationUnitEnum.DAY;
 
 @SpringBootTest
 public class PaymentPolicyClientTests {
     private static final String PAYMENT_POLICY_JSON = "data/account/paymentPolicy.json";
     private static final String PAYMENT_POLICIES_JSON = "data/account/paymentPolicies.json";
+    private static final String GET = "GET";
     private static MockWebServer mockWebServer;
     @Autowired
     private AppConfig appConfig;
@@ -50,7 +61,7 @@ public class PaymentPolicyClientTests {
     @Test
     void paymentPolicy_requestSerialization() throws InterruptedException {
         String str = TestUtil.readStringFromFile(PAYMENT_POLICY_JSON).orElse(null);
-        assertNotNull(str);
+        assertThat(str, is(notNullValue()));
         mockWebServer.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
@@ -60,14 +71,14 @@ public class PaymentPolicyClientTests {
         paymentPolicyClient.getByPaymentPolicyId("6196932000");
         RecordedRequest request = mockWebServer.takeRequest();
 
-        assertEquals("GET", request.getMethod());
-        assertEquals("/sell/account/v1/payment_policy/6196932000?marketplace_id=EBAY_US", request.getPath());
-    }
+        assertThat(request.getMethod(), is(GET));
+        assertThat(request.getPath(), is("/sell/account/v1/payment_policy/6196932000?marketplace_id=EBAY_US"));
+   }
 
     @Test
     void paymentPolicy_responseDeserialization() {
         String json = TestUtil.readStringFromFile(PAYMENT_POLICY_JSON).orElse(null);
-        Assertions.assertNotNull(json);
+        assertThat(json, is(notNullValue()));
         mockWebServer.enqueue(
             new MockResponse()
                 .setResponseCode(200)
@@ -76,21 +87,26 @@ public class PaymentPolicyClientTests {
         );
         Optional<PaymentPolicy> response = paymentPolicyClient.getByPaymentPolicyId("6196932000");
 
-        assertTrue(response.isPresent());
-        assertEquals("eBay Payments PAYPAL", response.get().getName());
-        assertEquals("All Excluding Motors Vehicles", response.get().getCategoryTypes().get(0).getName().getCode());
-        assertTrue(response.get().getCategoryTypes().get(0).getDefaultValue());
-        assertEquals("Paypal", response.get().getPaymentMethods().get(0).getPaymentMethodType().getCode());
-        assertEquals("PAYPAL_EMAIL", response.get().getPaymentMethods().get(0).getRecipientAccountReference().getReferenceType());
-        assertEquals(3, response.get().getPaymentMethods().get(0).getBrands().size());
-        assertEquals("American Express", response.get().getPaymentMethods().get(0).getBrands().get(0).getCode());
-        assertEquals("Day", response.get().getFullPaymentDueIn().getUnit().getCode());
+        assertThat(response.isPresent(), is(true));
+        assertThat(response.get().getName(), is("CreditCard"));
+        assertThat(response.get().getDescription(), is("CreditCard"));
+        assertThat(response.get().getMarketplaceId(), is(EBAY_US));
+        assertThat(response.get().getCategoryTypes().get(0).getName(), is(ALL_EXCLUDING_MOTORS_VEHICLES));
+        assertThat(response.get().getCategoryTypes().get(0).getDefaultValue(), is(false));
+        assertThat(response.get().getPaymentMethods().get(0).getPaymentMethodType(), is(CREDIT_CARD));
+        assertThat(response.get().getPaymentMethods().get(0).getBrands(), hasSize(3));
+        assertThat(response.get().getPaymentMethods().get(0).getBrands().get(0), is(AMERICAN_EXPRESS));
+        assertThat(response.get().getPaymentMethods().get(0).getBrands().get(1), is(VISA));
+        assertThat(response.get().getPaymentMethods().get(0).getBrands().get(2), is(MASTERCARD));
+        assertThat(response.get().getFullPaymentDueIn().getValue(), is(7));
+        assertThat(response.get().getFullPaymentDueIn().getUnit(), is(DAY));
+        assertThat(response.get().getImmediatePay(), is(false));
     }
 
     @Test
     void paymentPolicies_requestSerialization() throws InterruptedException {
         String str = TestUtil.readStringFromFile(PAYMENT_POLICIES_JSON).orElse(null);
-        assertNotNull(str);
+        assertThat(str, is(notNullValue()));
         mockWebServer.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
@@ -100,14 +116,14 @@ public class PaymentPolicyClientTests {
         paymentPolicyClient.getPaymentPolicies();
         RecordedRequest request = mockWebServer.takeRequest();
 
-        assertEquals("GET", request.getMethod());
-        assertEquals("/sell/account/v1/payment_policy?marketplace_id=EBAY_US", request.getPath());
+        assertThat(request.getMethod(), is(GET));
+        assertThat(request.getPath(), is("/sell/account/v1/payment_policy?marketplace_id=EBAY_US"));
     }
 
     @Test
     void paymentPolicies_responseDeserialization() {
         String json = TestUtil.readStringFromFile(PAYMENT_POLICIES_JSON).orElse(null);
-        assertNotNull(json);
+        assertThat(json, is(notNullValue()));
         mockWebServer.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
@@ -116,16 +132,28 @@ public class PaymentPolicyClientTests {
         );
         Optional<PaymentPolicies> response = paymentPolicyClient.getPaymentPolicies();
 
-        assertTrue(response.isPresent());
-        assertEquals(2, response.get().getTotal());
-        assertEquals("eBay Payments CREDIT_CARD", response.get().getPaymentPolicies().get(0).getName());
-        assertEquals("All Excluding Motors Vehicles", response.get().getPaymentPolicies().get(0).getCategoryTypes().get(0).getName().getCode());
-        assertTrue(response.get().getPaymentPolicies().get(0).getCategoryTypes().get(0).getDefaultValue());
-        assertEquals("Credit Card", response.get().getPaymentPolicies().get(0).getPaymentMethods().get(0).getPaymentMethodType().getCode());
-        assertEquals("Visa", response.get().getPaymentPolicies().get(0).getPaymentMethods().get(0).getBrands().get(1).getCode());
-        assertEquals("Day", response.get().getPaymentPolicies().get(0).getFullPaymentDueIn().getUnit().getCode());
-        assertEquals("eBay Payments PAYPAL", response.get().getPaymentPolicies().get(1).getName());
-        assertEquals("Paypal", response.get().getPaymentPolicies().get(1).getPaymentMethods().get(0).getPaymentMethodType().getCode());
-        assertEquals("PAYPAL_EMAIL", response.get().getPaymentPolicies().get(1).getPaymentMethods().get(0).getRecipientAccountReference().getReferenceType());
+        assertThat(response.isPresent(), is(true));
+        assertThat(response.get().getPaymentPolicies(), hasSize(2));
+        assertThat(response.get().getTotal(), is(2));
+        assertThat(response.get().getPaymentPolicies().get(0).getName(), is("CreditCard"));
+        assertThat(response.get().getPaymentPolicies().get(0).getDescription(), is("CreditCard"));
+        assertThat(response.get().getPaymentPolicies().get(0).getMarketplaceId(), is(EBAY_US));
+        assertThat(response.get().getPaymentPolicies().get(0).getCategoryTypes().get(0).getName(), is(ALL_EXCLUDING_MOTORS_VEHICLES));
+        assertThat(response.get().getPaymentPolicies().get(0).getCategoryTypes().get(0).getDefaultValue(), is(false));
+        assertThat(response.get().getPaymentPolicies().get(0).getPaymentMethods().get(0).getPaymentMethodType(), is(CREDIT_CARD));
+        assertThat(response.get().getPaymentPolicies().get(0).getPaymentMethods().get(0).getBrands(), hasSize(3));
+        assertThat(response.get().getPaymentPolicies().get(0).getPaymentMethods().get(0).getBrands().get(0), is(AMERICAN_EXPRESS));
+        assertThat(response.get().getPaymentPolicies().get(0).getPaymentMethods().get(0).getBrands().get(1), is(VISA));
+        assertThat(response.get().getPaymentPolicies().get(0).getPaymentMethods().get(0).getBrands().get(2), is(MASTERCARD));
+        assertThat(response.get().getPaymentPolicies().get(0).getFullPaymentDueIn().getValue(), is(7));
+        assertThat(response.get().getPaymentPolicies().get(0).getFullPaymentDueIn().getUnit(), is(DAY));
+        assertThat(response.get().getPaymentPolicies().get(0).getImmediatePay(), is(false));
+        assertThat(response.get().getPaymentPolicies().get(1).getName(), is("Paypal"));
+        assertThat(response.get().getPaymentPolicies().get(1).getDescription(), is("Paypal"));
+        assertThat(response.get().getPaymentPolicies().get(1).getPaymentMethods().get(0).getPaymentMethodType(), is(PAYPAL));
+        assertThat(response.get().getPaymentPolicies().get(1).getPaymentMethods().get(0).getRecipientAccountReference().getReferenceType(), is(PAYPAL_EMAIL));
+        assertThat(response.get().getPaymentPolicies().get(1).getFullPaymentDueIn().getValue(), is(7));
+        assertThat(response.get().getPaymentPolicies().get(1).getFullPaymentDueIn().getUnit(), is(DAY));
+        assertThat(response.get().getPaymentPolicies().get(1).getImmediatePay(), is(false));
     }
 }

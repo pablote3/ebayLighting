@@ -1,20 +1,16 @@
 {
-  "name": "eBay Payments PAYPAL",
-  "description": "eBay Payments - Paypal",
+  "name": "CreditCard",
+  "description": "CreditCard",
   "marketplaceId": "EBAY_US",
   "categoryTypes": [
     {
       "name": "ALL_EXCLUDING_MOTORS_VEHICLES",
-      "default": true
+      "default": false
     }
   ],
   "paymentMethods": [
     {
-      "paymentMethodType": "PAYPAL",
-      "recipientAccountReference": {
-        "referenceType": "PAYPAL_EMAIL",
-        "referenceId": "rossotti.paul@gmail.com"
-      },
+      "paymentMethodType": "CREDIT_CARD",
       "brands": [
         "AMERICAN_EXPRESS",
         "VISA",
@@ -27,5 +23,5 @@
     "unit": "DAY"
   },
   "immediatePay": false,
-  "paymentPolicyId": "6196932000"
+  "paymentPolicyId": "6198218000"
 }

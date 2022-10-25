@@ -1,9 +1,9 @@
 {
-    "total": 1,
+    "total": 2,
     "fulfillmentPolicies": [
         {
-            "name": "eBay Fulfillments EBAY_US",
-            "description": "eBay Fulfillments EBAY_US",
+            "name": "Domestic: FlatRate: USPS",
+            "description": "Domestic: FlatRate: USPS",
             "marketplaceId": "EBAY_US",
             "categoryTypes": [
                 {
@@ -18,25 +18,29 @@
             "shippingOptions": [
                 {
                     "optionType": "DOMESTIC",
-                    "costType": "CALCULATED",
-                    "packageHandlingCost": {
-                        "currency": "USD",
-                        "value": "0.00"
-                    },
+                    "costType": "FLAT_RATE",
                     "shippingServices": [
                         {
                             "sortOrder": 1,
                             "shippingCarrierCode": "USPS",
-                            "shippingServiceCode": "USPSPriority",
+                            "shippingServiceCode": "USPSPriorityFlatRateBox",
                             "shippingCost": {
-                                "currency": "USD",
-                                "value": "0.00"
+                                "value": "7.15",
+                                "currency": "USD"
+                            },
+                            "additionalShippingCost": {
+                                "value": "7.15",
+                                "currency": "USD"
                             },
                             "freeShipping": false,
-                            "buyerResponsibleForShipping": false,
+                            "buyerResponsibleForShipping": true,
                             "buyerResponsibleForPickup": false
                         }
                     ],
+                    "packageHandlingCost": {
+                        "value": "10.0",
+                        "currency": "USD"
+                    },
                     "insuranceOffered": false,
                     "insuranceFee": {
                         "value": "0.0",
@@ -47,7 +51,67 @@
             "globalShipping": false,
             "pickupDropOff": false,
             "freightShipping": false,
-            "fulfillmentPolicyId": "6196947000"
+            "fulfillmentPolicyId": "6198215000"
+        },
+        {
+            "name": "Domestic: Calculated: USPS",
+            "description": "Domestic: Calculated: USPS",
+            "marketplaceId": "EBAY_US",
+            "categoryTypes": [
+                {
+                    "name": "ALL_EXCLUDING_MOTORS_VEHICLES",
+                    "default": false
+                }
+            ],
+            "handlingTime": {
+                "value": 2,
+                "unit": "DAY"
+            },
+            "shippingOptions": [
+                {
+                    "optionType": "DOMESTIC",
+                    "costType": "CALCULATED",
+                    "shippingServices": [
+                        {
+                            "sortOrder": 1,
+                            "shippingCarrierCode": "USPS",
+                            "shippingServiceCode": "USPSPriority",
+                            "freeShipping": false,
+                            "buyerResponsibleForShipping": true,
+                            "buyerResponsibleForPickup": false
+                        },
+                        {
+                            "sortOrder": 2,
+                            "shippingCarrierCode": "USPS",
+                            "shippingServiceCode": "USPSFirstClass",
+                            "freeShipping": false,
+                            "buyerResponsibleForShipping": true,
+                            "buyerResponsibleForPickup": false
+                        },
+                        {
+                            "sortOrder": 3,
+                            "shippingCarrierCode": "USPS",
+                            "shippingServiceCode": "USPSParcel",
+                            "freeShipping": false,
+                            "buyerResponsibleForShipping": true,
+                            "buyerResponsibleForPickup": false
+                        }
+                    ],
+                    "packageHandlingCost": {
+                        "value": "10.0",
+                        "currency": "USD"
+                    },
+                    "insuranceOffered": false,
+                    "insuranceFee": {
+                        "value": "0.0",
+                        "currency": "USD"
+                    }
+                }
+            ],
+            "globalShipping": false,
+            "pickupDropOff": false,
+            "freightShipping": false,
+            "fulfillmentPolicyId": "6198216000"
         }
     ]
 }

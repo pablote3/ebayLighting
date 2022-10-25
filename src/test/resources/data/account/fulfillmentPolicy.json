@@ -1,6 +1,6 @@
 {
-    "name": "eBay Fulfillments EBAY_US",
-    "description": "eBay Fulfillments EBAY_US",
+    "name": "Domestic: FlatRate: USPS",
+    "description": "Domestic: FlatRate: USPS",
     "marketplaceId": "EBAY_US",
     "categoryTypes": [
         {
@@ -15,25 +15,29 @@
     "shippingOptions": [
         {
             "optionType": "DOMESTIC",
-            "costType": "CALCULATED",
-            "packageHandlingCost": {
-                "currency": "USD",
-                "value": "0.00"
-            },
+            "costType": "FLAT_RATE",
             "shippingServices": [
                 {
                     "sortOrder": 1,
                     "shippingCarrierCode": "USPS",
-                    "shippingServiceCode": "USPSPriority",
+                    "shippingServiceCode": "USPSPriorityFlatRateBox",
                     "shippingCost": {
-                        "currency": "USD",
-                        "value": "0.00"
+                        "value": "7.15",
+                        "currency": "USD"
+                    },
+                    "additionalShippingCost": {
+                        "value": "7.15",
+                        "currency": "USD"
                     },
                     "freeShipping": false,
-                    "buyerResponsibleForShipping": false,
+                    "buyerResponsibleForShipping": true,
                     "buyerResponsibleForPickup": false
                 }
             ],
+            "packageHandlingCost": {
+                "value": "10.0",
+                "currency": "USD"
+            },
             "insuranceOffered": false,
             "insuranceFee": {
                 "value": "0.0",
@@ -44,5 +48,5 @@
     "globalShipping": false,
     "pickupDropOff": false,
     "freightShipping": false,
-    "fulfillmentPolicyId": "6196947000"
+    "fulfillmentPolicyId": "6198215000"
 }

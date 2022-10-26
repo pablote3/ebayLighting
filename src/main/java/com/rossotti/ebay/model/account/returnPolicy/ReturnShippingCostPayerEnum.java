@@ -1,4 +1,4 @@
-package com.rossotti.ebay.helper.enumeration;
+package com.rossotti.ebay.model.account.returnPolicy;
 
 public enum ReturnShippingCostPayerEnum {
     BUYER ("Buyer"),

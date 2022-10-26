@@ -8,7 +8,6 @@ import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +19,18 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.io.IOException;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import static com.rossotti.ebay.model.account.program.ProgramTypeEnum.OUT_OF_STOCK_CONTROL;
+import static com.rossotti.ebay.model.account.program.ProgramTypeEnum.SELLING_POLICY_MANAGEMENT;
 
 @SpringBootTest
 public class OptedInProgramClientTests {
     private static final String OPTED_IN_PROGRAMS_JSON = "data/account/optedInPrograms.json";
+    private static final String GET = "GET";
     private static MockWebServer mockWebServer;
     @Autowired
     private AppConfig appConfig;
@@ -48,7 +52,7 @@ public class OptedInProgramClientTests {
     @Test
     void optedInPrograms_requestSerialization() throws InterruptedException {
         String str = TestUtil.readStringFromFile(OPTED_IN_PROGRAMS_JSON).orElse(null);
-        assertNotNull(str);
+        assertThat(str, is(notNullValue()));
         mockWebServer.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
@@ -58,14 +62,14 @@ public class OptedInProgramClientTests {
         optedInProgramClient.getOptedInPrograms();
         RecordedRequest request = mockWebServer.takeRequest();
 
-        assertEquals("GET", request.getMethod());
-        assertEquals("/sell/account/v1/program/get_opted_in_programs", request.getPath());
+        assertThat(request.getMethod(), is(GET));
+        assertThat(request.getPath(), is("/sell/account/v1/program/get_opted_in_programs"));
     }
 
     @Test
     void optedInPrograms_responseDeserialization() {
         String json = TestUtil.readStringFromFile(OPTED_IN_PROGRAMS_JSON).orElse(null);
-        Assertions.assertNotNull(json);
+        assertThat(json, is(notNullValue()));
         mockWebServer.enqueue(
             new MockResponse()
                 .setResponseCode(200)
@@ -74,9 +78,9 @@ public class OptedInProgramClientTests {
         );
         Optional<Programs> response = optedInProgramClient.getOptedInPrograms();
 
-        assertTrue(response.isPresent());
-        assertEquals(2, response.get().getPrograms().size());
-        assertEquals("OUT_OF_STOCK_CONTROL", response.get().getPrograms().get(0).getProgramType());
-        assertEquals("SELLING_POLICY_MANAGEMENT", response.get().getPrograms().get(1).getProgramType());
+        assertThat(response.isPresent(), is(true));
+        assertThat(response.get().getPrograms(), hasSize(2));
+        assertThat(response.get().getPrograms().get(0).getProgramType(), is(OUT_OF_STOCK_CONTROL));
+        assertThat(response.get().getPrograms().get(1).getProgramType(), is(SELLING_POLICY_MANAGEMENT));
     }
 }

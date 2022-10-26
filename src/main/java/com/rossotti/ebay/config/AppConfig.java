@@ -1,6 +1,6 @@
 package com.rossotti.ebay.config;
 
-import com.rossotti.ebay.helper.enumeration.MarketplaceIdEnum;
+import com.rossotti.ebay.model.common.MarketplaceIdEnum;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;

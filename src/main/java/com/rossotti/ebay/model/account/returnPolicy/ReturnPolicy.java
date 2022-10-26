@@ -1,9 +1,6 @@
 package com.rossotti.ebay.model.account.returnPolicy;
 
-import com.rossotti.ebay.helper.enumeration.MarketplaceIdEnum;
-import com.rossotti.ebay.helper.enumeration.RefundMethodEnum;
-import com.rossotti.ebay.helper.enumeration.ReturnMethodEnum;
-import com.rossotti.ebay.helper.enumeration.ReturnShippingCostPayerEnum;
+import com.rossotti.ebay.model.common.MarketplaceIdEnum;
 import com.rossotti.ebay.model.common.CategoryType;
 import lombok.Getter;
 import java.util.List;

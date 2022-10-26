@@ -1,4 +1,4 @@
-package com.rossotti.ebay.helper.enumeration;
+package com.rossotti.ebay.model.account.paymentPolicy;
 
 public enum PaymentInstrumentBrandEnum {
     AMERICAN_EXPRESS ("American Express"),

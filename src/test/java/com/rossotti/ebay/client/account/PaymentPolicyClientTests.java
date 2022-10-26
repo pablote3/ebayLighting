@@ -25,15 +25,15 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import static com.rossotti.ebay.helper.enumeration.CategoryTypeEnum.ALL_EXCLUDING_MOTORS_VEHICLES;
-import static com.rossotti.ebay.helper.enumeration.MarketplaceIdEnum.EBAY_US;
-import static com.rossotti.ebay.helper.enumeration.PaymentInstrumentBrandEnum.AMERICAN_EXPRESS;
-import static com.rossotti.ebay.helper.enumeration.PaymentInstrumentBrandEnum.MASTERCARD;
-import static com.rossotti.ebay.helper.enumeration.PaymentInstrumentBrandEnum.VISA;
-import static com.rossotti.ebay.helper.enumeration.PaymentMethodTypeEnum.PAYPAL;
-import static com.rossotti.ebay.helper.enumeration.PaymentMethodTypeEnum.CREDIT_CARD;
-import static com.rossotti.ebay.helper.enumeration.RecipientAccountReferenceTypeEnum.PAYPAL_EMAIL;
-import static com.rossotti.ebay.helper.enumeration.TimeDurationUnitEnum.DAY;
+import static com.rossotti.ebay.model.common.CategoryTypeEnum.ALL_EXCLUDING_MOTORS_VEHICLES;
+import static com.rossotti.ebay.model.common.MarketplaceIdEnum.EBAY_US;
+import static com.rossotti.ebay.model.account.paymentPolicy.PaymentInstrumentBrandEnum.AMERICAN_EXPRESS;
+import static com.rossotti.ebay.model.account.paymentPolicy.PaymentInstrumentBrandEnum.MASTERCARD;
+import static com.rossotti.ebay.model.account.paymentPolicy.PaymentInstrumentBrandEnum.VISA;
+import static com.rossotti.ebay.model.account.paymentPolicy.PaymentMethodTypeEnum.PAYPAL;
+import static com.rossotti.ebay.model.account.paymentPolicy.PaymentMethodTypeEnum.CREDIT_CARD;
+import static com.rossotti.ebay.model.account.paymentPolicy.RecipientAccountReferenceTypeEnum.PAYPAL_EMAIL;
+import static com.rossotti.ebay.model.common.TimeDurationUnitEnum.DAY;
 
 @SpringBootTest
 public class PaymentPolicyClientTests {

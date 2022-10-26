@@ -2,7 +2,7 @@ package com.rossotti.ebay.model.account.fulfillmentPolicy;
 
 import java.util.List;
 
-import com.rossotti.ebay.helper.enumeration.MarketplaceIdEnum;
+import com.rossotti.ebay.model.common.MarketplaceIdEnum;
 import com.rossotti.ebay.model.common.CategoryType;
 import lombok.Getter;
 

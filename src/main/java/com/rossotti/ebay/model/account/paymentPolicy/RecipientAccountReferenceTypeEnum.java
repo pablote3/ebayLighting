@@ -1,4 +1,4 @@
-package com.rossotti.ebay.helper.enumeration;
+package com.rossotti.ebay.model.account.paymentPolicy;
 
 public enum RecipientAccountReferenceTypeEnum {
     PAYPAL_EMAIL ("PAYPAL_EMAIL");

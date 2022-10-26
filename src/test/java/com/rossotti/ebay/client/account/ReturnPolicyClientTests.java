@@ -30,12 +30,12 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import static com.rossotti.ebay.helper.enumeration.CategoryTypeEnum.ALL_EXCLUDING_MOTORS_VEHICLES;
-import static com.rossotti.ebay.helper.enumeration.RefundMethodEnum.MONEY_BACK;
-import static com.rossotti.ebay.helper.enumeration.ReturnMethodEnum.REPLACEMENT;
-import static com.rossotti.ebay.helper.enumeration.ReturnShippingCostPayerEnum.SELLER;
-import static com.rossotti.ebay.helper.enumeration.MarketplaceIdEnum.EBAY_US;
-import static com.rossotti.ebay.helper.enumeration.TimeDurationUnitEnum.DAY;
+import static com.rossotti.ebay.model.common.CategoryTypeEnum.ALL_EXCLUDING_MOTORS_VEHICLES;
+import static com.rossotti.ebay.model.account.returnPolicy.RefundMethodEnum.MONEY_BACK;
+import static com.rossotti.ebay.model.account.returnPolicy.ReturnMethodEnum.REPLACEMENT;
+import static com.rossotti.ebay.model.account.returnPolicy.ReturnShippingCostPayerEnum.SELLER;
+import static com.rossotti.ebay.model.common.MarketplaceIdEnum.EBAY_US;
+import static com.rossotti.ebay.model.common.TimeDurationUnitEnum.DAY;
 
 @SpringBootTest
 public class ReturnPolicyClientTests {

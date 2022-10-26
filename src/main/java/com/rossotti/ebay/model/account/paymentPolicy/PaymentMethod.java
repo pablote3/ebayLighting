@@ -1,7 +1,5 @@
 package com.rossotti.ebay.model.account.paymentPolicy;
 
-import com.rossotti.ebay.helper.enumeration.PaymentInstrumentBrandEnum;
-import com.rossotti.ebay.helper.enumeration.PaymentMethodTypeEnum;
 import lombok.Getter;
 
 import java.util.ArrayList;

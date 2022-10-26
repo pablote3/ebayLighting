@@ -1,4 +1,4 @@
-package com.rossotti.ebay.helper.enumeration;
+package com.rossotti.ebay.model.common;
 
 public enum TimeDurationUnitEnum {
     YEAR ("Year"),

@@ -1,6 +1,6 @@
 package com.rossotti.ebay.model.inventory.offer;
 
-import com.rossotti.ebay.helper.enumeration.MarketplaceIdEnum;
+import com.rossotti.ebay.model.common.MarketplaceIdEnum;
 import lombok.Getter;
 
 @Getter

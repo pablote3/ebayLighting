@@ -1,4 +1,4 @@
-package com.rossotti.ebay.helper.enumeration;
+package com.rossotti.ebay.model.common;
 
 public enum MarketplaceIdEnum {
     EBAY_US ("EBAY_US");

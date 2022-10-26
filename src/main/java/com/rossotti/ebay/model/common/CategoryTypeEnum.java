@@ -1,4 +1,4 @@
-package com.rossotti.ebay.helper.enumeration;
+package com.rossotti.ebay.model.common;
 
 public enum CategoryTypeEnum {
     MOTORS_VEHICLES ("Motors Vehicles"),

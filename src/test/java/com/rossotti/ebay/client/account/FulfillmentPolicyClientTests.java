@@ -27,13 +27,13 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import static com.rossotti.ebay.helper.enumeration.CategoryTypeEnum.ALL_EXCLUDING_MOTORS_VEHICLES;
-import static com.rossotti.ebay.helper.enumeration.CurrencyCodeEnum.USD;
-import static com.rossotti.ebay.helper.enumeration.MarketplaceIdEnum.EBAY_US;
-import static com.rossotti.ebay.helper.enumeration.OptionTypeEnum.DOMESTIC;
-import static com.rossotti.ebay.helper.enumeration.ShippingCostTypeEnum.CALCULATED;
-import static com.rossotti.ebay.helper.enumeration.ShippingCostTypeEnum.FLAT_RATE;
-import static com.rossotti.ebay.helper.enumeration.TimeDurationUnitEnum.DAY;
+import static com.rossotti.ebay.model.common.CategoryTypeEnum.ALL_EXCLUDING_MOTORS_VEHICLES;
+import static com.rossotti.ebay.model.common.CurrencyCodeEnum.USD;
+import static com.rossotti.ebay.model.common.MarketplaceIdEnum.EBAY_US;
+import static com.rossotti.ebay.model.account.fulfillmentPolicy.OptionTypeEnum.DOMESTIC;
+import static com.rossotti.ebay.model.account.fulfillmentPolicy.ShippingCostTypeEnum.CALCULATED;
+import static com.rossotti.ebay.model.account.fulfillmentPolicy.ShippingCostTypeEnum.FLAT_RATE;
+import static com.rossotti.ebay.model.common.TimeDurationUnitEnum.DAY;
 
 @SpringBootTest
 public class FulfillmentPolicyClientTests {

@@ -9,7 +9,6 @@ import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +19,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.IOException;
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -80,7 +76,7 @@ public class ReturnPolicyClientTests {
     @Test
     void returnPolicy_responseDeserialization() {
         String json = TestUtil.readStringFromFile(RETURN_POLICY_JSON).orElse(null);
-        Assertions.assertNotNull(json);
+        assertThat(json, is(notNullValue()));
         mockWebServer.enqueue(
             new MockResponse()
                 .setResponseCode(200)
@@ -95,7 +91,7 @@ public class ReturnPolicyClientTests {
         assertThat(response.get().getMarketplaceId(), is(EBAY_US));
         assertThat(response.get().getCategoryTypes().get(0).getName(), is(ALL_EXCLUDING_MOTORS_VEHICLES));
         assertThat(response.get().getCategoryTypes().get(0).getDefaultValue(), is(true));
-        assertTrue(response.get().getReturnsAccepted());
+        assertThat(response.get().getReturnsAccepted(), is(true));
         assertThat(response.get().getReturnPeriod().getUnit(), is(DAY));
         assertThat(response.get().getRefundMethod(), is(MONEY_BACK));
         assertThat(response.get().getReturnMethod(), is(REPLACEMENT));
@@ -122,7 +118,7 @@ public class ReturnPolicyClientTests {
     @Test
     void returnPolicies_responseDeserialization() {
         String json = TestUtil.readStringFromFile(RETURN_POLICIES_JSON).orElse(null);
-        assertNotNull(json);
+        assertThat(json, is(notNullValue()));
         mockWebServer.enqueue(
                 new MockResponse()
                         .setResponseCode(200)

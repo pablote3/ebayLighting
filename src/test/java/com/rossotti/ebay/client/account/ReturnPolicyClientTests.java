@@ -21,15 +21,27 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.io.IOException;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import static com.rossotti.ebay.helper.enumeration.CategoryTypeEnum.ALL_EXCLUDING_MOTORS_VEHICLES;
+import static com.rossotti.ebay.helper.enumeration.RefundMethodEnum.MONEY_BACK;
+import static com.rossotti.ebay.helper.enumeration.ReturnMethodEnum.REPLACEMENT;
+import static com.rossotti.ebay.helper.enumeration.ReturnShippingCostPayerEnum.SELLER;
+import static com.rossotti.ebay.helper.enumeration.MarketplaceIdEnum.EBAY_US;
+import static com.rossotti.ebay.helper.enumeration.TimeDurationUnitEnum.DAY;
 
 @SpringBootTest
 public class ReturnPolicyClientTests {
     private static final String RETURN_POLICY_JSON = "data/account/returnPolicy.json";
     private static final String RETURN_POLICIES_JSON = "data/account/returnPolicies.json";
+    private static final String GET = "GET";
     private static MockWebServer mockWebServer;
     @Autowired
     private AppConfig appConfig;
@@ -51,7 +63,7 @@ public class ReturnPolicyClientTests {
     @Test
     void returnPolicy_requestSerialization() throws InterruptedException {
         String str = TestUtil.readStringFromFile(RETURN_POLICY_JSON).orElse(null);
-        assertNotNull(str);
+        assertThat(str, is(notNullValue()));
         mockWebServer.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
@@ -61,8 +73,8 @@ public class ReturnPolicyClientTests {
         returnPolicyClient.getByReturnPolicyId("6196944000");
         RecordedRequest request = mockWebServer.takeRequest();
 
-        assertEquals("GET", request.getMethod());
-        assertEquals("/sell/account/v1/return_policy/6196944000?marketplace_id=EBAY_US", request.getPath());
+        assertThat(request.getMethod(), is(GET));
+        assertThat(request.getPath(), is("/sell/account/v1/return_policy/6196944000?marketplace_id=EBAY_US"));
     }
 
     @Test
@@ -77,21 +89,23 @@ public class ReturnPolicyClientTests {
         );
         Optional<ReturnPolicy> response = returnPolicyClient.getByReturnPolicyId("6196944000");
 
-        assertTrue(response.isPresent());
-        assertEquals("eBay Returns REPLACEMENT", response.get().getName());
-        assertEquals("All Excluding Motors Vehicles", response.get().getCategoryTypes().get(0).getName().getCode());
-        assertTrue(response.get().getCategoryTypes().get(0).getDefaultValue());
+        assertThat(response.isPresent(), is(true));
+        assertThat(response.get().getName(), is("Return Accepted"));
+        assertThat(response.get().getDescription(), is("Return Accepted: Seller Pays Shipping"));
+        assertThat(response.get().getMarketplaceId(), is(EBAY_US));
+        assertThat(response.get().getCategoryTypes().get(0).getName(), is(ALL_EXCLUDING_MOTORS_VEHICLES));
+        assertThat(response.get().getCategoryTypes().get(0).getDefaultValue(), is(true));
         assertTrue(response.get().getReturnsAccepted());
-        assertEquals("Day", response.get().getReturnPeriod().getUnit().getCode());
-        assertEquals("Money Back", response.get().getRefundMethod().getCode());
-        assertEquals("Replacement", response.get().getReturnMethod().getCode());
-        assertEquals("Buyer", response.get().getReturnShippingCostPayer().getCode());
+        assertThat(response.get().getReturnPeriod().getUnit(), is(DAY));
+        assertThat(response.get().getRefundMethod(), is(MONEY_BACK));
+        assertThat(response.get().getReturnMethod(), is(REPLACEMENT));
+        assertThat(response.get().getReturnShippingCostPayer(), is(SELLER));
     }
 
     @Test
     void returnPolicies_requestSerialization() throws InterruptedException {
         String str = TestUtil.readStringFromFile(RETURN_POLICIES_JSON).orElse(null);
-        assertNotNull(str);
+        assertThat(str, is(notNullValue()));
         mockWebServer.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
@@ -101,8 +115,8 @@ public class ReturnPolicyClientTests {
         returnPolicyClient.getReturnPolicies();
         RecordedRequest request = mockWebServer.takeRequest();
 
-        assertEquals("GET", request.getMethod());
-        assertEquals("/sell/account/v1/return_policy?marketplace_id=EBAY_US", request.getPath());
+        assertThat(request.getMethod(), is(GET));
+        assertThat(request.getPath(), is("/sell/account/v1/return_policy?marketplace_id=EBAY_US"));
     }
 
     @Test
@@ -117,23 +131,28 @@ public class ReturnPolicyClientTests {
         );
         Optional<ReturnPolicies> response = returnPolicyClient.getReturnPolicies();
 
-        assertTrue(response.isPresent());
-        assertEquals(2, response.get().getTotal());
-        assertEquals("eBay Returns EXCHANGE", response.get().getReturnPolicies().get(0).getName());
-        assertEquals("All Excluding Motors Vehicles", response.get().getReturnPolicies().get(0).getCategoryTypes().get(0).getName().getCode());
-        assertTrue(response.get().getReturnPolicies().get(0).getCategoryTypes().get(0).getDefaultValue());
-        assertEquals("Day", response.get().getReturnPolicies().get(0).getReturnPeriod().getUnit().getCode());
-        assertTrue(response.get().getReturnPolicies().get(0).getReturnsAccepted());
-        assertEquals("Money Back", response.get().getReturnPolicies().get(0).getRefundMethod().getCode());
-        assertEquals("Exchange", response.get().getReturnPolicies().get(0).getReturnMethod().getCode());
-        assertEquals("Buyer", response.get().getReturnPolicies().get(0).getReturnShippingCostPayer().getCode());
-        assertEquals("eBay Returns REPLACEMENT", response.get().getReturnPolicies().get(1).getName());
-        assertEquals("All Excluding Motors Vehicles", response.get().getReturnPolicies().get(1).getCategoryTypes().get(0).getName().getCode());
-        assertFalse(response.get().getReturnPolicies().get(1).getCategoryTypes().get(0).getDefaultValue());
-        assertEquals("Day", response.get().getReturnPolicies().get(1).getReturnPeriod().getUnit().getCode());
-        assertTrue(response.get().getReturnPolicies().get(1).getReturnsAccepted());
-        assertEquals("Money Back", response.get().getReturnPolicies().get(1).getRefundMethod().getCode());
-        assertEquals("Replacement", response.get().getReturnPolicies().get(1).getReturnMethod().getCode());
-        assertEquals("Seller", response.get().getReturnPolicies().get(1).getReturnShippingCostPayer().getCode());
+        assertThat(response.isPresent(), is(true));
+        assertThat(response.get().getReturnPolicies(), hasSize(2));
+        assertThat(response.get().getTotal(), is(2));
+        assertThat(response.get().getReturnPolicies().get(0).getName(), is("No Return Accepted"));
+        assertThat(response.get().getReturnPolicies().get(0).getDescription(), is("No Return Accepted"));
+        assertThat(response.get().getReturnPolicies().get(0).getMarketplaceId(), is(EBAY_US));
+        assertThat(response.get().getReturnPolicies().get(0).getCategoryTypes().get(0).getName(), is(ALL_EXCLUDING_MOTORS_VEHICLES));
+        assertThat(response.get().getReturnPolicies().get(0).getCategoryTypes().get(0).getDefaultValue(), is(false));
+        assertThat(response.get().getReturnPolicies().get(0).getReturnPeriod(), is(nullValue()));
+        assertThat(response.get().getReturnPolicies().get(0).getReturnsAccepted(), is(false));
+        assertThat(response.get().getReturnPolicies().get(0).getRefundMethod(), is(nullValue()));
+        assertThat(response.get().getReturnPolicies().get(0).getReturnMethod(), is(nullValue()));
+        assertThat(response.get().getReturnPolicies().get(0).getReturnShippingCostPayer(), is(nullValue()));
+        assertThat(response.get().getReturnPolicies().get(1).getName(), is("Return Accepted"));
+        assertThat(response.get().getReturnPolicies().get(1).getDescription(), is("Return Accepted: Seller Pays Shipping"));
+        assertThat(response.get().getReturnPolicies().get(1).getMarketplaceId(), is(EBAY_US));
+        assertThat(response.get().getReturnPolicies().get(1).getCategoryTypes().get(0).getName(), is(ALL_EXCLUDING_MOTORS_VEHICLES));
+        assertThat(response.get().getReturnPolicies().get(1).getCategoryTypes().get(0).getDefaultValue(), is(true));
+        assertThat(response.get().getReturnPolicies().get(1).getReturnPeriod().getUnit(), is(DAY));
+        assertThat(response.get().getReturnPolicies().get(1).getReturnsAccepted(), is(true));
+        assertThat(response.get().getReturnPolicies().get(1).getRefundMethod(), is(MONEY_BACK));
+        assertThat(response.get().getReturnPolicies().get(1).getReturnMethod(), is(REPLACEMENT));
+        assertThat(response.get().getReturnPolicies().get(1).getReturnShippingCostPayer(), is(SELLER));
     }
 }

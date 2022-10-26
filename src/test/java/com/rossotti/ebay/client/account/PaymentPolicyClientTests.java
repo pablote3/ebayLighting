@@ -20,13 +20,13 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.io.IOException;
 import java.util.Optional;
 
-import static com.rossotti.ebay.helper.enumeration.CategoryTypeEnum.ALL_EXCLUDING_MOTORS_VEHICLES;
-import static com.rossotti.ebay.helper.enumeration.MarketplaceIdEnum.EBAY_US;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import static com.rossotti.ebay.helper.enumeration.CategoryTypeEnum.ALL_EXCLUDING_MOTORS_VEHICLES;
+import static com.rossotti.ebay.helper.enumeration.MarketplaceIdEnum.EBAY_US;
 import static com.rossotti.ebay.helper.enumeration.PaymentInstrumentBrandEnum.AMERICAN_EXPRESS;
 import static com.rossotti.ebay.helper.enumeration.PaymentInstrumentBrandEnum.MASTERCARD;
 import static com.rossotti.ebay.helper.enumeration.PaymentInstrumentBrandEnum.VISA;

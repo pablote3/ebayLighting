@@ -1,6 +1,6 @@
 {
-    "name": "eBay Returns REPLACEMENT",
-    "description": "eBay Returns - Replacement",
+    "name": "Return Accepted",
+    "description": "Return Accepted: Seller Pays Shipping",
     "marketplaceId": "EBAY_US",
     "categoryTypes": [
         {
@@ -15,6 +15,6 @@
     },
     "refundMethod": "MONEY_BACK",
     "returnMethod": "REPLACEMENT",
-    "returnShippingCostPayer": "BUYER",
-    "returnPolicyId": "6196944000"
+    "returnShippingCostPayer": "SELLER",
+    "returnPolicyId": "6198224000"
 }

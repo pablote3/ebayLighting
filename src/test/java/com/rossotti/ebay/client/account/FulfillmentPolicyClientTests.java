@@ -45,7 +45,6 @@ public class FulfillmentPolicyClientTests {
     private static final String USPS_PARCEL = "USPSParcel";
     private static final String USPS_PRIORITY = "USPSPriority";
     private static final BigDecimal SEVEN_FIFTEEN = BigDecimal.valueOf(7.15);
-
     private static final String USPS_PRIORITY_FLAT_RATE_BOX = "USPSPriorityFlatRateBox";
     private static MockWebServer mockWebServer;
     @Autowired

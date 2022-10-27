@@ -50,7 +50,7 @@ public class OptedInProgramClientTests {
     }
 
     @Test
-    void optedInPrograms_requestSerialization() throws InterruptedException {
+    void getOptedInPrograms_requestSerialize() throws InterruptedException {
         String str = TestUtil.readStringFromFile(OPTED_IN_PROGRAMS_JSON).orElse(null);
         assertThat(str, is(notNullValue()));
         mockWebServer.enqueue(
@@ -67,7 +67,7 @@ public class OptedInProgramClientTests {
     }
 
     @Test
-    void optedInPrograms_responseDeserialization() {
+    void getOptedInPrograms_responseDeserialize() {
         String json = TestUtil.readStringFromFile(OPTED_IN_PROGRAMS_JSON).orElse(null);
         assertThat(json, is(notNullValue()));
         mockWebServer.enqueue(

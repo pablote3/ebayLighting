@@ -57,7 +57,7 @@ public class ReturnPolicyClientTests {
     }
 
     @Test
-    void returnPolicy_requestSerialization() throws InterruptedException {
+    void getReturnPolicy_requestSerialize() throws InterruptedException {
         String str = TestUtil.readStringFromFile(RETURN_POLICY_JSON).orElse(null);
         assertThat(str, is(notNullValue()));
         mockWebServer.enqueue(
@@ -72,9 +72,8 @@ public class ReturnPolicyClientTests {
         assertThat(request.getMethod(), is(GET));
         assertThat(request.getPath(), is("/sell/account/v1/return_policy/6196944000?marketplace_id=EBAY_US"));
     }
-
     @Test
-    void returnPolicy_responseDeserialization() {
+    void getReturnPolicy_responseDeserialize() {
         String json = TestUtil.readStringFromFile(RETURN_POLICY_JSON).orElse(null);
         assertThat(json, is(notNullValue()));
         mockWebServer.enqueue(
@@ -97,9 +96,8 @@ public class ReturnPolicyClientTests {
         assertThat(response.get().getReturnMethod(), is(REPLACEMENT));
         assertThat(response.get().getReturnShippingCostPayer(), is(SELLER));
     }
-
     @Test
-    void returnPolicies_requestSerialization() throws InterruptedException {
+    void getReturnPolicies_requestSerialize() throws InterruptedException {
         String str = TestUtil.readStringFromFile(RETURN_POLICIES_JSON).orElse(null);
         assertThat(str, is(notNullValue()));
         mockWebServer.enqueue(
@@ -116,7 +114,7 @@ public class ReturnPolicyClientTests {
     }
 
     @Test
-    void returnPolicies_responseDeserialization() {
+    void getReturnPolicies_responseDeserialize() {
         String json = TestUtil.readStringFromFile(RETURN_POLICIES_JSON).orElse(null);
         assertThat(json, is(notNullValue()));
         mockWebServer.enqueue(

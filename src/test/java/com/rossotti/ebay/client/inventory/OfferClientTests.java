@@ -56,7 +56,7 @@ public class OfferClientTests {
     }
 
     @Test
-    void offer_requestSerialization() throws InterruptedException {
+    void getOffer_requestSerialize() throws InterruptedException {
         String str = TestUtil.readStringFromFile(OFFER_JSON).orElse(null);
         assertThat(str, is(notNullValue()));
         mockWebServer.enqueue(
@@ -73,7 +73,7 @@ public class OfferClientTests {
     }
 
     @Test
-    void offer_responseDeserialization() {
+    void getOffer_responseDeserialize() {
         String json = TestUtil.readStringFromFile(OFFER_JSON).orElse(null);
         assertThat(json, is(notNullValue()));
         mockWebServer.enqueue(
@@ -107,7 +107,7 @@ public class OfferClientTests {
     }
 
     @Test
-    void offers_requestSerialization() throws InterruptedException {
+    void getOffers_requestSerialize() throws InterruptedException {
         String str = TestUtil.readStringFromFile(OFFERS_JSON).orElse(null);
         assertThat(str, is(notNullValue()));
         mockWebServer.enqueue(
@@ -124,7 +124,7 @@ public class OfferClientTests {
     }
 
     @Test
-    void offers_responseDeserialization() {
+    void getOffers_responseDeserialize() {
         String json = TestUtil.readStringFromFile(OFFERS_JSON).orElse(null);
         assertThat(json, is(notNullValue()));
         mockWebServer.enqueue(

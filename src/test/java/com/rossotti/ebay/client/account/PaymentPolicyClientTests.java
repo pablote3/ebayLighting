@@ -59,7 +59,7 @@ public class PaymentPolicyClientTests {
     }
 
     @Test
-    void paymentPolicy_requestSerialization() throws InterruptedException {
+    void getPaymentPolicy_requestSerialize() throws InterruptedException {
         String str = TestUtil.readStringFromFile(PAYMENT_POLICY_JSON).orElse(null);
         assertThat(str, is(notNullValue()));
         mockWebServer.enqueue(
@@ -76,7 +76,7 @@ public class PaymentPolicyClientTests {
    }
 
     @Test
-    void paymentPolicy_responseDeserialization() {
+    void getPaymentPolicy_responseDeserialize() {
         String json = TestUtil.readStringFromFile(PAYMENT_POLICY_JSON).orElse(null);
         assertThat(json, is(notNullValue()));
         mockWebServer.enqueue(
@@ -104,7 +104,7 @@ public class PaymentPolicyClientTests {
     }
 
     @Test
-    void paymentPolicies_requestSerialization() throws InterruptedException {
+    void getPaymentPolicies_requestSerialize() throws InterruptedException {
         String str = TestUtil.readStringFromFile(PAYMENT_POLICIES_JSON).orElse(null);
         assertThat(str, is(notNullValue()));
         mockWebServer.enqueue(
@@ -121,7 +121,7 @@ public class PaymentPolicyClientTests {
     }
 
     @Test
-    void paymentPolicies_responseDeserialization() {
+    void getPaymentPolicies_responseDeserialize() {
         String json = TestUtil.readStringFromFile(PAYMENT_POLICIES_JSON).orElse(null);
         assertThat(json, is(notNullValue()));
         mockWebServer.enqueue(

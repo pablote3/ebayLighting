@@ -65,7 +65,7 @@ public class FulfillmentPolicyClientTests {
     }
 
     @Test
-    void fulfillmentPolicy_requestSerialization() throws InterruptedException {
+    void getFulfillmentPolicy_requestSerialize() throws InterruptedException {
         String str = TestUtil.readStringFromFile(FULFILLMENT_POLICY_JSON).orElse(null);
         assertThat(str, is(notNullValue()));
         mockWebServer.enqueue(
@@ -82,7 +82,7 @@ public class FulfillmentPolicyClientTests {
     }
 
     @Test
-    void fulfillmentPolicy_responseDeserialization() {
+    void getFulfillmentPolicy_responseDeserialize() {
         String json = TestUtil.readStringFromFile(FULFILLMENT_POLICY_JSON).orElse(null);
         assertThat(json, is(notNullValue()));
         mockWebServer.enqueue(
@@ -119,7 +119,7 @@ public class FulfillmentPolicyClientTests {
     }
 
     @Test
-    void fulfillmentPolicies_requestSerialization() throws InterruptedException {
+    void getFulfillmentPolicies_requestSerialize() throws InterruptedException {
         String str = TestUtil.readStringFromFile(FULFILLMENT_POLICIES_JSON).orElse(null);
         assertThat(str, is(notNullValue()));
         mockWebServer.enqueue(
@@ -136,7 +136,7 @@ public class FulfillmentPolicyClientTests {
     }
 
     @Test
-    void fulfillmentPolicies_responseDeserialization() {
+    void getFulfillmentPolicies_responseDeserialize() {
         String json = TestUtil.readStringFromFile(FULFILLMENT_POLICIES_JSON).orElse(null);
         assertThat(json, is(notNullValue()));
         mockWebServer.enqueue(

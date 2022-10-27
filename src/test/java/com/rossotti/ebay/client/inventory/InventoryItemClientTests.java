@@ -55,7 +55,7 @@ public class InventoryItemClientTests {
     }
 
     @Test
-    void inventoryItem_requestSerialization() throws InterruptedException {
+    void getInventoryItem_requestSerialize() throws InterruptedException {
         String str = TestUtil.readStringFromFile(INVENTORY_ITEM_JSON).orElse(null);
         assertThat(str, is(notNullValue()));
         mockWebServer.enqueue(
@@ -72,7 +72,7 @@ public class InventoryItemClientTests {
     }
 
     @Test
-    void inventoryItem_responseDeserialization() {
+    void getInventoryItem_responseDeserialize() {
         String json = TestUtil.readStringFromFile(INVENTORY_ITEM_JSON).orElse(null);
         assertThat(json, is(notNullValue()));
         mockWebServer.enqueue(
@@ -109,7 +109,7 @@ public class InventoryItemClientTests {
     }
 
     @Test
-    void inventoryItems_requestSerialization() throws InterruptedException {
+    void getInventoryItems_requestSerialize() throws InterruptedException {
         String str = TestUtil.readStringFromFile(INVENTORY_ITEMS_JSON).orElse(null);
         assertThat(str, is(notNullValue()));
         mockWebServer.enqueue(
@@ -126,7 +126,7 @@ public class InventoryItemClientTests {
     }
 
     @Test
-    void inventoryItems_responseDeserialization() {
+    void getInventoryItems_responseDeserialize() {
         String json = TestUtil.readStringFromFile(INVENTORY_ITEMS_JSON).orElse(null);
         assertThat(json, is(notNullValue()));
         mockWebServer.enqueue(

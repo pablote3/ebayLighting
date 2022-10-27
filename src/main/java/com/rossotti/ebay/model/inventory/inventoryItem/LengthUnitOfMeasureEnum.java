@@ -1,4 +1,4 @@
-package com.rossotti.ebay.model.common;
+package com.rossotti.ebay.model.inventory.inventoryItem;
 
 public enum LengthUnitOfMeasureEnum {
     INCH ("Inch"),

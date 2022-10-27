@@ -27,9 +27,9 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import static com.rossotti.ebay.model.inventory.inventoryItem.ConditionEnum.NEW;
-import static com.rossotti.ebay.model.common.LengthUnitOfMeasureEnum.INCH;
+import static com.rossotti.ebay.model.inventory.inventoryItem.LengthUnitOfMeasureEnum.INCH;
 import static com.rossotti.ebay.model.inventory.inventoryItem.LocaleEnum.en_US;
-import static com.rossotti.ebay.model.common.WeightUnitOfMeasureEnum.POUND;
+import static com.rossotti.ebay.model.inventory.inventoryItem.WeightUnitOfMeasureEnum.POUND;
 
 @SpringBootTest
 public class InventoryItemClientTests {

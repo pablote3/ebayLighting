@@ -1,6 +1,5 @@
 package com.rossotti.ebay.model.inventory.inventoryItem;
 
-import com.rossotti.ebay.model.common.WeightUnitOfMeasureEnum;
 import lombok.Getter;
 
 @Getter

@@ -18,16 +18,12 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 import static com.rossotti.ebay.model.common.CurrencyCodeEnum.USD;
 import static com.rossotti.ebay.model.inventory.offer.FormatTypeEnum.FIXED_PRICE;
@@ -39,7 +35,6 @@ public class OfferClientTests {
     private static final String OFFER_JSON = "data/inventory/offer.json";
     private static final String OFFERS_JSON = "data/inventory/offers.json";
     private static final String GET = "GET";
-    private static final BigDecimal TWO_SEVEN_TWO_SEVENTEEN = BigDecimal.valueOf(272.17);
     private static MockWebServer mockWebServer;
     @Autowired
     private AppConfig appConfig;
@@ -92,8 +87,12 @@ public class OfferClientTests {
         assertThat(response.get().getSku(), is("123"));
         assertThat(response.get().getMarketplaceId(), is(EBAY_US));
         assertThat(response.get().getFormat(), is(FIXED_PRICE));
-        assertThat(response.get().getPricingSummary().getPrice().getValue(), is(TWO_SEVEN_TWO_SEVENTEEN));
+        assertThat(response.get().getListingDescription(), is("GoPro Hero4 Helmet Cam - order description"));
+        assertThat(response.get().getAvailableQuantity(), is(10));
+        assertThat(response.get().getPricingSummary().getPrice().getValue(), is("272.17"));
         assertThat(response.get().getPricingSummary().getPrice().getCurrency(), is(USD));
+        assertThat(response.get().getListingPolicies().getPaymentPolicyId(), is("6196932000"));
+        assertThat(response.get().getListingPolicies().getReturnPolicyId(), is("6196944000"));
         assertThat(response.get().getListingPolicies().getFulfillmentPolicyId(), is("6196947000"));
         assertThat(response.get().getTax().getApplyTax(), is(false));
         assertThat(response.get().getListing().getListingStatus(), is(ACTIVE));
@@ -102,7 +101,7 @@ public class OfferClientTests {
     @Test
     void offers_requestSerialization() throws InterruptedException {
         String str = TestUtil.readStringFromFile(OFFERS_JSON).orElse(null);
-        assertNotNull(str);
+        assertThat(str, is(notNullValue()));
         mockWebServer.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
@@ -112,14 +111,14 @@ public class OfferClientTests {
         offerClient.getOffersBySku("123");
         RecordedRequest request = mockWebServer.takeRequest();
 
-        assertEquals("GET", request.getMethod());
-        assertEquals("/sell/inventory/v1/offer?sku=123&limit=20&offset=0", request.getPath());
+        assertThat(request.getMethod(), is(GET));
+        assertThat(request.getPath(), is("/sell/inventory/v1/offer?sku=123&limit=20&offset=0"));
     }
 
     @Test
     void offers_responseDeserialization() {
         String json = TestUtil.readStringFromFile(OFFERS_JSON).orElse(null);
-        assertNotNull(json);
+        assertThat(json, is(notNullValue()));
         mockWebServer.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
@@ -128,16 +127,21 @@ public class OfferClientTests {
         );
         Optional<Offers> response = offerClient.getOffersBySku("123");
 
-        assertTrue(response.isPresent());
-        assertEquals(1, response.get().getTotal());
-        assertEquals(1, response.get().getSize());
+        assertThat(response.isPresent(), is(true));
+        assertThat(response.get().getOffers(), hasSize(1));
+        assertThat(response.get().getTotal(), is(1));
         assertThat(response.get().getOffers().get(0).getOfferId(), is("8209815010"));
         assertThat(response.get().getOffers().get(0).getSku(), is("123"));
         assertThat(response.get().getOffers().get(0).getMarketplaceId(), is(EBAY_US));
         assertThat(response.get().getOffers().get(0).getFormat(), is(FIXED_PRICE));
-        assertThat(response.get().getOffers().get(0).getPricingSummary().getPrice().getValue(), is(TWO_SEVEN_TWO_SEVENTEEN));
-        assertThat(response.get().getOffers().get(0).getPricingSummary().getPrice().getCurrency(), is(USD));        assertEquals("6196947000", response.get().getOffers().get(0).getListingPolicies().getFulfillmentPolicyId());
-        assertFalse(response.get().getOffers().get(0).getTax().getApplyTax());
+        assertThat(response.get().getOffers().get(0).getListingDescription(), is("GoPro Hero4 Helmet Cam - order description"));
+        assertThat(response.get().getOffers().get(0).getAvailableQuantity(), is(10));
+        assertThat(response.get().getOffers().get(0).getPricingSummary().getPrice().getValue(), is("272.17"));
+        assertThat(response.get().getOffers().get(0).getPricingSummary().getPrice().getCurrency(), is(USD));
+        assertThat(response.get().getOffers().get(0).getListingPolicies().getPaymentPolicyId(), is("6196932000"));
+        assertThat(response.get().getOffers().get(0).getListingPolicies().getReturnPolicyId(), is("6196944000"));
+        assertThat(response.get().getOffers().get(0).getListingPolicies().getFulfillmentPolicyId(), is("6196947000"));
+        assertThat(response.get().getOffers().get(0).getTax().getApplyTax(), is(false));
         assertThat(response.get().getOffers().get(0).getListing().getListingStatus(), is(ACTIVE));
     }
 }

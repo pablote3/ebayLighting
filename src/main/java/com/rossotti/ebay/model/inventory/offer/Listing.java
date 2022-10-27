@@ -5,6 +5,6 @@ import lombok.Getter;
 @Getter
 public class Listing {
     private String listingId;
-    private String listingStatus;
+    private ListingStatusEnum listingStatus;
     private Integer soldQuantity;
 }

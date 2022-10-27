@@ -9,7 +9,6 @@ import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +20,22 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.io.IOException;
 import java.util.Optional;
 
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import static org.junit.jupiter.api.Assertions.*;
+
+import static com.rossotti.ebay.model.common.CurrencyCodeEnum.USD;
+import static com.rossotti.ebay.model.inventory.offer.ListingStatusEnum.ACTIVE;
 
 @SpringBootTest
 public class OfferClientTests {
     private static final String OFFER_JSON = "data/inventory/offer.json";
     private static final String OFFERS_JSON = "data/inventory/offers.json";
+    private static final String GET = "GET";
     private static MockWebServer mockWebServer;
     @Autowired
     private AppConfig appConfig;
@@ -48,39 +57,39 @@ public class OfferClientTests {
     @Test
     void offer_requestSerialization() throws InterruptedException {
         String str = TestUtil.readStringFromFile(OFFER_JSON).orElse(null);
-        assertNotNull(str);
+        assertThat(str, is(notNullValue()));
         mockWebServer.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .setBody(str)
         );
-        offerClient.getByOfferOfferId("8209815010");
+        offerClient.getByOfferByOfferId("8209815010");
         RecordedRequest request = mockWebServer.takeRequest();
 
-        assertEquals("GET", request.getMethod());
-        assertEquals("/sell/inventory/v1/offer/8209815010", request.getPath());
+        assertThat(request.getMethod(), is(GET));
+        assertThat(request.getPath(), is("/sell/inventory/v1/offer/8209815010"));
     }
 
     @Test
     void offer_responseDeserialization() {
         String json = TestUtil.readStringFromFile(OFFER_JSON).orElse(null);
-        Assertions.assertNotNull(json);
+        assertThat(json, is(notNullValue()));
         mockWebServer.enqueue(
             new MockResponse()
                 .setResponseCode(200)
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .setBody(json)
         );
-        Optional<Offer> response = offerClient.getByOfferOfferId("8209815010");
+        Optional<Offer> response = offerClient.getByOfferByOfferId("8209815010");
 
-        assertTrue(response.isPresent());
-        Assertions.assertEquals("8209815010", response.get().getOfferId());
-        Assertions.assertEquals("123", response.get().getSku());
-        Assertions.assertEquals("United States Dollar", response.get().getPricingSummary().getPrice().getCurrency().getCode());
-        Assertions.assertEquals("6196947000", response.get().getListingPolicies().getFulfillmentPolicyId());
-        Assertions.assertFalse(response.get().getTax().getApplyTax());
-        Assertions.assertEquals("ACTIVE", response.get().getListing().getListingStatus());
+        assertThat(response.isPresent(), is(true));
+        assertThat(response.get().getOfferId(), is("8209815010"));
+        assertThat(response.get().getSku(), is("123"));
+        assertThat(response.get().getPricingSummary().getPrice().getCurrency(), is(USD));
+        assertThat(response.get().getListingPolicies().getFulfillmentPolicyId(), is("6196947000"));
+        assertThat(response.get().getTax().getApplyTax(), is(false));
+        assertThat(response.get().getListing().getListingStatus(), is(ACTIVE));
     }
 
     @Test
@@ -113,13 +122,13 @@ public class OfferClientTests {
         Optional<Offers> response = offerClient.getOffersBySku("123");
 
         assertTrue(response.isPresent());
-        Assertions.assertEquals(1, response.get().getTotal());
-        Assertions.assertEquals(1, response.get().getSize());
-        Assertions.assertEquals("8209815010", response.get().getOffers().get(0).getOfferId());
-        Assertions.assertEquals("123", response.get().getOffers().get(0).getSku());
-        Assertions.assertEquals("United States Dollar", response.get().getOffers().get(0).getPricingSummary().getPrice().getCurrency().getCode());
-        Assertions.assertEquals("6196947000", response.get().getOffers().get(0).getListingPolicies().getFulfillmentPolicyId());
-        Assertions.assertFalse(response.get().getOffers().get(0).getTax().getApplyTax());
-        Assertions.assertEquals("ACTIVE", response.get().getOffers().get(0).getListing().getListingStatus());
+        assertEquals(1, response.get().getTotal());
+        assertEquals(1, response.get().getSize());
+        assertEquals("8209815010", response.get().getOffers().get(0).getOfferId());
+        assertEquals("123", response.get().getOffers().get(0).getSku());
+        assertEquals("United States Dollar", response.get().getOffers().get(0).getPricingSummary().getPrice().getCurrency().getCode());
+        assertEquals("6196947000", response.get().getOffers().get(0).getListingPolicies().getFulfillmentPolicyId());
+        assertFalse(response.get().getOffers().get(0).getTax().getApplyTax());
+        assertThat(response.get().getOffers().get(0).getListing().getListingStatus(), is(ACTIVE));
     }
 }

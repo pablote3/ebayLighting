@@ -29,7 +29,7 @@ public class OfferClient extends BaseClient {
         this.serverConfig = serverConfig;
     }
 
-    public Optional<Offer> getByOfferOfferId(final String offerId) {
+    public Optional<Offer> getByOfferByOfferId(final String offerId) {
         properties = createWebClientProperties(pathKey);
         UriComponentsBuilder builder = baseUriComponentBuilder(properties);
         if (isNotBlank(offerId)) {

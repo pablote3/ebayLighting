@@ -30,6 +30,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import static com.rossotti.ebay.model.common.CategoryTypeEnum.ALL_EXCLUDING_MOTORS_VEHICLES;
+import static com.rossotti.ebay.model.inventory.inventoryItem.ConditionEnum.NEW;
 import static com.rossotti.ebay.model.inventory.inventoryItem.LocaleEnum.en_US;
 
 @SpringBootTest
@@ -86,15 +87,17 @@ public class InventoryItemClientTests {
 
         assertThat(response.isPresent(), is(true));
         assertThat(response.get().getSku(), is("123"));
-//        assertThat(response.get().getLocale(), is(EN_US));
-        assertEquals("GoPro Hero4 Helmet Cam", response.get().getProduct().getTitle());
-        assertEquals("GoPro", response.get().getProduct().getAspects().getBrand().get(0));
-        assertEquals("Helmet/Action", response.get().getProduct().getAspects().getType().get(0));
-        assertEquals("High Definition", response.get().getProduct().getAspects().getRecordingDefinition().get(0));
-        assertEquals("10x", response.get().getProduct().getAspects().getOpticalZoom().get(0));
-        assertEquals("Flash Drive (SSD)", response.get().getProduct().getAspects().getMediaFormat().get(0));
-        assertEquals("Removable", response.get().getProduct().getAspects().getStorageType().get(0));
-        assertEquals("https://i.ebayimg.com/images/g/ySgAAOSw4-hZsdNS/s-l1600.jpg", response.get().getProduct().getImageUrls().get(0));
+        assertThat(response.get().getLocale(), is(en_US));
+        assertThat(response.get().getCondition(), is(NEW));
+        assertThat(response.get().getProduct().getTitle(), is("GoPro Hero4 Helmet Cam"));
+        assertThat(response.get().getProduct().getDescription(), is("New GoPro Hero4 Helmet Cam. Unopened box."));
+        assertThat(response.get().getProduct().getAspects().getBrand().get(0), is("GoPro"));
+        assertThat(response.get().getProduct().getAspects().getType().get(0), is("Helmet/Action"));
+        assertThat(response.get().getProduct().getAspects().getRecordingDefinition().get(0), is("High Definition"));
+        assertThat(response.get().getProduct().getAspects().getOpticalZoom().get(0), is("10x"));
+        assertThat(response.get().getProduct().getAspects().getMediaFormat().get(0), is("Flash Drive (SSD)"));
+        assertThat(response.get().getProduct().getAspects().getStorageType().get(0), is("Removable"));
+        assertThat(response.get().getProduct().getImageUrls().get(0), is("https://i.ebayimg.com/images/g/ySgAAOSw4-hZsdNS/s-l1600.jpg"));
         assertEquals("INCH", response.get().getPackageWeightAndSize().getDimensions().getUnit());
         assertEquals(Double.valueOf("1.16"), response.get().getPackageWeightAndSize().getDimensions().getLength());
         assertEquals("POUND", response.get().getPackageWeightAndSize().getWeight().getUnit());
@@ -136,15 +139,16 @@ public class InventoryItemClientTests {
         assertThat(response.get().getInventoryItems(), hasSize(1));
         assertThat(response.get().getTotal(), is(1));
         assertThat(response.get().getInventoryItems().get(0).getSku(), is("123"));
-//        assertThat(response.get().getInventoryItems().get(0).getLocale(), is(EN_US));
-        assertEquals("GoPro Hero4 Helmet Cam", response.get().getInventoryItems().get(0).getProduct().getTitle());
-        assertEquals("GoPro", response.get().getInventoryItems().get(0).getProduct().getAspects().getBrand().get(0));
-        assertEquals("Helmet/Action", response.get().getInventoryItems().get(0).getProduct().getAspects().getType().get(0));
-        assertEquals("High Definition", response.get().getInventoryItems().get(0).getProduct().getAspects().getRecordingDefinition().get(0));
-        assertEquals("10x", response.get().getInventoryItems().get(0).getProduct().getAspects().getOpticalZoom().get(0));
-        assertEquals("Flash Drive (SSD)", response.get().getInventoryItems().get(0).getProduct().getAspects().getMediaFormat().get(0));
-        assertEquals("Removable", response.get().getInventoryItems().get(0).getProduct().getAspects().getStorageType().get(0));
-        assertEquals("https://i.ebayimg.com/images/g/ySgAAOSw4-hZsdNS/s-l1600.jpg", response.get().getInventoryItems().get(0).getProduct().getImageUrls().get(0));
+        assertThat(response.get().getInventoryItems().get(0).getLocale(), is(en_US));
+        assertThat(response.get().getInventoryItems().get(0).getProduct().getTitle(), is("GoPro Hero4 Helmet Cam"));
+        assertThat(response.get().getInventoryItems().get(0).getProduct().getDescription(), is("New GoPro Hero4 Helmet Cam. Unopened box."));
+        assertThat(response.get().getInventoryItems().get(0).getProduct().getAspects().getBrand().get(0), is("GoPro"));
+        assertThat(response.get().getInventoryItems().get(0).getProduct().getAspects().getType().get(0), is("Helmet/Action"));
+        assertThat(response.get().getInventoryItems().get(0).getProduct().getAspects().getRecordingDefinition().get(0), is("High Definition"));
+        assertThat(response.get().getInventoryItems().get(0).getProduct().getAspects().getOpticalZoom().get(0), is("10x"));
+        assertThat(response.get().getInventoryItems().get(0).getProduct().getAspects().getMediaFormat().get(0), is("Flash Drive (SSD)"));
+        assertThat(response.get().getInventoryItems().get(0).getProduct().getAspects().getStorageType().get(0), is("Removable"));
+        assertThat(response.get().getInventoryItems().get(0).getProduct().getImageUrls().get(0), is("https://i.ebayimg.com/images/g/ySgAAOSw4-hZsdNS/s-l1600.jpg"));
         assertNull(response.get().getInventoryItems().get(0).getPackageWeightAndSize());
         assertEquals(Integer.valueOf("50"), response.get().getInventoryItems().get(0).getAvailability().getShipToLocationAvailability().getQuantity());
         assertNull(response.get().getInventoryItems().get(0).getAvailability().getShipToLocationAvailability().getAllocationByFormat());

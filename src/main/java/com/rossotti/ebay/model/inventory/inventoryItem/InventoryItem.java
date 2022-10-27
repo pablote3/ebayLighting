@@ -7,7 +7,7 @@ public class InventoryItem {
     private String sku;
     private LocaleEnum locale;
     private Product product;
-    private String condition;
+    private ConditionEnum condition;
     private PackageWeightAndSize packageWeightAndSize;
     private Availability availability;
 }

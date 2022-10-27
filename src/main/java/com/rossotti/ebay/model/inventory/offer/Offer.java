@@ -19,7 +19,7 @@ public class Offer {
     private String merchantLocationKey;
     private Tax tax;
     private Listing listing;
-    private String status;
+    private OfferStatusEnum status;
     private String listingDuration;
     private Boolean includeCatalogProductDetails;
     private Boolean hideBuyerDetails;

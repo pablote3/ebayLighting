@@ -29,6 +29,7 @@ import static com.rossotti.ebay.model.common.CurrencyCodeEnum.USD;
 import static com.rossotti.ebay.model.inventory.offer.FormatTypeEnum.FIXED_PRICE;
 import static com.rossotti.ebay.model.inventory.offer.ListingStatusEnum.ACTIVE;
 import static com.rossotti.ebay.model.common.MarketplaceIdEnum.EBAY_US;
+import static com.rossotti.ebay.model.inventory.offer.OfferStatusEnum.PUBLISHED;
 
 @SpringBootTest
 public class OfferClientTests {
@@ -87,6 +88,7 @@ public class OfferClientTests {
         assertThat(response.get().getSku(), is("123"));
         assertThat(response.get().getMarketplaceId(), is(EBAY_US));
         assertThat(response.get().getFormat(), is(FIXED_PRICE));
+        assertThat(response.get().getStatus(), is(PUBLISHED));
         assertThat(response.get().getListingDescription(), is("GoPro Hero4 Helmet Cam - order description"));
         assertThat(response.get().getAvailableQuantity(), is(10));
         assertThat(response.get().getPricingSummary().getPrice().getValue(), is("272.17"));
@@ -95,7 +97,9 @@ public class OfferClientTests {
         assertThat(response.get().getListingPolicies().getReturnPolicyId(), is("6196944000"));
         assertThat(response.get().getListingPolicies().getFulfillmentPolicyId(), is("6196947000"));
         assertThat(response.get().getTax().getApplyTax(), is(false));
+        assertThat(response.get().getListing().getListingId(), is("110551471149"));
         assertThat(response.get().getListing().getListingStatus(), is(ACTIVE));
+        assertThat(response.get().getListing().getSoldQuantity(), is(0));
     }
 
     @Test
@@ -134,6 +138,7 @@ public class OfferClientTests {
         assertThat(response.get().getOffers().get(0).getSku(), is("123"));
         assertThat(response.get().getOffers().get(0).getMarketplaceId(), is(EBAY_US));
         assertThat(response.get().getOffers().get(0).getFormat(), is(FIXED_PRICE));
+        assertThat(response.get().getOffers().get(0).getStatus(), is(PUBLISHED));
         assertThat(response.get().getOffers().get(0).getListingDescription(), is("GoPro Hero4 Helmet Cam - order description"));
         assertThat(response.get().getOffers().get(0).getAvailableQuantity(), is(10));
         assertThat(response.get().getOffers().get(0).getPricingSummary().getPrice().getValue(), is("272.17"));
@@ -142,6 +147,8 @@ public class OfferClientTests {
         assertThat(response.get().getOffers().get(0).getListingPolicies().getReturnPolicyId(), is("6196944000"));
         assertThat(response.get().getOffers().get(0).getListingPolicies().getFulfillmentPolicyId(), is("6196947000"));
         assertThat(response.get().getOffers().get(0).getTax().getApplyTax(), is(false));
+        assertThat(response.get().getOffers().get(0).getListing().getListingId(), is("110551471149"));
+        assertThat(response.get().getOffers().get(0).getListing().getSoldQuantity(), is(0));
         assertThat(response.get().getOffers().get(0).getListing().getListingStatus(), is(ACTIVE));
     }
 }

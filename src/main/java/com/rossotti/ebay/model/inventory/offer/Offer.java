@@ -20,7 +20,7 @@ public class Offer {
     private Tax tax;
     private Listing listing;
     private OfferStatusEnum status;
-    private String listingDuration;
+    private ListingDurationEnum listingDuration;
     private Boolean includeCatalogProductDetails;
     private Boolean hideBuyerDetails;
 }

@@ -27,6 +27,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import static com.rossotti.ebay.model.common.CurrencyCodeEnum.USD;
 import static com.rossotti.ebay.model.inventory.offer.FormatTypeEnum.FIXED_PRICE;
+import static com.rossotti.ebay.model.inventory.offer.ListingDurationEnum.GTC;
 import static com.rossotti.ebay.model.inventory.offer.ListingStatusEnum.ACTIVE;
 import static com.rossotti.ebay.model.common.MarketplaceIdEnum.EBAY_US;
 import static com.rossotti.ebay.model.inventory.offer.OfferStatusEnum.PUBLISHED;
@@ -89,6 +90,9 @@ public class OfferClientTests {
         assertThat(response.get().getMarketplaceId(), is(EBAY_US));
         assertThat(response.get().getFormat(), is(FIXED_PRICE));
         assertThat(response.get().getStatus(), is(PUBLISHED));
+        assertThat(response.get().getListingDuration(), is(GTC));
+        assertThat(response.get().getIncludeCatalogProductDetails(), is(true));
+        assertThat(response.get().getHideBuyerDetails(), is(false));
         assertThat(response.get().getListingDescription(), is("GoPro Hero4 Helmet Cam - order description"));
         assertThat(response.get().getAvailableQuantity(), is(10));
         assertThat(response.get().getPricingSummary().getPrice().getValue(), is("272.17"));
@@ -139,6 +143,9 @@ public class OfferClientTests {
         assertThat(response.get().getOffers().get(0).getMarketplaceId(), is(EBAY_US));
         assertThat(response.get().getOffers().get(0).getFormat(), is(FIXED_PRICE));
         assertThat(response.get().getOffers().get(0).getStatus(), is(PUBLISHED));
+        assertThat(response.get().getOffers().get(0).getListingDuration(), is(GTC));
+        assertThat(response.get().getOffers().get(0).getIncludeCatalogProductDetails(), is(true));
+        assertThat(response.get().getOffers().get(0).getHideBuyerDetails(), is(false));
         assertThat(response.get().getOffers().get(0).getListingDescription(), is("GoPro Hero4 Helmet Cam - order description"));
         assertThat(response.get().getOffers().get(0).getAvailableQuantity(), is(10));
         assertThat(response.get().getOffers().get(0).getPricingSummary().getPrice().getValue(), is("272.17"));

@@ -1,5 +1,6 @@
-package com.rossotti.ebay.model.common;
+package com.rossotti.ebay.model.account.fulfillmentPolicy;
 
+import com.rossotti.ebay.model.common.CurrencyCodeEnum;
 import lombok.Getter;
 
 import java.math.BigDecimal;

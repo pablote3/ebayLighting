@@ -1,6 +1,5 @@
 package com.rossotti.ebay.model.account.fulfillmentPolicy;
 
-import com.rossotti.ebay.model.common.Cost;
 import lombok.Getter;
 
 @Getter

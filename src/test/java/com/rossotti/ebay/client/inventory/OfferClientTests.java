@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -29,13 +30,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import static com.rossotti.ebay.model.common.CurrencyCodeEnum.USD;
+import static com.rossotti.ebay.model.inventory.offer.FormatTypeEnum.FIXED_PRICE;
 import static com.rossotti.ebay.model.inventory.offer.ListingStatusEnum.ACTIVE;
+import static com.rossotti.ebay.model.common.MarketplaceIdEnum.EBAY_US;
 
 @SpringBootTest
 public class OfferClientTests {
     private static final String OFFER_JSON = "data/inventory/offer.json";
     private static final String OFFERS_JSON = "data/inventory/offers.json";
     private static final String GET = "GET";
+    private static final BigDecimal TWO_SEVEN_TWO_SEVENTEEN = BigDecimal.valueOf(272.17);
     private static MockWebServer mockWebServer;
     @Autowired
     private AppConfig appConfig;
@@ -86,6 +90,9 @@ public class OfferClientTests {
         assertThat(response.isPresent(), is(true));
         assertThat(response.get().getOfferId(), is("8209815010"));
         assertThat(response.get().getSku(), is("123"));
+        assertThat(response.get().getMarketplaceId(), is(EBAY_US));
+        assertThat(response.get().getFormat(), is(FIXED_PRICE));
+        assertThat(response.get().getPricingSummary().getPrice().getValue(), is(TWO_SEVEN_TWO_SEVENTEEN));
         assertThat(response.get().getPricingSummary().getPrice().getCurrency(), is(USD));
         assertThat(response.get().getListingPolicies().getFulfillmentPolicyId(), is("6196947000"));
         assertThat(response.get().getTax().getApplyTax(), is(false));
@@ -124,10 +131,12 @@ public class OfferClientTests {
         assertTrue(response.isPresent());
         assertEquals(1, response.get().getTotal());
         assertEquals(1, response.get().getSize());
-        assertEquals("8209815010", response.get().getOffers().get(0).getOfferId());
-        assertEquals("123", response.get().getOffers().get(0).getSku());
-        assertEquals("United States Dollar", response.get().getOffers().get(0).getPricingSummary().getPrice().getCurrency().getCode());
-        assertEquals("6196947000", response.get().getOffers().get(0).getListingPolicies().getFulfillmentPolicyId());
+        assertThat(response.get().getOffers().get(0).getOfferId(), is("8209815010"));
+        assertThat(response.get().getOffers().get(0).getSku(), is("123"));
+        assertThat(response.get().getOffers().get(0).getMarketplaceId(), is(EBAY_US));
+        assertThat(response.get().getOffers().get(0).getFormat(), is(FIXED_PRICE));
+        assertThat(response.get().getOffers().get(0).getPricingSummary().getPrice().getValue(), is(TWO_SEVEN_TWO_SEVENTEEN));
+        assertThat(response.get().getOffers().get(0).getPricingSummary().getPrice().getCurrency(), is(USD));        assertEquals("6196947000", response.get().getOffers().get(0).getListingPolicies().getFulfillmentPolicyId());
         assertFalse(response.get().getOffers().get(0).getTax().getApplyTax());
         assertThat(response.get().getOffers().get(0).getListing().getListingStatus(), is(ACTIVE));
     }

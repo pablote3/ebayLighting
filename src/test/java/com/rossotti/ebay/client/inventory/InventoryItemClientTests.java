@@ -20,18 +20,16 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.io.IOException;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import static com.rossotti.ebay.model.common.CategoryTypeEnum.ALL_EXCLUDING_MOTORS_VEHICLES;
 import static com.rossotti.ebay.model.inventory.inventoryItem.ConditionEnum.NEW;
+import static com.rossotti.ebay.model.common.LengthUnitOfMeasureEnum.INCH;
 import static com.rossotti.ebay.model.inventory.inventoryItem.LocaleEnum.en_US;
+import static com.rossotti.ebay.model.common.WeightUnitOfMeasureEnum.POUND;
 
 @SpringBootTest
 public class InventoryItemClientTests {
@@ -89,6 +87,8 @@ public class InventoryItemClientTests {
         assertThat(response.get().getSku(), is("123"));
         assertThat(response.get().getLocale(), is(en_US));
         assertThat(response.get().getCondition(), is(NEW));
+        assertThat(response.get().getProduct().getBrand(), is("GoPro"));
+        assertThat(response.get().getProduct().getMpn(), is("CHDHX-401"));
         assertThat(response.get().getProduct().getTitle(), is("GoPro Hero4 Helmet Cam"));
         assertThat(response.get().getProduct().getDescription(), is("New GoPro Hero4 Helmet Cam. Unopened box."));
         assertThat(response.get().getProduct().getAspects().getBrand().get(0), is("GoPro"));
@@ -98,12 +98,14 @@ public class InventoryItemClientTests {
         assertThat(response.get().getProduct().getAspects().getMediaFormat().get(0), is("Flash Drive (SSD)"));
         assertThat(response.get().getProduct().getAspects().getStorageType().get(0), is("Removable"));
         assertThat(response.get().getProduct().getImageUrls().get(0), is("https://i.ebayimg.com/images/g/ySgAAOSw4-hZsdNS/s-l1600.jpg"));
-        assertEquals("INCH", response.get().getPackageWeightAndSize().getDimensions().getUnit());
-        assertEquals(Double.valueOf("1.16"), response.get().getPackageWeightAndSize().getDimensions().getLength());
-        assertEquals("POUND", response.get().getPackageWeightAndSize().getWeight().getUnit());
-        assertEquals(Double.valueOf("2.25"), response.get().getPackageWeightAndSize().getWeight().getValue());
-        assertEquals(Integer.valueOf("50"), response.get().getAvailability().getShipToLocationAvailability().getQuantity());
-        assertEquals(Integer.valueOf("50"), response.get().getAvailability().getShipToLocationAvailability().getAllocationByFormat().getFixedPrice());
+        assertThat(response.get().getPackageWeightAndSize().getDimensions().getUnit(), is(INCH));
+        assertThat(response.get().getPackageWeightAndSize().getDimensions().getWidth(), is(2.32));
+        assertThat(response.get().getPackageWeightAndSize().getDimensions().getLength(), is(1.16));
+        assertThat(response.get().getPackageWeightAndSize().getDimensions().getHeight(), is(1.61));
+        assertThat(response.get().getPackageWeightAndSize().getWeight().getUnit(), is(POUND));
+        assertThat(response.get().getPackageWeightAndSize().getWeight().getValue(), is(2.25));
+        assertThat(response.get().getAvailability().getShipToLocationAvailability().getQuantity(), is(50));
+        assertThat(response.get().getAvailability().getShipToLocationAvailability().getAllocationByFormat().getFixedPrice(), is(50));
     }
 
     @Test
@@ -119,8 +121,8 @@ public class InventoryItemClientTests {
         inventoryItemClient.getInventoryItems();
         RecordedRequest request = mockWebServer.takeRequest();
 
-        assertEquals("GET", request.getMethod());
-        assertEquals("/sell/inventory/v1/inventory_item?limit=20&offset=0", request.getPath());
+        assertThat(request.getMethod(), is(GET));
+        assertThat(request.getPath(), is("/sell/inventory/v1/inventory_item?limit=20&offset=0"));
     }
 
     @Test
@@ -140,6 +142,10 @@ public class InventoryItemClientTests {
         assertThat(response.get().getTotal(), is(1));
         assertThat(response.get().getInventoryItems().get(0).getSku(), is("123"));
         assertThat(response.get().getInventoryItems().get(0).getLocale(), is(en_US));
+        assertThat(response.get().getInventoryItems().get(0).getProduct().getBrand(), is("GoPro"));
+        assertThat(response.get().getInventoryItems().get(0).getProduct().getMpn(), is("CHDHX-401"));
+        assertThat(response.get().getInventoryItems().get(0).getProduct().getTitle(), is("GoPro Hero4 Helmet Cam"));
+        assertThat(response.get().getInventoryItems().get(0).getProduct().getDescription(), is("New GoPro Hero4 Helmet Cam. Unopened box."));
         assertThat(response.get().getInventoryItems().get(0).getProduct().getTitle(), is("GoPro Hero4 Helmet Cam"));
         assertThat(response.get().getInventoryItems().get(0).getProduct().getDescription(), is("New GoPro Hero4 Helmet Cam. Unopened box."));
         assertThat(response.get().getInventoryItems().get(0).getProduct().getAspects().getBrand().get(0), is("GoPro"));
@@ -149,8 +155,8 @@ public class InventoryItemClientTests {
         assertThat(response.get().getInventoryItems().get(0).getProduct().getAspects().getMediaFormat().get(0), is("Flash Drive (SSD)"));
         assertThat(response.get().getInventoryItems().get(0).getProduct().getAspects().getStorageType().get(0), is("Removable"));
         assertThat(response.get().getInventoryItems().get(0).getProduct().getImageUrls().get(0), is("https://i.ebayimg.com/images/g/ySgAAOSw4-hZsdNS/s-l1600.jpg"));
-        assertNull(response.get().getInventoryItems().get(0).getPackageWeightAndSize());
-        assertEquals(Integer.valueOf("50"), response.get().getInventoryItems().get(0).getAvailability().getShipToLocationAvailability().getQuantity());
-        assertNull(response.get().getInventoryItems().get(0).getAvailability().getShipToLocationAvailability().getAllocationByFormat());
+        assertThat(response.get().getInventoryItems().get(0).getPackageWeightAndSize(), is(nullValue()));
+        assertThat(response.get().getInventoryItems().get(0).getAvailability().getShipToLocationAvailability().getQuantity(), is(50));
+        assertThat(response.get().getInventoryItems().get(0).getAvailability().getShipToLocationAvailability().getAllocationByFormat(), is(nullValue()));
     }
 }

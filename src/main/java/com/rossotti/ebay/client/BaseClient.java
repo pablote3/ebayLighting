@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
+import reactor.core.publisher.Mono;
 import reactor.util.retry.Retry;
 
 import java.time.Duration;
@@ -63,6 +64,20 @@ public abstract class BaseClient {
                      .retryWhen(Retry.backoff(appConfig.getMaxRetries(), Duration.ofMillis(appConfig.getBackoffInterval()))
                      .doAfterRetry((r) -> logRetryCount(r.totalRetries(), appConfig.getMaxRetries())))
                      .block()
+        );
+    }
+    protected <T> Optional<T> webClientCall(WebClientProperties properties, Class<T> requestClass, Object body) {
+        return Optional.ofNullable(
+                webClient.method(properties.getMethod())
+                        .uri(properties.getUri())
+                        .headers(h -> h.addAll(properties.getHeaders()))
+                        .body(Mono.just(body), requestClass)
+                        .retrieve()
+                        .bodyToMono(requestClass)
+                        .timeout(Duration.ofMillis(appConfig.getHttpTimeOutMs()))
+                        .retryWhen(Retry.backoff(appConfig.getMaxRetries(), Duration.ofMillis(appConfig.getBackoffInterval()))
+                                .doAfterRetry((r) -> logRetryCount(r.totalRetries(), appConfig.getMaxRetries())))
+                        .block()
         );
     }
     private void logRetryCount(long current, int max) {

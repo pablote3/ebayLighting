@@ -53,4 +53,14 @@ public class PaymentPolicyClient extends BaseClient {
         properties.setHeaders(createHeaders(properties));
         return webClientCall(properties, PaymentPolicies.class);
     }
+    public Optional<PaymentPolicy> create(final PaymentPolicy paymentPolicy) {
+        properties = createWebClientProperties(pathKey);
+        UriComponentsBuilder builder = baseUriComponentBuilder(properties);
+        builder.queryParam("marketplace_id", properties.getMarketplaceId());
+        properties.setUri(builder.build().toUri());
+        properties.setMethod(HttpMethod.POST);
+        logger.info(builder.build().toUriString());
+        properties.setHeaders(createHeaders(properties));
+        return webClientCall(properties, PaymentPolicy.class, paymentPolicy);
+    }
 }

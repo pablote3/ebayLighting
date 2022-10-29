@@ -4,7 +4,6 @@ import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.ServerConfig;
 import com.rossotti.ebay.model.account.paymentPolicy.PaymentPolicies;
 import com.rossotti.ebay.model.account.paymentPolicy.PaymentPolicy;
-import com.rossotti.ebay.util.TestUtil;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -20,7 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -37,6 +36,8 @@ import static com.rossotti.ebay.model.account.paymentPolicy.PaymentMethodTypeEnu
 import static com.rossotti.ebay.model.account.paymentPolicy.PaymentMethodTypeEnum.CREDIT_CARD;
 import static com.rossotti.ebay.model.account.paymentPolicy.RecipientAccountReferenceTypeEnum.PAYPAL_EMAIL;
 import static com.rossotti.ebay.model.common.TimeDurationUnitEnum.DAY;
+import static com.rossotti.ebay.util.TestUtil.createServerConfig;
+import static com.rossotti.ebay.util.TestUtil.readStringFromFile;
 
 @SpringBootTest
 public class PaymentPolicyClientTests {
@@ -54,7 +55,7 @@ public class PaymentPolicyClientTests {
     @BeforeEach
     public void setup() {
         mockWebServer = new MockWebServer();
-        ServerConfig serverConfig = TestUtil.createServerConfig(mockWebServer.url("/"));
+        ServerConfig serverConfig = createServerConfig(mockWebServer.url("/"));
         paymentPolicyClient = new PaymentPolicyClient(WebClient.create(), appConfig, serverConfig);
     }
 
@@ -64,14 +65,11 @@ public class PaymentPolicyClientTests {
     }
 
     @Test
-    void getPaymentPolicy_requestSerialize() throws InterruptedException {
-        String str = TestUtil.readStringFromFile(PAYMENT_POLICY_JSON).orElse(null);
-        assertThat(str, is(notNullValue()));
+    void getPaymentPolicy_request() throws InterruptedException {
         mockWebServer.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .setBody(str)
         );
         paymentPolicyClient.getByPaymentPolicyId("6196932000");
         RecordedRequest request = mockWebServer.takeRequest();
@@ -81,14 +79,12 @@ public class PaymentPolicyClientTests {
    }
 
     @Test
-    void getPaymentPolicy_responseDeserialize() {
-        String json = TestUtil.readStringFromFile(PAYMENT_POLICY_JSON).orElse(null);
-        assertThat(json, is(notNullValue()));
+    void getPaymentPolicy_response() {
         mockWebServer.enqueue(
             new MockResponse()
                 .setResponseCode(200)
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .setBody(json)
+                .setBody(Objects.requireNonNull(readStringFromFile(PAYMENT_POLICY_JSON).orElse(null)))
         );
         Optional<PaymentPolicy> response = paymentPolicyClient.getByPaymentPolicyId("6196932000");
 
@@ -109,14 +105,11 @@ public class PaymentPolicyClientTests {
     }
 
     @Test
-    void getPaymentPolicies_requestSerialize() throws InterruptedException {
-        String str = TestUtil.readStringFromFile(PAYMENT_POLICIES_JSON).orElse(null);
-        assertThat(str, is(notNullValue()));
+    void getPaymentPolicies_request() throws InterruptedException {
         mockWebServer.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .setBody(str)
         );
         paymentPolicyClient.getPaymentPolicies();
         RecordedRequest request = mockWebServer.takeRequest();
@@ -126,14 +119,12 @@ public class PaymentPolicyClientTests {
     }
 
     @Test
-    void getPaymentPolicies_responseDeserialize() {
-        String json = TestUtil.readStringFromFile(PAYMENT_POLICIES_JSON).orElse(null);
-        assertThat(json, is(notNullValue()));
+    void getPaymentPolicies_response() {
         mockWebServer.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .setBody(json)
+                        .setBody(Objects.requireNonNull(readStringFromFile(PAYMENT_POLICIES_JSON).orElse(null)))
         );
         Optional<PaymentPolicies> response = paymentPolicyClient.getPaymentPolicies();
 
@@ -162,50 +153,37 @@ public class PaymentPolicyClientTests {
         assertThat(response.get().getPaymentPolicies().get(1).getImmediatePay(), is(false));
     }
     @Test
-    void createPaymentPolicy_requestSerialize() throws InterruptedException {
-        String str = TestUtil.readStringFromFile(PAYMENT_POLICY_JSON).orElse(null);
-        assertThat(str, is(notNullValue()));
+    void createPaymentPolicy_request() throws InterruptedException {
         mockWebServer.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .setBody(str)
+                        .setBody(Objects.requireNonNull(readStringFromFile(PAYMENT_POLICY_JSON).orElse(null)))
         );
         paymentPolicyClient.create(new PaymentPolicy());
 
         RecordedRequest request = mockWebServer.takeRequest();
+        JsonContent<Object> body = json.from(request.getBody().readUtf8());
 
+        assertThat(body, is(notNullValue()));
         assertThat(request.getMethod(), is(POST));
         assertThat(request.getPath(), is("/sell/account/v1/payment_policy?marketplace_id=EBAY_US"));
     }
 
     @Test
-    void createPaymentPolicy_responseDeserialize() throws InterruptedException {
+    void createPaymentPolicy_response() throws InterruptedException {
         mockWebServer.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .setBody(getJson(PAYMENT_POLICY_JSON))
+                        .setBody(Objects.requireNonNull(readStringFromFile(PAYMENT_POLICY_JSON).orElse(null)))
         );
 
         PaymentPolicy paymentPolicy = new PaymentPolicy();
         paymentPolicy.setName("CreditCard");
         Optional<PaymentPolicy> response = paymentPolicyClient.create(paymentPolicy);
 
-        RecordedRequest request = mockWebServer.takeRequest();
-        JsonContent<Object> body = json.from(request.getBody().readUtf8());
-
-        assertThat(body, is(notNullValue()));
         assertThat(response.isPresent(), is(true));
         assertThat(response.get().getName(), is("CreditCard"));
-    }
-    private String getJson(String path) {
-        try {
-            InputStream jsonStream = this.getClass().getClassLoader().getResourceAsStream(path);
-            assert jsonStream != null;
-            return new String(jsonStream.readAllBytes());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

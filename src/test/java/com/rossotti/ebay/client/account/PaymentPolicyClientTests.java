@@ -45,6 +45,7 @@ public class PaymentPolicyClientTests {
     private static final String PAYMENT_POLICIES_JSON = "data/account/paymentPolicies.json";
     private static final String GET = "GET";
     private static final String POST = "POST";
+    private static final String DELETE = "DELETE";
     private static MockWebServer mockWebServer;
     private final BasicJsonTester json = new BasicJsonTester(this.getClass());
     @Autowired
@@ -185,5 +186,30 @@ public class PaymentPolicyClientTests {
 
         assertThat(response.isPresent(), is(true));
         assertThat(response.get().getName(), is("CreditCard"));
+    }
+
+    @Test
+    void deletePaymentPolicy_request() throws InterruptedException {
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+        );
+        paymentPolicyClient.delete("6196932000");
+        RecordedRequest request = mockWebServer.takeRequest();
+
+        assertThat(request.getMethod(), is(DELETE));
+        assertThat(request.getPath(), is("/sell/account/v1/payment_policy/6196932000"));
+    }
+
+    @Test
+    void deletePaymentPolicy_response() {
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(204)
+        );
+        Optional<PaymentPolicy> response = paymentPolicyClient.delete("6196932000");
+
+        assertThat(response.isPresent(), is(false));
     }
 }

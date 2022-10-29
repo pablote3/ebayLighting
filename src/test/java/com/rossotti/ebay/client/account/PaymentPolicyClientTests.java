@@ -13,11 +13,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.json.BasicJsonTester;
+import org.springframework.boot.test.json.JsonContent;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -40,7 +43,9 @@ public class PaymentPolicyClientTests {
     private static final String PAYMENT_POLICY_JSON = "data/account/paymentPolicy.json";
     private static final String PAYMENT_POLICIES_JSON = "data/account/paymentPolicies.json";
     private static final String GET = "GET";
+    private static final String POST = "POST";
     private static MockWebServer mockWebServer;
+    private final BasicJsonTester json = new BasicJsonTester(this.getClass());
     @Autowired
     private AppConfig appConfig;
     @Autowired
@@ -155,5 +160,52 @@ public class PaymentPolicyClientTests {
         assertThat(response.get().getPaymentPolicies().get(1).getFullPaymentDueIn().getValue(), is(7));
         assertThat(response.get().getPaymentPolicies().get(1).getFullPaymentDueIn().getUnit(), is(DAY));
         assertThat(response.get().getPaymentPolicies().get(1).getImmediatePay(), is(false));
+    }
+    @Test
+    void createPaymentPolicy_requestSerialize() throws InterruptedException {
+        String str = TestUtil.readStringFromFile(PAYMENT_POLICY_JSON).orElse(null);
+        assertThat(str, is(notNullValue()));
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .setBody(str)
+        );
+        paymentPolicyClient.create(new PaymentPolicy());
+
+        RecordedRequest request = mockWebServer.takeRequest();
+
+        assertThat(request.getMethod(), is(POST));
+        assertThat(request.getPath(), is("/sell/account/v1/payment_policy?marketplace_id=EBAY_US"));
+    }
+
+    @Test
+    void createPaymentPolicy_responseDeserialize() throws InterruptedException {
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .setBody(getJson(PAYMENT_POLICY_JSON))
+        );
+
+        PaymentPolicy paymentPolicy = new PaymentPolicy();
+        paymentPolicy.setName("CreditCard");
+        Optional<PaymentPolicy> response = paymentPolicyClient.create(paymentPolicy);
+
+        RecordedRequest request = mockWebServer.takeRequest();
+        JsonContent<Object> body = json.from(request.getBody().readUtf8());
+
+        assertThat(body, is(notNullValue()));
+        assertThat(response.isPresent(), is(true));
+        assertThat(response.get().getName(), is("CreditCard"));
+    }
+    private String getJson(String path) {
+        try {
+            InputStream jsonStream = this.getClass().getClassLoader().getResourceAsStream(path);
+            assert jsonStream != null;
+            return new String(jsonStream.readAllBytes());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

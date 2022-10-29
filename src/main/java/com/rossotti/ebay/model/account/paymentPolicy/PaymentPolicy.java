@@ -3,9 +3,12 @@ package com.rossotti.ebay.model.account.paymentPolicy;
 import com.rossotti.ebay.model.common.MarketplaceIdEnum;
 import com.rossotti.ebay.model.common.CategoryType;
 import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 @Getter
+@Setter
 public class PaymentPolicy {
     private String name;
     private String description;

@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.BasicJsonTester;
 import org.springframework.boot.test.json.JsonContent;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -39,13 +40,15 @@ import static com.rossotti.ebay.model.common.TimeDurationUnitEnum.DAY;
 import static com.rossotti.ebay.util.TestUtil.createServerConfig;
 import static com.rossotti.ebay.util.TestUtil.readStringFromFile;
 
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.PUT;
+import static org.springframework.http.HttpMethod.DELETE;
+
 @SpringBootTest
 public class PaymentPolicyClientTests {
     private static final String PAYMENT_POLICY_JSON = "data/account/paymentPolicy.json";
     private static final String PAYMENT_POLICIES_JSON = "data/account/paymentPolicies.json";
-    private static final String GET = "GET";
-    private static final String POST = "POST";
-    private static final String DELETE = "DELETE";
     private static MockWebServer mockWebServer;
     private final BasicJsonTester json = new BasicJsonTester(this.getClass());
     @Autowired
@@ -75,7 +78,7 @@ public class PaymentPolicyClientTests {
         paymentPolicyClient.getByPaymentPolicyId("6196932000");
         RecordedRequest request = mockWebServer.takeRequest();
 
-        assertThat(request.getMethod(), is(GET));
+        assertThat(request.getMethod(), is(GET.name()));
         assertThat(request.getPath(), is("/sell/account/v1/payment_policy/6196932000?marketplace_id=EBAY_US"));
    }
 
@@ -115,7 +118,7 @@ public class PaymentPolicyClientTests {
         paymentPolicyClient.getPaymentPolicies();
         RecordedRequest request = mockWebServer.takeRequest();
 
-        assertThat(request.getMethod(), is(GET));
+        assertThat(request.getMethod(), is(GET.name()));
         assertThat(request.getPath(), is("/sell/account/v1/payment_policy?marketplace_id=EBAY_US"));
     }
 
@@ -167,12 +170,45 @@ public class PaymentPolicyClientTests {
         JsonContent<Object> body = json.from(request.getBody().readUtf8());
 
         assertThat(body, is(notNullValue()));
-        assertThat(request.getMethod(), is(POST));
+        assertThat(request.getMethod(), is(POST.name()));
         assertThat(request.getPath(), is("/sell/account/v1/payment_policy?marketplace_id=EBAY_US"));
     }
 
     @Test
-    void createPaymentPolicy_response() throws InterruptedException {
+    void createPaymentPolicy_response() {
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .setBody(Objects.requireNonNull(readStringFromFile(PAYMENT_POLICY_JSON).orElse(null)))
+        );
+
+        PaymentPolicy paymentPolicy = new PaymentPolicy();
+        paymentPolicy.setName("CreditCard");
+        Optional<PaymentPolicy> response = paymentPolicyClient.create(paymentPolicy);
+
+        assertThat(response.isPresent(), is(true));
+        assertThat(response.get().getName(), is("CreditCard"));
+    }
+    @Test
+    void updatePaymentPolicy_request() throws InterruptedException {
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .setBody(Objects.requireNonNull(readStringFromFile(PAYMENT_POLICY_JSON).orElse(null)))
+        );
+        paymentPolicyClient.update(new PaymentPolicy(), "123456");
+
+        RecordedRequest request = mockWebServer.takeRequest();
+        JsonContent<Object> body = json.from(request.getBody().readUtf8());
+
+        assertThat(body, is(notNullValue()));
+        assertThat(request.getMethod(), is(PUT.name()));
+        assertThat(request.getPath(), is("/sell/account/v1/payment_policy/123456"));
+    }
+    @Test
+    void updatePaymentPolicy_response() {
         mockWebServer.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
@@ -198,7 +234,7 @@ public class PaymentPolicyClientTests {
         paymentPolicyClient.delete("6196932000");
         RecordedRequest request = mockWebServer.takeRequest();
 
-        assertThat(request.getMethod(), is(DELETE));
+        assertThat(request.getMethod(), is(DELETE.name()));
         assertThat(request.getPath(), is("/sell/account/v1/payment_policy/6196932000"));
     }
 

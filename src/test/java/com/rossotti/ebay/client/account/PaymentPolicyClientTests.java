@@ -15,7 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.BasicJsonTester;
 import org.springframework.boot.test.json.JsonContent;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -74,6 +73,7 @@ public class PaymentPolicyClientTests {
                 new MockResponse()
                         .setResponseCode(200)
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .setBody(Objects.requireNonNull(readStringFromFile(PAYMENT_POLICY_JSON).orElse(null)))
         );
         paymentPolicyClient.getByPaymentPolicyId("6196932000");
         RecordedRequest request = mockWebServer.takeRequest();
@@ -184,7 +184,6 @@ public class PaymentPolicyClientTests {
         );
 
         PaymentPolicy paymentPolicy = new PaymentPolicy();
-        paymentPolicy.setName("CreditCard");
         Optional<PaymentPolicy> response = paymentPolicyClient.create(paymentPolicy);
 
         assertThat(response.isPresent(), is(true));
@@ -217,7 +216,6 @@ public class PaymentPolicyClientTests {
         );
 
         PaymentPolicy paymentPolicy = new PaymentPolicy();
-        paymentPolicy.setName("CreditCard");
         Optional<PaymentPolicy> response = paymentPolicyClient.create(paymentPolicy);
 
         assertThat(response.isPresent(), is(true));

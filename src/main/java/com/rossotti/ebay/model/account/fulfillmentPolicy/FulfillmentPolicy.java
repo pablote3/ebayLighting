@@ -5,8 +5,10 @@ import java.util.List;
 import com.rossotti.ebay.model.common.MarketplaceIdEnum;
 import com.rossotti.ebay.model.common.CategoryType;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class FulfillmentPolicy {
     private String name;
     private String description;

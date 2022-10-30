@@ -42,7 +42,6 @@ public class FulfillmentPolicyClient extends BaseClient {
         properties.setHeaders(createHeaders(properties));
         return webClientCall(properties, FulfillmentPolicy.class);
     }
-
     public Optional<FulfillmentPolicies> getFulfillmentPolicies() {
         properties = createWebClientProperties(pathKey);
         UriComponentsBuilder builder = baseUriComponentBuilder(properties);
@@ -52,5 +51,39 @@ public class FulfillmentPolicyClient extends BaseClient {
         logger.info(builder.build().toUriString());
         properties.setHeaders(createHeaders(properties));
         return webClientCall(properties, FulfillmentPolicies.class);
+    }
+    public Optional<FulfillmentPolicy> create(final FulfillmentPolicy fulfillmentPolicy) {
+        properties = createWebClientProperties(pathKey);
+        UriComponentsBuilder builder = baseUriComponentBuilder(properties);
+        builder.queryParam("marketplace_id", properties.getMarketplaceId());
+        properties.setUri(builder.build().toUri());
+        properties.setMethod(HttpMethod.POST);
+        logger.info(builder.build().toUriString());
+        properties.setHeaders(createHeaders(properties));
+        return webClientCall(properties, FulfillmentPolicy.class, fulfillmentPolicy);
+    }
+    public Optional<FulfillmentPolicy> update(final FulfillmentPolicy fulfillmentPolicy, final String fulfillmentPolicyId) {
+        properties = createWebClientProperties(pathKey);
+        UriComponentsBuilder builder = baseUriComponentBuilder(properties);
+        if (isNotBlank(fulfillmentPolicyId)) {
+            builder.path("/" + fulfillmentPolicyId);
+        }
+        properties.setUri(builder.build().toUri());
+        properties.setMethod(HttpMethod.PUT);
+        logger.info(builder.build().toUriString());
+        properties.setHeaders(createHeaders(properties));
+        return webClientCall(properties, FulfillmentPolicy.class, fulfillmentPolicy);
+    }
+    public Optional<FulfillmentPolicy> delete(final String fulfillmentPolicyId) {
+        properties = createWebClientProperties(pathKey);
+        UriComponentsBuilder builder = baseUriComponentBuilder(properties);
+        if (isNotBlank(fulfillmentPolicyId)) {
+            builder.path("/" + fulfillmentPolicyId);
+        }
+        properties.setUri(builder.build().toUri());
+        properties.setMethod(HttpMethod.DELETE);
+        logger.info(builder.build().toUriString());
+        properties.setHeaders(createHeaders(properties));
+        return webClientCall(properties, FulfillmentPolicy.class);
     }
 }

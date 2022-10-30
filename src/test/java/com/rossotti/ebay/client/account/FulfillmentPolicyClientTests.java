@@ -87,7 +87,6 @@ public class FulfillmentPolicyClientTests {
         assertThat(request.getMethod(), is(GET.name()));
         assertThat(request.getPath(), is("/sell/account/v1/fulfillment_policy/6196947000?marketplace_id=EBAY_US"));
     }
-
     @Test
     void getFulfillmentPolicy_response() {
         mockWebServer.enqueue(
@@ -122,7 +121,6 @@ public class FulfillmentPolicyClientTests {
         assertThat(response.get().getShippingOptions().get(0).getInsuranceFee().getValue(), comparesEqualTo(BigDecimal.ZERO));
         assertThat(response.get().getShippingOptions().get(0).getInsuranceFee().getCurrency(), is(USD));
     }
-
     @Test
     void getFulfillmentPolicies_request() throws InterruptedException {
         mockWebServer.enqueue(
@@ -137,7 +135,6 @@ public class FulfillmentPolicyClientTests {
         assertThat(request.getMethod(), is(GET.name()));
         assertThat(request.getPath(), is("/sell/account/v1/fulfillment_policy?marketplace_id=EBAY_US"));
     }
-
     @Test
     void getFulfillmentPolicies_response() {
         mockWebServer.enqueue(
@@ -217,7 +214,6 @@ public class FulfillmentPolicyClientTests {
         assertThat(request.getMethod(), is(POST.name()));
         assertThat(request.getPath(), is("/sell/account/v1/fulfillment_policy?marketplace_id=EBAY_US"));
     }
-
     @Test
     void createFulfillmentPolicy_response() {
         mockWebServer.enqueue(
@@ -265,7 +261,6 @@ public class FulfillmentPolicyClientTests {
         assertThat(response.isPresent(), is(true));
         assertThat(response.get().getName(), is("Domestic: FlatRate: USPS"));
     }
-
     @Test
     void deleteFulfillmentPolicy_request() throws InterruptedException {
         mockWebServer.enqueue(
@@ -279,7 +274,6 @@ public class FulfillmentPolicyClientTests {
         assertThat(request.getMethod(), is(DELETE.name()));
         assertThat(request.getPath(), is("/sell/account/v1/fulfillment_policy/6196932000"));
     }
-
     @Test
     void deleteFulfillmentPolicy_response() {
         mockWebServer.enqueue(

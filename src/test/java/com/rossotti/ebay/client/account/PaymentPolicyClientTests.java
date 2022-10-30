@@ -81,7 +81,6 @@ public class PaymentPolicyClientTests {
         assertThat(request.getMethod(), is(GET.name()));
         assertThat(request.getPath(), is("/sell/account/v1/payment_policy/6196932000?marketplace_id=EBAY_US"));
    }
-
     @Test
     void getPaymentPolicy_response() {
         mockWebServer.enqueue(
@@ -107,7 +106,6 @@ public class PaymentPolicyClientTests {
         assertThat(response.get().getFullPaymentDueIn().getUnit(), is(DAY));
         assertThat(response.get().getImmediatePay(), is(false));
     }
-
     @Test
     void getPaymentPolicies_request() throws InterruptedException {
         mockWebServer.enqueue(
@@ -121,7 +119,6 @@ public class PaymentPolicyClientTests {
         assertThat(request.getMethod(), is(GET.name()));
         assertThat(request.getPath(), is("/sell/account/v1/payment_policy?marketplace_id=EBAY_US"));
     }
-
     @Test
     void getPaymentPolicies_response() {
         mockWebServer.enqueue(
@@ -173,7 +170,6 @@ public class PaymentPolicyClientTests {
         assertThat(request.getMethod(), is(POST.name()));
         assertThat(request.getPath(), is("/sell/account/v1/payment_policy?marketplace_id=EBAY_US"));
     }
-
     @Test
     void createPaymentPolicy_response() {
         mockWebServer.enqueue(
@@ -221,7 +217,6 @@ public class PaymentPolicyClientTests {
         assertThat(response.isPresent(), is(true));
         assertThat(response.get().getName(), is("CreditCard"));
     }
-
     @Test
     void deletePaymentPolicy_request() throws InterruptedException {
         mockWebServer.enqueue(
@@ -235,7 +230,6 @@ public class PaymentPolicyClientTests {
         assertThat(request.getMethod(), is(DELETE.name()));
         assertThat(request.getPath(), is("/sell/account/v1/payment_policy/6196932000"));
     }
-
     @Test
     void deletePaymentPolicy_response() {
         mockWebServer.enqueue(

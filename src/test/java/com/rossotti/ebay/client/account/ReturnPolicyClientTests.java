@@ -4,7 +4,6 @@ import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.ServerConfig;
 import com.rossotti.ebay.model.account.returnPolicy.ReturnPolicies;
 import com.rossotti.ebay.model.account.returnPolicy.ReturnPolicy;
-import com.rossotti.ebay.util.TestUtil;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -13,11 +12,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.json.BasicJsonTester;
+import org.springframework.boot.test.json.JsonContent;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -32,13 +34,20 @@ import static com.rossotti.ebay.model.account.returnPolicy.ReturnMethodEnum.REPL
 import static com.rossotti.ebay.model.account.returnPolicy.ReturnShippingCostPayerEnum.SELLER;
 import static com.rossotti.ebay.model.common.MarketplaceIdEnum.EBAY_US;
 import static com.rossotti.ebay.model.common.TimeDurationUnitEnum.DAY;
+import static com.rossotti.ebay.util.TestUtil.createServerConfig;
+import static com.rossotti.ebay.util.TestUtil.readStringFromFile;
+
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.PUT;
+import static org.springframework.http.HttpMethod.DELETE;
 
 @SpringBootTest
 public class ReturnPolicyClientTests {
     private static final String RETURN_POLICY_JSON = "data/account/returnPolicy.json";
     private static final String RETURN_POLICIES_JSON = "data/account/returnPolicies.json";
-    private static final String GET = "GET";
     private static MockWebServer mockWebServer;
+    private final BasicJsonTester json = new BasicJsonTester(this.getClass());
     @Autowired
     private AppConfig appConfig;
     @Autowired
@@ -47,7 +56,7 @@ public class ReturnPolicyClientTests {
     @BeforeEach
     public void setup() {
         mockWebServer = new MockWebServer();
-        ServerConfig serverConfig = TestUtil.createServerConfig(mockWebServer.url("/"));
+        ServerConfig serverConfig = createServerConfig(mockWebServer.url("/"));
         returnPolicyClient = new ReturnPolicyClient(WebClient.create(), appConfig, serverConfig);
     }
 
@@ -57,30 +66,26 @@ public class ReturnPolicyClientTests {
     }
 
     @Test
-    void getReturnPolicy_requestSerialize() throws InterruptedException {
-        String str = TestUtil.readStringFromFile(RETURN_POLICY_JSON).orElse(null);
-        assertThat(str, is(notNullValue()));
+    void getReturnPolicy_request() throws InterruptedException {
         mockWebServer.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .setBody(str)
+                        .setBody(Objects.requireNonNull(readStringFromFile(RETURN_POLICY_JSON).orElse(null)))
         );
         returnPolicyClient.getByReturnPolicyId("6196944000");
         RecordedRequest request = mockWebServer.takeRequest();
 
-        assertThat(request.getMethod(), is(GET));
+        assertThat(request.getMethod(), is(GET.name()));
         assertThat(request.getPath(), is("/sell/account/v1/return_policy/6196944000?marketplace_id=EBAY_US"));
     }
     @Test
-    void getReturnPolicy_responseDeserialize() {
-        String json = TestUtil.readStringFromFile(RETURN_POLICY_JSON).orElse(null);
-        assertThat(json, is(notNullValue()));
+    void getReturnPolicy_response() {
         mockWebServer.enqueue(
             new MockResponse()
                 .setResponseCode(200)
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .setBody(json)
+                .setBody(Objects.requireNonNull(readStringFromFile(RETURN_POLICY_JSON).orElse(null)))
         );
         Optional<ReturnPolicy> response = returnPolicyClient.getByReturnPolicyId("6196944000");
 
@@ -97,31 +102,26 @@ public class ReturnPolicyClientTests {
         assertThat(response.get().getReturnShippingCostPayer(), is(SELLER));
     }
     @Test
-    void getReturnPolicies_requestSerialize() throws InterruptedException {
-        String str = TestUtil.readStringFromFile(RETURN_POLICIES_JSON).orElse(null);
-        assertThat(str, is(notNullValue()));
+    void getReturnPolicies_request() throws InterruptedException {
         mockWebServer.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .setBody(str)
+                        .setBody(Objects.requireNonNull(readStringFromFile(RETURN_POLICIES_JSON).orElse(null)))
         );
         returnPolicyClient.getReturnPolicies();
         RecordedRequest request = mockWebServer.takeRequest();
 
-        assertThat(request.getMethod(), is(GET));
+        assertThat(request.getMethod(), is(GET.name()));
         assertThat(request.getPath(), is("/sell/account/v1/return_policy?marketplace_id=EBAY_US"));
     }
-
     @Test
-    void getReturnPolicies_responseDeserialize() {
-        String json = TestUtil.readStringFromFile(RETURN_POLICIES_JSON).orElse(null);
-        assertThat(json, is(notNullValue()));
+    void getReturnPolicies_response() {
         mockWebServer.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .setBody(json)
+                        .setBody(readStringFromFile(RETURN_POLICIES_JSON).orElse(null))
         );
         Optional<ReturnPolicies> response = returnPolicyClient.getReturnPolicies();
 
@@ -148,5 +148,92 @@ public class ReturnPolicyClientTests {
         assertThat(response.get().getReturnPolicies().get(1).getRefundMethod(), is(MONEY_BACK));
         assertThat(response.get().getReturnPolicies().get(1).getReturnMethod(), is(REPLACEMENT));
         assertThat(response.get().getReturnPolicies().get(1).getReturnShippingCostPayer(), is(SELLER));
+    }
+    @Test
+    void createReturnPolicy_request() throws InterruptedException {
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .setBody(Objects.requireNonNull(readStringFromFile(RETURN_POLICY_JSON).orElse(null)))
+        );
+        returnPolicyClient.create(new ReturnPolicy());
+
+        RecordedRequest request = mockWebServer.takeRequest();
+        JsonContent<Object> body = json.from(request.getBody().readUtf8());
+
+        assertThat(body, is(notNullValue()));
+        assertThat(request.getMethod(), is(POST.name()));
+        assertThat(request.getPath(), is("/sell/account/v1/return_policy?marketplace_id=EBAY_US"));
+    }
+    @Test
+    void createReturnPolicy_response() {
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .setBody(Objects.requireNonNull(readStringFromFile(RETURN_POLICY_JSON).orElse(null)))
+        );
+
+        ReturnPolicy returnPolicy = new ReturnPolicy();
+        Optional<ReturnPolicy> response = returnPolicyClient.create(returnPolicy);
+
+        assertThat(response.isPresent(), is(true));
+        assertThat(response.get().getName(), is("Return Accepted"));
+    }
+    @Test
+    void updateReturnPolicy_request() throws InterruptedException {
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .setBody(Objects.requireNonNull(readStringFromFile(RETURN_POLICY_JSON).orElse(null)))
+        );
+        returnPolicyClient.update(new ReturnPolicy(), "123456");
+
+        RecordedRequest request = mockWebServer.takeRequest();
+        JsonContent<Object> body = json.from(request.getBody().readUtf8());
+
+        assertThat(body, is(notNullValue()));
+        assertThat(request.getMethod(), is(PUT.name()));
+        assertThat(request.getPath(), is("/sell/account/v1/return_policy/123456"));
+    }
+    @Test
+    void updateReturnPolicy_response() {
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .setBody(Objects.requireNonNull(readStringFromFile(RETURN_POLICY_JSON).orElse(null)))
+        );
+
+        ReturnPolicy returnPolicy = new ReturnPolicy();
+        Optional<ReturnPolicy> response = returnPolicyClient.create(returnPolicy);
+
+        assertThat(response.isPresent(), is(true));
+        assertThat(response.get().getName(), is("Return Accepted"));
+    }
+    @Test
+    void deleteReturnPolicy_request() throws InterruptedException {
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+        );
+        returnPolicyClient.delete("6196932000");
+        RecordedRequest request = mockWebServer.takeRequest();
+
+        assertThat(request.getMethod(), is(DELETE.name()));
+        assertThat(request.getPath(), is("/sell/account/v1/return_policy/6196932000"));
+    }
+    @Test
+    void deleteReturnPolicy_response() {
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(204)
+        );
+        Optional<ReturnPolicy> response = returnPolicyClient.delete("6196932000");
+
+        assertThat(response.isPresent(), is(false));
     }
 }

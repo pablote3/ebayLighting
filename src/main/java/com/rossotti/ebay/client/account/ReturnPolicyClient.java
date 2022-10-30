@@ -28,7 +28,6 @@ public class ReturnPolicyClient extends BaseClient {
         this.appConfig = appConfig;
         this.serverConfig = serverConfig;
     }
-
     public Optional<ReturnPolicy> getByReturnPolicyId(final String returnPolicyId) {
         properties = createWebClientProperties(pathKey);
         UriComponentsBuilder builder = baseUriComponentBuilder(properties);
@@ -42,7 +41,6 @@ public class ReturnPolicyClient extends BaseClient {
         properties.setHeaders(createHeaders(properties));
         return webClientCall(properties, ReturnPolicy.class);
     }
-
     public Optional<ReturnPolicies> getReturnPolicies() {
         properties = createWebClientProperties(pathKey);
         UriComponentsBuilder builder = baseUriComponentBuilder(properties);
@@ -52,5 +50,39 @@ public class ReturnPolicyClient extends BaseClient {
         logger.info(builder.build().toUriString());
         properties.setHeaders(createHeaders(properties));
         return webClientCall(properties, ReturnPolicies.class);
+    }
+    public Optional<ReturnPolicy> create(final ReturnPolicy returnPolicy) {
+        properties = createWebClientProperties(pathKey);
+        UriComponentsBuilder builder = baseUriComponentBuilder(properties);
+        builder.queryParam("marketplace_id", properties.getMarketplaceId());
+        properties.setUri(builder.build().toUri());
+        properties.setMethod(HttpMethod.POST);
+        logger.info(builder.build().toUriString());
+        properties.setHeaders(createHeaders(properties));
+        return webClientCall(properties, ReturnPolicy.class, returnPolicy);
+    }
+    public Optional<ReturnPolicy> update(final ReturnPolicy returnPolicy, final String returnPolicyId) {
+        properties = createWebClientProperties(pathKey);
+        UriComponentsBuilder builder = baseUriComponentBuilder(properties);
+        if (isNotBlank(returnPolicyId)) {
+            builder.path("/" + returnPolicyId);
+        }
+        properties.setUri(builder.build().toUri());
+        properties.setMethod(HttpMethod.PUT);
+        logger.info(builder.build().toUriString());
+        properties.setHeaders(createHeaders(properties));
+        return webClientCall(properties, ReturnPolicy.class, returnPolicy);
+    }
+    public Optional<ReturnPolicy> delete(final String returnPolicyId) {
+        properties = createWebClientProperties(pathKey);
+        UriComponentsBuilder builder = baseUriComponentBuilder(properties);
+        if (isNotBlank(returnPolicyId)) {
+            builder.path("/" + returnPolicyId);
+        }
+        properties.setUri(builder.build().toUri());
+        properties.setMethod(HttpMethod.DELETE);
+        logger.info(builder.build().toUriString());
+        properties.setHeaders(createHeaders(properties));
+        return webClientCall(properties, ReturnPolicy.class);
     }
 }

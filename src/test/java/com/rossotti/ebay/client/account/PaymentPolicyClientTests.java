@@ -212,7 +212,7 @@ public class PaymentPolicyClientTests {
         );
 
         PaymentPolicy paymentPolicy = new PaymentPolicy();
-        Optional<PaymentPolicy> response = paymentPolicyClient.create(paymentPolicy);
+        Optional<PaymentPolicy> response = paymentPolicyClient.update(paymentPolicy, "123456");
 
         assertThat(response.isPresent(), is(true));
         assertThat(response.get().getName(), is("CreditCard"));

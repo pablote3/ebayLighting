@@ -79,7 +79,7 @@ public class FulfillmentPolicyClientTests {
                 new MockResponse()
                         .setResponseCode(200)
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .setBody(readStringFromFile(FULFILLMENT_POLICY_JSON).orElse(null))
+                        .setBody(Objects.requireNonNull(readStringFromFile(FULFILLMENT_POLICY_JSON).orElse(null)))
         );
         fulfillmentPolicyClient.getByFulfillmentPolicyId("6196947000");
         RecordedRequest request = mockWebServer.takeRequest();
@@ -93,7 +93,7 @@ public class FulfillmentPolicyClientTests {
             new MockResponse()
                 .setResponseCode(200)
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .setBody(readStringFromFile(FULFILLMENT_POLICY_JSON).orElse(null))
+                .setBody(Objects.requireNonNull(readStringFromFile(FULFILLMENT_POLICY_JSON).orElse(null)))
         );
         Optional<FulfillmentPolicy> response = fulfillmentPolicyClient.getByFulfillmentPolicyId("6196932000");
 
@@ -127,7 +127,7 @@ public class FulfillmentPolicyClientTests {
                 new MockResponse()
                         .setResponseCode(200)
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .setBody(readStringFromFile(FULFILLMENT_POLICIES_JSON).orElse(null))
+                        .setBody(Objects.requireNonNull(readStringFromFile(FULFILLMENT_POLICIES_JSON).orElse(null)))
         );
         fulfillmentPolicyClient.getFulfillmentPolicies();
         RecordedRequest request = mockWebServer.takeRequest();
@@ -141,7 +141,7 @@ public class FulfillmentPolicyClientTests {
                 new MockResponse()
                         .setResponseCode(200)
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .setBody(readStringFromFile(FULFILLMENT_POLICIES_JSON).orElse(null))
+                        .setBody(Objects.requireNonNull(readStringFromFile(FULFILLMENT_POLICIES_JSON).orElse(null)))
         );
         Optional<FulfillmentPolicies> response = fulfillmentPolicyClient.getFulfillmentPolicies();
 
@@ -256,7 +256,7 @@ public class FulfillmentPolicyClientTests {
         );
 
         FulfillmentPolicy fulfillmentPolicy = new FulfillmentPolicy();
-        Optional<FulfillmentPolicy> response = fulfillmentPolicyClient.create(fulfillmentPolicy);
+        Optional<FulfillmentPolicy> response = fulfillmentPolicyClient.update(fulfillmentPolicy, "123456");
 
         assertThat(response.isPresent(), is(true));
         assertThat(response.get().getName(), is("Domestic: FlatRate: USPS"));

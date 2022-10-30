@@ -121,7 +121,7 @@ public class ReturnPolicyClientTests {
                 new MockResponse()
                         .setResponseCode(200)
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .setBody(readStringFromFile(RETURN_POLICIES_JSON).orElse(null))
+                        .setBody(Objects.requireNonNull(readStringFromFile(RETURN_POLICIES_JSON).orElse(null)))
         );
         Optional<ReturnPolicies> response = returnPolicyClient.getReturnPolicies();
 
@@ -208,7 +208,7 @@ public class ReturnPolicyClientTests {
         );
 
         ReturnPolicy returnPolicy = new ReturnPolicy();
-        Optional<ReturnPolicy> response = returnPolicyClient.create(returnPolicy);
+        Optional<ReturnPolicy> response = returnPolicyClient.update(returnPolicy, "123456");
 
         assertThat(response.isPresent(), is(true));
         assertThat(response.get().getName(), is("Return Accepted"));

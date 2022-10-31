@@ -28,12 +28,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import static com.rossotti.ebay.model.account.program.ProgramTypeEnum.OUT_OF_STOCK_CONTROL;
 import static com.rossotti.ebay.model.account.program.ProgramTypeEnum.SELLING_POLICY_MANAGEMENT;
+import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 
 @SpringBootTest
 public class OptedInProgramClientTests {
     private static final String OPTED_IN_PROGRAMS_JSON = "data/account/optedInPrograms.json";
-    private static final String GET = "GET";
     private static MockWebServer mockWebServer;
     private final BasicJsonTester json = new BasicJsonTester(this.getClass());
     @Autowired
@@ -66,7 +66,7 @@ public class OptedInProgramClientTests {
         optedInProgramClient.getOptedInPrograms();
         RecordedRequest request = mockWebServer.takeRequest();
 
-        assertThat(request.getMethod(), is(GET));
+        assertThat(request.getMethod(), is(GET.name()));
         assertThat(request.getPath(), is("/sell/account/v1/program/get_opted_in_programs"));
     }
     @Test

@@ -1,28 +1,13 @@
 package com.rossotti.ebay.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.ServerConfig;
-import com.rossotti.ebay.client.WebClientProperties;
 import okhttp3.HttpUrl;
 import java.io.InputStream;
 import java.util.Optional;
 
 public class TestUtil {
     public static ObjectMapper objectMapper;
-    public static WebClientProperties createWebClientProperties(HttpUrl url, AppConfig appConfig, String pathKey) {
-        WebClientProperties properties = new WebClientProperties();
-        properties.setScheme(url.scheme());
-        properties.setHost(url.host());
-        properties.setPort(url.port());
-        properties.setContentType(appConfig.getContentType());
-        properties.setMarketplaceId(appConfig.getMarketplaceId().getCode());
-        properties.setPath(appConfig.getResourceMap().get(pathKey));
-        properties.setLimit(20);
-        properties.setOffset(0);
-        return properties;
-    }
-
     public static ServerConfig createServerConfig(HttpUrl url) {
         ServerConfig serverConfig = new ServerConfig();
         serverConfig.setScheme(url.scheme());

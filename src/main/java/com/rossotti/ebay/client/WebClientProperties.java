@@ -18,6 +18,7 @@ public class WebClientProperties {
     private HttpHeaders headers;
     private String path;
     private String contentType;
+    private String contentLanguage;
     private Integer limit;
     private Integer offset;
     private String marketplaceId;

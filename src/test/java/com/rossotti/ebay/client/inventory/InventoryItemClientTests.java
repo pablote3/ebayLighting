@@ -13,13 +13,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.json.BasicJsonTester;
+import org.springframework.boot.test.json.JsonContent;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 
+import static com.rossotti.ebay.util.TestUtil.readStringFromFile;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -30,6 +34,8 @@ import static com.rossotti.ebay.model.inventory.inventoryItem.ConditionEnum.NEW;
 import static com.rossotti.ebay.model.inventory.inventoryItem.LengthUnitOfMeasureEnum.INCH;
 import static com.rossotti.ebay.model.inventory.inventoryItem.LocaleEnum.en_US;
 import static com.rossotti.ebay.model.inventory.inventoryItem.WeightUnitOfMeasureEnum.POUND;
+import static org.springframework.http.HttpMethod.DELETE;
+import static org.springframework.http.HttpMethod.PUT;
 
 @SpringBootTest
 public class InventoryItemClientTests {
@@ -37,6 +43,8 @@ public class InventoryItemClientTests {
     private static final String INVENTORY_ITEMS_JSON = "data/inventory/inventoryItems.json";
     private static final String GET = "GET";
     private static MockWebServer mockWebServer;
+    private final BasicJsonTester json = new BasicJsonTester(this.getClass());
+
     @Autowired
     private AppConfig appConfig;
     @Autowired
@@ -48,12 +56,10 @@ public class InventoryItemClientTests {
         ServerConfig serverConfig = TestUtil.createServerConfig(mockWebServer.url("/"));
         inventoryItemClient = new InventoryItemClient(WebClient.create(), appConfig, serverConfig);
     }
-
     @AfterAll
     public static void tearDown() throws IOException {
         mockWebServer.shutdown();
     }
-
     @Test
     void getInventoryItem_requestSerialize() throws InterruptedException {
         String str = TestUtil.readStringFromFile(INVENTORY_ITEM_JSON).orElse(null);
@@ -70,7 +76,6 @@ public class InventoryItemClientTests {
         assertThat(request.getMethod(), is(GET));
         assertThat(request.getPath(), is("/sell/inventory/v1/inventory_item/123"));
     }
-
     @Test
     void getInventoryItem_responseDeserialize() {
         String json = TestUtil.readStringFromFile(INVENTORY_ITEM_JSON).orElse(null);
@@ -107,7 +112,6 @@ public class InventoryItemClientTests {
         assertThat(response.get().getAvailability().getShipToLocationAvailability().getQuantity(), is(50));
         assertThat(response.get().getAvailability().getShipToLocationAvailability().getAllocationByFormat().getFixedPrice(), is(50));
     }
-
     @Test
     void getInventoryItems_requestSerialize() throws InterruptedException {
         String str = TestUtil.readStringFromFile(INVENTORY_ITEMS_JSON).orElse(null);
@@ -124,7 +128,6 @@ public class InventoryItemClientTests {
         assertThat(request.getMethod(), is(GET));
         assertThat(request.getPath(), is("/sell/inventory/v1/inventory_item?limit=20&offset=0"));
     }
-
     @Test
     void getInventoryItems_responseDeserialize() {
         String json = TestUtil.readStringFromFile(INVENTORY_ITEMS_JSON).orElse(null);
@@ -158,5 +161,60 @@ public class InventoryItemClientTests {
         assertThat(response.get().getInventoryItems().get(0).getPackageWeightAndSize(), is(nullValue()));
         assertThat(response.get().getInventoryItems().get(0).getAvailability().getShipToLocationAvailability().getQuantity(), is(50));
         assertThat(response.get().getInventoryItems().get(0).getAvailability().getShipToLocationAvailability().getAllocationByFormat(), is(nullValue()));
+    }
+    @Test
+    void createOrUpdateInventoryItem_request() throws InterruptedException {
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .setBody(Objects.requireNonNull(readStringFromFile(INVENTORY_ITEM_JSON).orElse(null)))
+        );
+        inventoryItemClient.createOrUpdate(new InventoryItem(), "123");
+
+        RecordedRequest request = mockWebServer.takeRequest();
+        JsonContent<Object> body = json.from(request.getBody().readUtf8());
+
+        assertThat(body, is(notNullValue()));
+        assertThat(request.getMethod(), is(PUT.name()));
+        assertThat(request.getPath(), is("/sell/inventory/v1/inventory_item/123"));
+    }
+    @Test
+    void createOrUpdateInventoryItem_response() {
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .setBody(Objects.requireNonNull(readStringFromFile(INVENTORY_ITEM_JSON).orElse(null)))
+        );
+
+        InventoryItem inventoryItem = new InventoryItem();
+        Optional<InventoryItem> response = inventoryItemClient.createOrUpdate(inventoryItem, "123");
+
+        assertThat(response.isPresent(), is(true));
+        assertThat(response.get().getSku(), is("123"));
+    }
+    @Test
+    void deleteInventoryItem_request() throws InterruptedException {
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+        );
+        inventoryItemClient.delete("6196932000");
+        RecordedRequest request = mockWebServer.takeRequest();
+
+        assertThat(request.getMethod(), is(DELETE.name()));
+        assertThat(request.getPath(), is("/sell/inventory/v1/inventory_item/6196932000"));
+    }
+    @Test
+    void deleteInventoryItem_response() {
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(204)
+        );
+        Optional<InventoryItem> response = inventoryItemClient.delete("6196932000");
+
+        assertThat(response.isPresent(), is(false));
     }
 }

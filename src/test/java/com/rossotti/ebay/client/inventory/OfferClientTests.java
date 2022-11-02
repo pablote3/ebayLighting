@@ -13,13 +13,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.json.BasicJsonTester;
+import org.springframework.boot.test.json.JsonContent;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 
+import static com.rossotti.ebay.util.TestUtil.readStringFromFile;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -31,13 +35,17 @@ import static com.rossotti.ebay.model.inventory.offer.ListingDurationEnum.GTC;
 import static com.rossotti.ebay.model.inventory.offer.ListingStatusEnum.ACTIVE;
 import static com.rossotti.ebay.model.common.MarketplaceIdEnum.EBAY_US;
 import static com.rossotti.ebay.model.inventory.offer.OfferStatusEnum.PUBLISHED;
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.PUT;
+import static org.springframework.http.HttpMethod.DELETE;
 
 @SpringBootTest
 public class OfferClientTests {
     private static final String OFFER_JSON = "data/inventory/offer.json";
     private static final String OFFERS_JSON = "data/inventory/offers.json";
-    private static final String GET = "GET";
     private static MockWebServer mockWebServer;
+    private final BasicJsonTester json = new BasicJsonTester(this.getClass());
     @Autowired
     private AppConfig appConfig;
     @Autowired
@@ -68,7 +76,7 @@ public class OfferClientTests {
         offerClient.getByOfferByOfferId("8209815010");
         RecordedRequest request = mockWebServer.takeRequest();
 
-        assertThat(request.getMethod(), is(GET));
+        assertThat(request.getMethod(), is(GET.name()));
         assertThat(request.getPath(), is("/sell/inventory/v1/offer/8209815010"));
     }
 
@@ -119,7 +127,7 @@ public class OfferClientTests {
         offerClient.getOffersBySku("123");
         RecordedRequest request = mockWebServer.takeRequest();
 
-        assertThat(request.getMethod(), is(GET));
+        assertThat(request.getMethod(), is(GET.name()));
         assertThat(request.getPath(), is("/sell/inventory/v1/offer?sku=123&limit=20&offset=0"));
     }
 
@@ -157,5 +165,92 @@ public class OfferClientTests {
         assertThat(response.get().getOffers().get(0).getListing().getListingId(), is("110551471149"));
         assertThat(response.get().getOffers().get(0).getListing().getSoldQuantity(), is(0));
         assertThat(response.get().getOffers().get(0).getListing().getListingStatus(), is(ACTIVE));
+    }
+    @Test
+    void createOffer_request() throws InterruptedException {
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .setBody(Objects.requireNonNull(readStringFromFile(OFFER_JSON).orElse(null)))
+        );
+        offerClient.create(new Offer());
+
+        RecordedRequest request = mockWebServer.takeRequest();
+        JsonContent<Object> body = json.from(request.getBody().readUtf8());
+
+        assertThat(body, is(notNullValue()));
+        assertThat(request.getMethod(), is(POST.name()));
+        assertThat(request.getPath(), is("/sell/inventory/v1/offer"));
+    }
+    @Test
+    void createOffer_response() {
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .setBody(Objects.requireNonNull(Objects.requireNonNull(readStringFromFile(OFFER_JSON)).orElse(null)))
+        );
+
+        Offer offer = new Offer();
+        Optional<Offer> response = offerClient.create(offer);
+
+        assertThat(response.isPresent(), is(true));
+        assertThat(response.get().getOfferId(), is("8209815010"));
+    }
+    @Test
+    void updateOffer_request() throws InterruptedException {
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .setBody(Objects.requireNonNull(readStringFromFile(OFFER_JSON).orElse(null)))
+        );
+        offerClient.update(new Offer(), "8209815010");
+
+        RecordedRequest request = mockWebServer.takeRequest();
+        JsonContent<Object> body = json.from(request.getBody().readUtf8());
+
+        assertThat(body, is(notNullValue()));
+        assertThat(request.getMethod(), is(PUT.name()));
+        assertThat(request.getPath(), is("/sell/inventory/v1/offer/8209815010"));
+    }
+    @Test
+    void updateOffer_response() {
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .setBody(Objects.requireNonNull(readStringFromFile(OFFER_JSON).orElse(null)))
+        );
+
+        Offer offer = new Offer();
+        Optional<Offer> response = offerClient.update(offer, "8209815010");
+
+        assertThat(response.isPresent(), is(true));
+        assertThat(response.get().getOfferId(), is("8209815010"));
+    }
+    @Test
+    void deleteOffer_request() throws InterruptedException {
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+        );
+        offerClient.delete("6196932000");
+        RecordedRequest request = mockWebServer.takeRequest();
+
+        assertThat(request.getMethod(), is(DELETE.name()));
+        assertThat(request.getPath(), is("/sell/inventory/v1/offer/6196932000"));
+    }
+    @Test
+    void deleteOffer_response() {
+        mockWebServer.enqueue(
+                new MockResponse()
+                        .setResponseCode(204)
+        );
+        Optional<Offer> response = offerClient.delete("6196932000");
+
+        assertThat(response.isPresent(), is(false));
     }
 }

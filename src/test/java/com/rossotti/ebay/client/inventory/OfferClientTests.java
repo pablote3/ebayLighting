@@ -73,7 +73,7 @@ public class OfferClientTests {
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .setBody(str)
         );
-        offerClient.getByOfferByOfferId("8209815010");
+        offerClient.getOfferByOfferId("8209815010");
         RecordedRequest request = mockWebServer.takeRequest();
 
         assertThat(request.getMethod(), is(GET.name()));
@@ -90,7 +90,7 @@ public class OfferClientTests {
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .setBody(json)
         );
-        Optional<Offer> response = offerClient.getByOfferByOfferId("8209815010");
+        Optional<Offer> response = offerClient.getOfferByOfferId("8209815010");
 
         assertThat(response.isPresent(), is(true));
         assertThat(response.get().getOfferId(), is("8209815010"));

@@ -1,28 +1,25 @@
 package com.rossotti.ebay.client.inventory;
 
 import com.rossotti.ebay.client.BaseClient;
+import com.rossotti.ebay.client.util.QueryParam;
+import com.rossotti.ebay.client.util.QueryParamEnum;
 import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.ServerConfig;
 import com.rossotti.ebay.client.util.WebClientProperties;
 import com.rossotti.ebay.model.inventory.inventoryItem.InventoryItem;
 import com.rossotti.ebay.model.inventory.inventoryItem.InventoryItems;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
-
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @Component
 public class InventoryItemClient extends BaseClient {
-    private WebClientProperties properties;
     private static final String pathKey = "inventory_item";
-    private static final Logger logger = LoggerFactory.getLogger(InventoryItemClient.class);
 
     public InventoryItemClient(WebClient webClient, AppConfig appConfig, ServerConfig serverConfig) {
         this.webClient = webClient;
@@ -31,52 +28,24 @@ public class InventoryItemClient extends BaseClient {
     }
 
     public Optional<InventoryItem> getByInventoryItemSku(final String sku) {
-        properties = createWebClientProperties(pathKey);
-        UriComponentsBuilder builder = baseUriComponentBuilder(properties);
-        if (isNotBlank(sku)) {
-            builder.path("/" + sku);
-        }
-        properties.setUri(builder.build().toUri());
-        properties.setMethod(HttpMethod.GET);
-        logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders());
+        WebClientProperties properties = buildProperties(pathKey, HttpMethod.GET, sku, null);
+        properties.getHeaders().add(HttpHeaders.CONTENT_LANGUAGE, appConfig.getContentLanguage());
         return webClientCall(properties, InventoryItem.class);
     }
     public Optional<InventoryItems> getInventoryItems() {
-        properties = createWebClientProperties(pathKey);
-        UriComponentsBuilder builder = baseUriComponentBuilder(properties);
-        builder.queryParam("limit", appConfig.getLimit());
-        builder.queryParam("offset", appConfig.getOffset());
-        properties.setUri(builder.build().toUri());
-        properties.setMethod(HttpMethod.GET);
-        logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders());
+        List<QueryParam> queryParams = new ArrayList<>();
+        queryParams.add(new QueryParam(QueryParamEnum.LIMIT, appConfig.getLimit()));
+        queryParams.add(new QueryParam(QueryParamEnum.OFFSET, appConfig.getOffset()));
+        WebClientProperties properties = buildProperties(pathKey, HttpMethod.GET, null, queryParams);
         return webClientCall(properties, InventoryItems.class);
     }
     public Optional<InventoryItem> createOrUpdate(final InventoryItem inventoryItem, final String sku) {
-        properties = createWebClientProperties(pathKey);
-        UriComponentsBuilder builder = baseUriComponentBuilder(properties);
-        if (isNotBlank(sku)) {
-            builder.path("/" + sku);
-        }
-        properties.setUri(builder.build().toUri());
-        properties.setMethod(HttpMethod.PUT);
-        logger.info(builder.build().toUriString());
-        HttpHeaders headers = createHeaders();
-        headers.add(HttpHeaders.CONTENT_LANGUAGE, appConfig.getContentLanguage());
-        properties.setHeaders(headers);
+        WebClientProperties properties = buildProperties(pathKey, HttpMethod.PUT, sku, null);
+        properties.getHeaders().add(HttpHeaders.CONTENT_LANGUAGE, appConfig.getContentLanguage());
         return webClientCall(properties, InventoryItem.class, inventoryItem);
     }
     public Optional<InventoryItem> delete(final String sku) {
-        properties = createWebClientProperties(pathKey);
-        UriComponentsBuilder builder = baseUriComponentBuilder(properties);
-        if (isNotBlank(sku)) {
-            builder.path("/" + sku);
-        }
-        properties.setUri(builder.build().toUri());
-        properties.setMethod(HttpMethod.DELETE);
-        logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders());
+        WebClientProperties properties = buildProperties(pathKey, HttpMethod.DELETE, sku, null);
         return webClientCall(properties, InventoryItem.class);
     }
 }

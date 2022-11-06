@@ -35,7 +35,7 @@ public class OptedInProgramClient extends BaseClient {
         properties.setUri(builder.build().toUri());
         properties.setMethod(HttpMethod.GET);
         logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders(properties));
+        properties.setHeaders(createHeaders());
         return webClientCall(properties, Programs.class);
     }
     public Optional<Program> optIntoProgram(final Program program) {
@@ -44,7 +44,7 @@ public class OptedInProgramClient extends BaseClient {
         properties.setUri(builder.build().toUri());
         properties.setMethod(HttpMethod.POST);
         logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders(properties));
+        properties.setHeaders(createHeaders());
         return webClientCall(properties, Program.class, program);
     }
     public Optional<Program> optOutOfProgram(final Program program) {
@@ -53,7 +53,7 @@ public class OptedInProgramClient extends BaseClient {
         properties.setUri(builder.build().toUri());
         properties.setMethod(HttpMethod.POST);
         logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders(properties));
+        properties.setHeaders(createHeaders());
         return webClientCall(properties, Program.class, program);
     }
 }

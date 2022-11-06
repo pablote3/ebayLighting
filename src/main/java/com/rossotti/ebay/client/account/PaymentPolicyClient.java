@@ -39,7 +39,7 @@ public class PaymentPolicyClient extends BaseClient {
         properties.setUri(builder.build().toUri());
         properties.setMethod(HttpMethod.GET);
         logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders(properties));
+        properties.setHeaders(createHeaders());
         return webClientCall(properties, PaymentPolicy.class);
     }
 
@@ -50,7 +50,7 @@ public class PaymentPolicyClient extends BaseClient {
         properties.setUri(builder.build().toUri());
         properties.setMethod(HttpMethod.GET);
         logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders(properties));
+        properties.setHeaders(createHeaders());
         return webClientCall(properties, PaymentPolicies.class);
     }
     public Optional<PaymentPolicy> create(final PaymentPolicy paymentPolicy) {
@@ -60,7 +60,7 @@ public class PaymentPolicyClient extends BaseClient {
         properties.setUri(builder.build().toUri());
         properties.setMethod(HttpMethod.POST);
         logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders(properties));
+        properties.setHeaders(createHeaders());
         return webClientCall(properties, PaymentPolicy.class, paymentPolicy);
     }
     public Optional<PaymentPolicy> update(final PaymentPolicy paymentPolicy, final String paymentPolicyId) {
@@ -72,7 +72,7 @@ public class PaymentPolicyClient extends BaseClient {
         properties.setUri(builder.build().toUri());
         properties.setMethod(HttpMethod.PUT);
         logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders(properties));
+        properties.setHeaders(createHeaders());
         return webClientCall(properties, PaymentPolicy.class, paymentPolicy);
     }
     public Optional<PaymentPolicy> delete(final String paymentPolicyId) {
@@ -84,7 +84,7 @@ public class PaymentPolicyClient extends BaseClient {
         properties.setUri(builder.build().toUri());
         properties.setMethod(HttpMethod.DELETE);
         logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders(properties));
+        properties.setHeaders(createHeaders());
         return webClientCall(properties, PaymentPolicy.class);
     }
 }

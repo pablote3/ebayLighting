@@ -39,7 +39,7 @@ public class FulfillmentPolicyClient extends BaseClient {
         properties.setUri(builder.build().toUri());
         properties.setMethod(HttpMethod.GET);
         logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders(properties));
+        properties.setHeaders(createHeaders());
         return webClientCall(properties, FulfillmentPolicy.class);
     }
     public Optional<FulfillmentPolicies> getFulfillmentPolicies() {
@@ -49,7 +49,7 @@ public class FulfillmentPolicyClient extends BaseClient {
         properties.setUri(builder.build().toUri());
         properties.setMethod(HttpMethod.GET);
         logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders(properties));
+        properties.setHeaders(createHeaders());
         return webClientCall(properties, FulfillmentPolicies.class);
     }
     public Optional<FulfillmentPolicy> create(final FulfillmentPolicy fulfillmentPolicy) {
@@ -59,7 +59,7 @@ public class FulfillmentPolicyClient extends BaseClient {
         properties.setUri(builder.build().toUri());
         properties.setMethod(HttpMethod.POST);
         logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders(properties));
+        properties.setHeaders(createHeaders());
         return webClientCall(properties, FulfillmentPolicy.class, fulfillmentPolicy);
     }
     public Optional<FulfillmentPolicy> update(final FulfillmentPolicy fulfillmentPolicy, final String fulfillmentPolicyId) {
@@ -71,7 +71,7 @@ public class FulfillmentPolicyClient extends BaseClient {
         properties.setUri(builder.build().toUri());
         properties.setMethod(HttpMethod.PUT);
         logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders(properties));
+        properties.setHeaders(createHeaders());
         return webClientCall(properties, FulfillmentPolicy.class, fulfillmentPolicy);
     }
     public Optional<FulfillmentPolicy> delete(final String fulfillmentPolicyId) {
@@ -83,7 +83,7 @@ public class FulfillmentPolicyClient extends BaseClient {
         properties.setUri(builder.build().toUri());
         properties.setMethod(HttpMethod.DELETE);
         logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders(properties));
+        properties.setHeaders(createHeaders());
         return webClientCall(properties, FulfillmentPolicy.class);
     }
 }

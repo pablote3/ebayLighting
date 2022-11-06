@@ -44,7 +44,7 @@ public class OfferClient extends BaseClient {
         properties.setUri(builder.build().toUri());
         properties.setMethod(HttpMethod.GET);
         logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders(properties));
+        properties.setHeaders(createHeaders());
         return webClientCall(properties, Offer.class);
     }
 

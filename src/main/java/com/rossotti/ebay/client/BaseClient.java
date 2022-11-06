@@ -51,7 +51,7 @@ public abstract class BaseClient {
         properties.setUri(builder.build().toUri());
         properties.setMethod(httpMethod);
         logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders(properties));
+        properties.setHeaders(createHeaders());
         return properties;
     }
     protected WebClientProperties createWebClientProperties(String pathKey) {
@@ -59,14 +59,13 @@ public abstract class BaseClient {
         properties.setScheme(serverConfig.getScheme());
         properties.setHost(serverConfig.getHost());
         properties.setPort(serverConfig.getPort());
-        properties.setContentType(appConfig.getContentType());
         properties.setMarketplaceId(appConfig.getMarketplaceId().getCode());
         properties.setPath(appConfig.getResourceMap().get(pathKey));
         return properties;
     }
-    protected HttpHeaders createHeaders(WebClientProperties properties) {
+    protected HttpHeaders createHeaders() {
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_TYPE, properties.getContentType());
+        headers.add(HttpHeaders.CONTENT_TYPE, appConfig.getContentType());
         return headers;
     }
     protected UriComponentsBuilder baseUriComponentBuilder(WebClientProperties properties) {

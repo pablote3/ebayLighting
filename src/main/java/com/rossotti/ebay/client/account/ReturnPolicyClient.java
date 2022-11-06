@@ -38,7 +38,7 @@ public class ReturnPolicyClient extends BaseClient {
         properties.setUri(builder.build().toUri());
         properties.setMethod(HttpMethod.GET);
         logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders(properties));
+        properties.setHeaders(createHeaders());
         return webClientCall(properties, ReturnPolicy.class);
     }
     public Optional<ReturnPolicies> getReturnPolicies() {
@@ -48,7 +48,7 @@ public class ReturnPolicyClient extends BaseClient {
         properties.setUri(builder.build().toUri());
         properties.setMethod(HttpMethod.GET);
         logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders(properties));
+        properties.setHeaders(createHeaders());
         return webClientCall(properties, ReturnPolicies.class);
     }
     public Optional<ReturnPolicy> create(final ReturnPolicy returnPolicy) {
@@ -58,7 +58,7 @@ public class ReturnPolicyClient extends BaseClient {
         properties.setUri(builder.build().toUri());
         properties.setMethod(HttpMethod.POST);
         logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders(properties));
+        properties.setHeaders(createHeaders());
         return webClientCall(properties, ReturnPolicy.class, returnPolicy);
     }
     public Optional<ReturnPolicy> update(final ReturnPolicy returnPolicy, final String returnPolicyId) {
@@ -70,7 +70,7 @@ public class ReturnPolicyClient extends BaseClient {
         properties.setUri(builder.build().toUri());
         properties.setMethod(HttpMethod.PUT);
         logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders(properties));
+        properties.setHeaders(createHeaders());
         return webClientCall(properties, ReturnPolicy.class, returnPolicy);
     }
     public Optional<ReturnPolicy> delete(final String returnPolicyId) {
@@ -82,7 +82,7 @@ public class ReturnPolicyClient extends BaseClient {
         properties.setUri(builder.build().toUri());
         properties.setMethod(HttpMethod.DELETE);
         logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders(properties));
+        properties.setHeaders(createHeaders());
         return webClientCall(properties, ReturnPolicy.class);
     }
 }

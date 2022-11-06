@@ -18,7 +18,6 @@ public class WebClientProperties {
     private HttpHeaders headers;
     private String path;
     private String contentType;
-//    private String contentLanguage;
     private String marketplaceId;
     private int httpTimeOutMs;
     private int maxRetries;

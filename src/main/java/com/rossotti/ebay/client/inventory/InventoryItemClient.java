@@ -39,7 +39,7 @@ public class InventoryItemClient extends BaseClient {
         properties.setUri(builder.build().toUri());
         properties.setMethod(HttpMethod.GET);
         logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders(properties));
+        properties.setHeaders(createHeaders());
         return webClientCall(properties, InventoryItem.class);
     }
     public Optional<InventoryItems> getInventoryItems() {
@@ -50,7 +50,7 @@ public class InventoryItemClient extends BaseClient {
         properties.setUri(builder.build().toUri());
         properties.setMethod(HttpMethod.GET);
         logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders(properties));
+        properties.setHeaders(createHeaders());
         return webClientCall(properties, InventoryItems.class);
     }
     public Optional<InventoryItem> createOrUpdate(final InventoryItem inventoryItem, final String sku) {
@@ -62,7 +62,7 @@ public class InventoryItemClient extends BaseClient {
         properties.setUri(builder.build().toUri());
         properties.setMethod(HttpMethod.PUT);
         logger.info(builder.build().toUriString());
-        HttpHeaders headers = createHeaders(properties);
+        HttpHeaders headers = createHeaders();
         headers.add(HttpHeaders.CONTENT_LANGUAGE, appConfig.getContentLanguage());
         properties.setHeaders(headers);
         return webClientCall(properties, InventoryItem.class, inventoryItem);
@@ -76,7 +76,7 @@ public class InventoryItemClient extends BaseClient {
         properties.setUri(builder.build().toUri());
         properties.setMethod(HttpMethod.DELETE);
         logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders(properties));
+        properties.setHeaders(createHeaders());
         return webClientCall(properties, InventoryItem.class);
     }
 }

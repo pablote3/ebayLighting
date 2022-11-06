@@ -1,4 +1,4 @@
-package com.rossotti.ebay.client;
+package com.rossotti.ebay.client.util;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,8 +19,6 @@ public class WebClientProperties {
     private String path;
     private String contentType;
     private String contentLanguage;
-    private Integer limit;
-    private Integer offset;
     private String marketplaceId;
     private int httpTimeOutMs;
     private int maxRetries;

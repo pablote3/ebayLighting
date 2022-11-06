@@ -1,10 +1,11 @@
 package com.rossotti.ebay.client.inventory;
 
 import com.rossotti.ebay.client.BaseClient;
+import com.rossotti.ebay.client.util.QueryParam;
 import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.ServerConfig;
-import com.rossotti.ebay.client.WebClientProperties;
-import com.rossotti.ebay.model.common.QueryParamEnum;
+import com.rossotti.ebay.client.util.WebClientProperties;
+import com.rossotti.ebay.client.util.QueryParamEnum;
 import com.rossotti.ebay.model.inventory.offer.Offer;
 import com.rossotti.ebay.model.inventory.offer.Offers;
 import org.slf4j.Logger;
@@ -48,25 +49,25 @@ public class OfferClient extends BaseClient {
     }
 
     public Optional<Offers> getOffersBySku(final String sku) {
-        List<QueryParamEnum> queryParams = new ArrayList<>();
-        queryParams.add(QueryParamEnum.SKU);
-        queryParams.add(QueryParamEnum.LIMIT);
-        queryParams.add(QueryParamEnum.OFFSET);
+        List<QueryParam> queryParams = new ArrayList<>();
+        queryParams.add(new QueryParam(QueryParamEnum.SKU, sku));
+        queryParams.add(new QueryParam(QueryParamEnum.LIMIT, appConfig.getLimit()));
+        queryParams.add(new QueryParam(QueryParamEnum.OFFSET, appConfig.getOffset()));
         WebClientProperties properties = buildProperties(pathKey, HttpMethod.GET, null, queryParams);
 
-        properties = createWebClientProperties(pathKey);
-        UriComponentsBuilder builder = baseUriComponentBuilder(properties);
-        Properties props = new Properties();
-        props.put("sku", sku);
-        props.put("limit", properties.getLimit());
-        props.put("offset", properties.getOffset());
-        builder.queryParam("sku", sku);
-        builder.queryParam("limit", properties.getLimit());
-        builder.queryParam("offset", properties.getOffset());
-        properties.setUri(builder.build().toUri());
-        properties.setMethod(HttpMethod.GET);
-        logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders(properties));
+//        properties = createWebClientProperties(pathKey);
+//        UriComponentsBuilder builder = baseUriComponentBuilder(properties);
+//        Properties props = new Properties();
+//        props.put("sku", sku);
+//        props.put("limit", properties.getLimit());
+//        props.put("offset", properties.getOffset());
+//        builder.queryParam("sku", sku);
+//        builder.queryParam("limit", properties.getLimit());
+//        builder.queryParam("offset", properties.getOffset());
+//        properties.setUri(builder.build().toUri());
+//        properties.setMethod(HttpMethod.GET);
+//        logger.info(builder.build().toUriString());
+//        properties.setHeaders(createHeaders(properties));
         return webClientCall(properties, Offers.class);
     }
     public Optional<Offer> create(final Offer offer) {

@@ -45,8 +45,8 @@ public class InventoryItemClient extends BaseClient {
     public Optional<InventoryItems> getInventoryItems() {
         properties = createWebClientProperties(pathKey);
         UriComponentsBuilder builder = baseUriComponentBuilder(properties);
-        builder.queryParam("limit", properties.getLimit());
-        builder.queryParam("offset", properties.getOffset());
+        builder.queryParam("limit", appConfig.getLimit());
+        builder.queryParam("offset", appConfig.getOffset());
         properties.setUri(builder.build().toUri());
         properties.setMethod(HttpMethod.GET);
         logger.info(builder.build().toUriString());
@@ -63,7 +63,7 @@ public class InventoryItemClient extends BaseClient {
         properties.setMethod(HttpMethod.PUT);
         logger.info(builder.build().toUriString());
         HttpHeaders headers = createHeaders(properties);
-        headers.add(HttpHeaders.CONTENT_LANGUAGE, properties.getContentLanguage());
+        headers.add(HttpHeaders.CONTENT_LANGUAGE, appConfig.getContentLanguage());
         properties.setHeaders(headers);
         return webClientCall(properties, InventoryItem.class, inventoryItem);
     }

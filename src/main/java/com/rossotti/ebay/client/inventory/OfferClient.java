@@ -54,30 +54,16 @@ public class OfferClient extends BaseClient {
         queryParams.add(new QueryParam(QueryParamEnum.LIMIT, appConfig.getLimit()));
         queryParams.add(new QueryParam(QueryParamEnum.OFFSET, appConfig.getOffset()));
         WebClientProperties properties = buildProperties(pathKey, HttpMethod.GET, null, queryParams);
-
-//        properties = createWebClientProperties(pathKey);
-//        UriComponentsBuilder builder = baseUriComponentBuilder(properties);
-//        Properties props = new Properties();
-//        props.put("sku", sku);
-//        props.put("limit", properties.getLimit());
-//        props.put("offset", properties.getOffset());
-//        builder.queryParam("sku", sku);
-//        builder.queryParam("limit", properties.getLimit());
-//        builder.queryParam("offset", properties.getOffset());
-//        properties.setUri(builder.build().toUri());
-//        properties.setMethod(HttpMethod.GET);
-//        logger.info(builder.build().toUriString());
-//        properties.setHeaders(createHeaders(properties));
         return webClientCall(properties, Offers.class);
     }
     public Optional<Offer> create(final Offer offer) {
         WebClientProperties properties = buildProperties(pathKey, HttpMethod.POST, null, null);
-        properties.getHeaders().add(HttpHeaders.CONTENT_LANGUAGE, properties.getContentLanguage());
+        properties.getHeaders().add(HttpHeaders.CONTENT_LANGUAGE, appConfig.getContentLanguage());
         return webClientCall(properties, Offer.class, offer);
     }
     public Optional<Offer> update(final Offer offer, final String offerId) {
         WebClientProperties properties = buildProperties(pathKey, HttpMethod.PUT, offerId, null);
-        properties.getHeaders().add(HttpHeaders.CONTENT_LANGUAGE, properties.getContentLanguage());
+        properties.getHeaders().add(HttpHeaders.CONTENT_LANGUAGE, appConfig.getContentLanguage());
         return webClientCall(properties, Offer.class, offer);
     }
     public Optional<Offer> delete(final String offerId) {

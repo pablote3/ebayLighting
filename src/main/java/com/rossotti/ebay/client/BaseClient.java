@@ -45,7 +45,7 @@ public abstract class BaseClient {
         }
         if (queryParams != null) {
             queryParams.forEach(c -> {
-                builder.queryParam(c.getName().name(), c.getValue());
+                builder.queryParam(c.getName().getCode(), c.getValue());
             });
         }
         properties.setUri(builder.build().toUri());
@@ -60,7 +60,6 @@ public abstract class BaseClient {
         properties.setHost(serverConfig.getHost());
         properties.setPort(serverConfig.getPort());
         properties.setContentType(appConfig.getContentType());
-        properties.setContentLanguage(appConfig.getContentLanguage());
         properties.setMarketplaceId(appConfig.getMarketplaceId().getCode());
         properties.setPath(appConfig.getResourceMap().get(pathKey));
         return properties;

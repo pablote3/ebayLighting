@@ -1,8 +1,9 @@
 package com.rossotti.ebay.client;
 
+import com.rossotti.ebay.client.util.QueryParam;
+import com.rossotti.ebay.client.util.WebClientProperties;
 import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.ServerConfig;
-import com.rossotti.ebay.model.common.QueryParamEnum;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,10 +16,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import reactor.util.retry.Retry;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Properties;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
@@ -38,7 +37,7 @@ public abstract class BaseClient {
 //        public void throwScapiResponseException(String errorMessage, HttpStatus statusCode, Throwable t) { logger.throwScapiResponseException(createRestClientFailMsg() + " " + errorMessage, statusCode, t); }
 //        protected void throwRestClientException(final Exception exception, String... params) { logger.throwRestClientException(exception, tackOnRestClientFailMsg(params)); }
 
-    protected WebClientProperties buildProperties(String pathKey, HttpMethod httpMethod, String addlPath, List<QueryParamEnum> queryParams) {
+    protected WebClientProperties buildProperties(String pathKey, HttpMethod httpMethod, String addlPath, List<QueryParam> queryParams) {
         WebClientProperties properties = createWebClientProperties(pathKey);
         UriComponentsBuilder builder = baseUriComponentBuilder(properties);
         if (isNotBlank(addlPath)) {
@@ -46,10 +45,7 @@ public abstract class BaseClient {
         }
         if (queryParams != null) {
             queryParams.forEach(c -> {
-                String name = c.name();
-//            builder.queryParam("sku", sku);
-//            builder.queryParam("limit", properties.getLimit());
-//            builder.queryParam("offset", properties.getOffset());
+                builder.queryParam(c.getName().name(), c.getValue());
             });
         }
         properties.setUri(builder.build().toUri());
@@ -67,8 +63,6 @@ public abstract class BaseClient {
         properties.setContentLanguage(appConfig.getContentLanguage());
         properties.setMarketplaceId(appConfig.getMarketplaceId().getCode());
         properties.setPath(appConfig.getResourceMap().get(pathKey));
-        properties.setLimit(20);
-        properties.setOffset(0);
         return properties;
     }
     protected HttpHeaders createHeaders(WebClientProperties properties) {

@@ -15,6 +15,8 @@ public class AppConfig {
     private String contentType;
     private String contentLanguage;
     private MarketplaceIdEnum marketplaceId;
+    private String limit;
+    private String offset;
     private int httpTimeOutMs;
     private int maxRetries;
     private int backoffInterval;

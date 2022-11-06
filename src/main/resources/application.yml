@@ -2,6 +2,8 @@ ebay:
   contentType: application/json
   contentLanguage: en-US
   marketplaceId: EBAY_US
+  limit: 20
+  offset: 0
   http-time-out-ms: 5000
   maxRetries: 3
   backoffInterval: 1000

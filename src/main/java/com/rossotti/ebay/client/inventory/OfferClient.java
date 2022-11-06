@@ -4,6 +4,7 @@ import com.rossotti.ebay.client.BaseClient;
 import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.ServerConfig;
 import com.rossotti.ebay.client.WebClientProperties;
+import com.rossotti.ebay.model.common.QueryParamEnum;
 import com.rossotti.ebay.model.inventory.offer.Offer;
 import com.rossotti.ebay.model.inventory.offer.Offers;
 import org.slf4j.Logger;
@@ -14,7 +15,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
@@ -44,8 +48,18 @@ public class OfferClient extends BaseClient {
     }
 
     public Optional<Offers> getOffersBySku(final String sku) {
+        List<QueryParamEnum> queryParams = new ArrayList<>();
+        queryParams.add(QueryParamEnum.SKU);
+        queryParams.add(QueryParamEnum.LIMIT);
+        queryParams.add(QueryParamEnum.OFFSET);
+        WebClientProperties properties = buildProperties(pathKey, HttpMethod.GET, null, queryParams);
+
         properties = createWebClientProperties(pathKey);
         UriComponentsBuilder builder = baseUriComponentBuilder(properties);
+        Properties props = new Properties();
+        props.put("sku", sku);
+        props.put("limit", properties.getLimit());
+        props.put("offset", properties.getOffset());
         builder.queryParam("sku", sku);
         builder.queryParam("limit", properties.getLimit());
         builder.queryParam("offset", properties.getOffset());
@@ -56,39 +70,17 @@ public class OfferClient extends BaseClient {
         return webClientCall(properties, Offers.class);
     }
     public Optional<Offer> create(final Offer offer) {
-        properties = createWebClientProperties(pathKey);
-        UriComponentsBuilder builder = baseUriComponentBuilder(properties);
-        properties.setUri(builder.build().toUri());
-        properties.setMethod(HttpMethod.POST);
-        HttpHeaders headers = createHeaders(properties);
-        headers.add(HttpHeaders.CONTENT_LANGUAGE, properties.getContentLanguage());
-        properties.setHeaders(headers);
+        WebClientProperties properties = buildProperties(pathKey, HttpMethod.POST, null, null);
+        properties.getHeaders().add(HttpHeaders.CONTENT_LANGUAGE, properties.getContentLanguage());
         return webClientCall(properties, Offer.class, offer);
     }
     public Optional<Offer> update(final Offer offer, final String offerId) {
-        properties = createWebClientProperties(pathKey);
-        UriComponentsBuilder builder = baseUriComponentBuilder(properties);
-        if (isNotBlank(offerId)) {
-            builder.path("/" + offerId);
-        }
-        properties.setUri(builder.build().toUri());
-        properties.setMethod(HttpMethod.PUT);
-        logger.info(builder.build().toUriString());
-        HttpHeaders headers = createHeaders(properties);
-        headers.add(HttpHeaders.CONTENT_LANGUAGE, properties.getContentLanguage());
-        properties.setHeaders(headers);
+        WebClientProperties properties = buildProperties(pathKey, HttpMethod.PUT, offerId, null);
+        properties.getHeaders().add(HttpHeaders.CONTENT_LANGUAGE, properties.getContentLanguage());
         return webClientCall(properties, Offer.class, offer);
     }
     public Optional<Offer> delete(final String offerId) {
-        properties = createWebClientProperties(pathKey);
-        UriComponentsBuilder builder = baseUriComponentBuilder(properties);
-        if (isNotBlank(offerId)) {
-            builder.path("/" + offerId);
-        }
-        properties.setUri(builder.build().toUri());
-        properties.setMethod(HttpMethod.DELETE);
-        logger.info(builder.build().toUriString());
-        properties.setHeaders(createHeaders(properties));
+        WebClientProperties properties = buildProperties(pathKey, HttpMethod.DELETE, offerId, null);
         return webClientCall(properties, Offer.class);
     }
 }

@@ -5,7 +5,7 @@ public enum QueryParamEnum {
     OFFSET ("offset"),
     MARKETPLACE_ID ("marketplace_id"),
     SKU ("sku");
-    private String code;
+    private final String code;
     QueryParamEnum(String code) {
         this.code = code;
     }

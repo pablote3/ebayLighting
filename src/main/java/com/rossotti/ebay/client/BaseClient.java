@@ -4,10 +4,8 @@ import com.rossotti.ebay.client.util.QueryParam;
 import com.rossotti.ebay.client.util.WebClientProperties;
 import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.ServerConfig;
-import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
@@ -22,21 +20,11 @@ import java.util.Optional;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @Component
-@Getter
 public abstract class BaseClient {
-
-    @Autowired
     protected WebClient webClient;
-
     protected AppConfig appConfig;
     protected ServerConfig serverConfig;
-
     private final Logger logger = LoggerFactory.getLogger(BaseClient.class);
-
-//        public void throwResponseException(String errorMessage) { throwResponseException(errorMessage, HttpStatus.BAD_REQUEST, null); }
-//        public void throwResponseException(String errorMessage, HttpStatus statusCode, Throwable t) { logger.throwResponseException(createRestClientFailMsg() + " " + errorMessage, statusCode, t); }
-//        protected void throwRestClientException(final Exception exception, String... params) { logger.throwRestClientException(exception, tackOnRestClientFailMsg(params)); }
-
     protected WebClientProperties buildProperties(String pathKey, HttpMethod httpMethod, String addlPath, List<QueryParam> queryParams) {
         WebClientProperties properties = createWebClientProperties(pathKey);
         UriComponentsBuilder builder = baseUriComponentBuilder(properties);
@@ -73,7 +61,6 @@ public abstract class BaseClient {
         uriComp.path(properties.getPath());
         return uriComp;
     }
-
     protected <T> Optional<T> webClientCall(WebClientProperties properties, Class<T> responseClass) {
         return Optional.ofNullable(
             webClient.method(properties.getMethod())

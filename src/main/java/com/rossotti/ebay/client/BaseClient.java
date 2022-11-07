@@ -33,8 +33,8 @@ public abstract class BaseClient {
 
     private final Logger logger = LoggerFactory.getLogger(BaseClient.class);
 
-//        public void throwScapiResponseException(String errorMessage) { throwScapiResponseException(errorMessage, HttpStatus.BAD_REQUEST, null); }
-//        public void throwScapiResponseException(String errorMessage, HttpStatus statusCode, Throwable t) { logger.throwScapiResponseException(createRestClientFailMsg() + " " + errorMessage, statusCode, t); }
+//        public void throwResponseException(String errorMessage) { throwResponseException(errorMessage, HttpStatus.BAD_REQUEST, null); }
+//        public void throwResponseException(String errorMessage, HttpStatus statusCode, Throwable t) { logger.throwResponseException(createRestClientFailMsg() + " " + errorMessage, statusCode, t); }
 //        protected void throwRestClientException(final Exception exception, String... params) { logger.throwRestClientException(exception, tackOnRestClientFailMsg(params)); }
 
     protected WebClientProperties buildProperties(String pathKey, HttpMethod httpMethod, String addlPath, List<QueryParam> queryParams) {
@@ -44,9 +44,7 @@ public abstract class BaseClient {
             builder.path("/" + addlPath);
         }
         if (queryParams != null) {
-            queryParams.forEach(c -> {
-                builder.queryParam(c.getName().getCode(), c.getValue());
-            });
+            queryParams.forEach(c -> builder.queryParam(c.getName().getCode(), c.getValue()));
         }
         properties.setUri(builder.build().toUri());
         properties.setMethod(httpMethod);
@@ -54,7 +52,7 @@ public abstract class BaseClient {
         properties.setHeaders(createHeaders());
         return properties;
     }
-    protected WebClientProperties createWebClientProperties(String pathKey) {
+    private WebClientProperties createWebClientProperties(String pathKey) {
         WebClientProperties properties = new WebClientProperties();
         properties.setScheme(serverConfig.getScheme());
         properties.setHost(serverConfig.getHost());
@@ -62,12 +60,12 @@ public abstract class BaseClient {
         properties.setPath(appConfig.getResourceMap().get(pathKey));
         return properties;
     }
-    protected HttpHeaders createHeaders() {
+    private HttpHeaders createHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, appConfig.getContentType());
         return headers;
     }
-    protected UriComponentsBuilder baseUriComponentBuilder(WebClientProperties properties) {
+    private UriComponentsBuilder baseUriComponentBuilder(WebClientProperties properties) {
         UriComponentsBuilder uriComp = UriComponentsBuilder.newInstance();
         uriComp.scheme(properties.getScheme());
         uriComp.host(properties.getHost());

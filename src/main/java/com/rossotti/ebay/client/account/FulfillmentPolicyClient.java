@@ -8,7 +8,6 @@ import com.rossotti.ebay.config.ServerConfig;
 import com.rossotti.ebay.client.util.WebClientProperties;
 import com.rossotti.ebay.model.account.fulfillmentPolicy.FulfillmentPolicies;
 import com.rossotti.ebay.model.account.fulfillmentPolicy.FulfillmentPolicy;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -31,7 +30,6 @@ public class FulfillmentPolicyClient extends BaseClient {
         List<QueryParam> queryParams = new ArrayList<>();
         queryParams.add(new QueryParam(QueryParamEnum.MARKETPLACE_ID, appConfig.getMarketplaceId().getCode()));
         WebClientProperties properties = buildProperties(pathKey, HttpMethod.GET, fulfillmentPolicyId, queryParams);
-        properties.getHeaders().add(HttpHeaders.CONTENT_LANGUAGE, appConfig.getContentLanguage());
         return webClientCall(properties, FulfillmentPolicy.class);
     }
     public Optional<FulfillmentPolicies> getFulfillmentPolicies() {
@@ -44,7 +42,6 @@ public class FulfillmentPolicyClient extends BaseClient {
         List<QueryParam> queryParams = new ArrayList<>();
         queryParams.add(new QueryParam(QueryParamEnum.MARKETPLACE_ID, appConfig.getMarketplaceId().getCode()));
         WebClientProperties properties = buildProperties(pathKey, HttpMethod.POST, null, queryParams);
-        properties.getHeaders().add(HttpHeaders.CONTENT_LANGUAGE, appConfig.getContentLanguage());
         return webClientCall(properties, FulfillmentPolicy.class, fulfillmentPolicy);
     }
     public Optional<FulfillmentPolicy> update(final FulfillmentPolicy fulfillmentPolicy, final String fulfillmentPolicyId) {

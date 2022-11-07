@@ -6,29 +6,19 @@ import com.rossotti.ebay.client.util.QueryParamEnum;
 import com.rossotti.ebay.config.AppConfig;
 import com.rossotti.ebay.config.ServerConfig;
 import com.rossotti.ebay.client.util.WebClientProperties;
-import com.rossotti.ebay.model.account.fulfillmentPolicy.FulfillmentPolicies;
-import com.rossotti.ebay.model.account.fulfillmentPolicy.FulfillmentPolicy;
 import com.rossotti.ebay.model.account.paymentPolicy.PaymentPolicies;
 import com.rossotti.ebay.model.account.paymentPolicy.PaymentPolicy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
-
 @Component
 public class PaymentPolicyClient extends BaseClient {
-    private WebClientProperties properties;
     private static final String pathKey = "payment_policy";
-    private static final Logger logger = LoggerFactory.getLogger(PaymentPolicyClient.class);
 
     public PaymentPolicyClient(WebClient webClient, AppConfig appConfig, ServerConfig serverConfig) {
         this.webClient = webClient;

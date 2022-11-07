@@ -59,7 +59,6 @@ public abstract class BaseClient {
         properties.setScheme(serverConfig.getScheme());
         properties.setHost(serverConfig.getHost());
         properties.setPort(serverConfig.getPort());
-        properties.setMarketplaceId(appConfig.getMarketplaceId().getCode());
         properties.setPath(appConfig.getResourceMap().get(pathKey));
         return properties;
     }
@@ -92,16 +91,16 @@ public abstract class BaseClient {
     }
     protected <T> Optional<T> webClientCall(WebClientProperties properties, Class<T> requestClass, Object body) {
         return Optional.ofNullable(
-                webClient.method(properties.getMethod())
-                        .uri(properties.getUri())
-                        .headers(h -> h.addAll(properties.getHeaders()))
-                        .bodyValue(body)
-                        .retrieve()
-                        .bodyToMono(requestClass)
-                        .timeout(Duration.ofMillis(appConfig.getHttpTimeOutMs()))
-                        .retryWhen(Retry.backoff(appConfig.getMaxRetries(), Duration.ofMillis(appConfig.getBackoffInterval()))
-                                .doAfterRetry((r) -> logRetryCount(r.totalRetries(), appConfig.getMaxRetries())))
-                        .block()
+            webClient.method(properties.getMethod())
+                     .uri(properties.getUri())
+                     .headers(h -> h.addAll(properties.getHeaders()))
+                     .bodyValue(body)
+                     .retrieve()
+                     .bodyToMono(requestClass)
+                     .timeout(Duration.ofMillis(appConfig.getHttpTimeOutMs()))
+                     .retryWhen(Retry.backoff(appConfig.getMaxRetries(), Duration.ofMillis(appConfig.getBackoffInterval()))
+                     .doAfterRetry((r) -> logRetryCount(r.totalRetries(), appConfig.getMaxRetries())))
+                     .block()
         );
     }
     private void logRetryCount(long current, int max) {

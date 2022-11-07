@@ -17,8 +17,4 @@ public class WebClientProperties {
     private HttpMethod method;
     private HttpHeaders headers;
     private String path;
-    private String marketplaceId;
-    private int httpTimeOutMs;
-    private int maxRetries;
-    private int backoffInterval;
 }

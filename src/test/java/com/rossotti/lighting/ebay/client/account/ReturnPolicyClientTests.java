@@ -1,6 +1,5 @@
-package com.rossotti.ebay.client.account;
+package com.rossotti.lighting.ebay.client.account;
 
-import com.rossotti.lighting.ebay.client.account.ReturnPolicyClient;
 import com.rossotti.lighting.config.AppConfig;
 import com.rossotti.lighting.config.ServerConfig;
 import com.rossotti.lighting.ebay.model.account.returnPolicy.ReturnPolicies;
@@ -35,8 +34,8 @@ import static com.rossotti.lighting.ebay.model.account.returnPolicy.ReturnMethod
 import static com.rossotti.lighting.ebay.model.account.returnPolicy.ReturnShippingCostPayerEnum.SELLER;
 import static com.rossotti.lighting.ebay.model.common.MarketplaceIdEnum.EBAY_US;
 import static com.rossotti.lighting.ebay.model.common.TimeDurationUnitEnum.DAY;
-import static com.rossotti.ebay.util.TestUtil.createServerConfig;
-import static com.rossotti.ebay.util.TestUtil.readStringFromFile;
+import static com.rossotti.lighting.ebay.util.TestUtil.createServerConfig;
+import static com.rossotti.lighting.ebay.util.TestUtil.readStringFromFile;
 
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
@@ -45,8 +44,8 @@ import static org.springframework.http.HttpMethod.DELETE;
 
 @SpringBootTest
 public class ReturnPolicyClientTests {
-    private static final String RETURN_POLICY_JSON = "data/account/returnPolicy.json";
-    private static final String RETURN_POLICIES_JSON = "data/account/returnPolicies.json";
+    private static final String RETURN_POLICY_JSON = "ebay/data/account/returnPolicy.json";
+    private static final String RETURN_POLICIES_JSON = "ebay/data/account/returnPolicies.json";
     private static MockWebServer mockWebServer;
     private final BasicJsonTester json = new BasicJsonTester(this.getClass());
     @Autowired

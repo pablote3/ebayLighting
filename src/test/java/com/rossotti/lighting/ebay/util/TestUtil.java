@@ -1,4 +1,4 @@
-package com.rossotti.ebay.util;
+package com.rossotti.lighting.ebay.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rossotti.lighting.config.ServerConfig;

@@ -1,11 +1,10 @@
-package com.rossotti.ebay.client.account;
+package com.rossotti.lighting.ebay.client.account;
 
-import com.rossotti.lighting.ebay.client.account.OptedInProgramClient;
 import com.rossotti.lighting.config.AppConfig;
 import com.rossotti.lighting.config.ServerConfig;
 import com.rossotti.lighting.ebay.model.account.program.Program;
 import com.rossotti.lighting.ebay.model.account.program.Programs;
-import com.rossotti.ebay.util.TestUtil;
+import com.rossotti.lighting.ebay.util.TestUtil;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -34,7 +33,7 @@ import static org.springframework.http.HttpMethod.POST;
 
 @SpringBootTest
 public class OptedInProgramClientTests {
-    private static final String OPTED_IN_PROGRAMS_JSON = "data/account/optedInPrograms.json";
+    private static final String OPTED_IN_PROGRAMS_JSON = "ebay/data/account/optedInPrograms.json";
     private static MockWebServer mockWebServer;
     private final BasicJsonTester json = new BasicJsonTester(this.getClass());
     @Autowired

@@ -1,6 +1,5 @@
-package com.rossotti.ebay.client.account;
+package com.rossotti.lighting.ebay.client.account;
 
-import com.rossotti.lighting.ebay.client.account.FulfillmentPolicyClient;
 import com.rossotti.lighting.config.AppConfig;
 import com.rossotti.lighting.config.ServerConfig;
 import com.rossotti.lighting.ebay.model.account.fulfillmentPolicy.FulfillmentPolicies;
@@ -38,8 +37,8 @@ import static com.rossotti.lighting.ebay.model.account.fulfillmentPolicy.Shippin
 import static com.rossotti.lighting.ebay.model.account.fulfillmentPolicy.ShippingCostTypeEnum.FLAT_RATE;
 import static com.rossotti.lighting.ebay.model.common.TimeDurationUnitEnum.DAY;
 
-import static com.rossotti.ebay.util.TestUtil.createServerConfig;
-import static com.rossotti.ebay.util.TestUtil.readStringFromFile;
+import static com.rossotti.lighting.ebay.util.TestUtil.createServerConfig;
+import static com.rossotti.lighting.ebay.util.TestUtil.readStringFromFile;
 
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
@@ -48,8 +47,8 @@ import static org.springframework.http.HttpMethod.DELETE;
 
 @SpringBootTest
 public class FulfillmentPolicyClientTests {
-    private static final String FULFILLMENT_POLICY_JSON = "data/account/fulfillmentPolicy.json";
-    private static final String FULFILLMENT_POLICIES_JSON = "data/account/fulfillmentPolicies.json";
+    private static final String FULFILLMENT_POLICY_JSON = "ebay/data/account/fulfillmentPolicy.json";
+    private static final String FULFILLMENT_POLICIES_JSON = "ebay/data/account/fulfillmentPolicies.json";
     private static final String USPS = "USPS";
     private static final String USPS_FIRST_CLASS = "USPSFirstClass";
     private static final String USPS_PARCEL = "USPSParcel";

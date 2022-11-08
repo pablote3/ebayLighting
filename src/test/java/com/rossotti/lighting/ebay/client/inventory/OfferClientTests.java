@@ -1,11 +1,10 @@
-package com.rossotti.ebay.client.inventory;
+package com.rossotti.lighting.ebay.client.inventory;
 
-import com.rossotti.lighting.ebay.client.inventory.OfferClient;
 import com.rossotti.lighting.config.AppConfig;
 import com.rossotti.lighting.config.ServerConfig;
 import com.rossotti.lighting.ebay.model.inventory.offer.Offer;
 import com.rossotti.lighting.ebay.model.inventory.offer.Offers;
-import com.rossotti.ebay.util.TestUtil;
+import com.rossotti.lighting.ebay.util.TestUtil;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -24,7 +23,7 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 
-import static com.rossotti.ebay.util.TestUtil.readStringFromFile;
+import static com.rossotti.lighting.ebay.util.TestUtil.readStringFromFile;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -43,8 +42,8 @@ import static org.springframework.http.HttpMethod.DELETE;
 
 @SpringBootTest
 public class OfferClientTests {
-    private static final String OFFER_JSON = "data/inventory/offer.json";
-    private static final String OFFERS_JSON = "data/inventory/offers.json";
+    private static final String OFFER_JSON = "ebay/data/inventory/offer.json";
+    private static final String OFFERS_JSON = "ebay/data/inventory/offers.json";
     private static MockWebServer mockWebServer;
     private final BasicJsonTester json = new BasicJsonTester(this.getClass());
     @Autowired

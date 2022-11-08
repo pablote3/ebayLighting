@@ -1,6 +1,5 @@
-package com.rossotti.ebay.client.account;
+package com.rossotti.lighting.ebay.client.account;
 
-import com.rossotti.lighting.ebay.client.account.PaymentPolicyClient;
 import com.rossotti.lighting.config.AppConfig;
 import com.rossotti.lighting.config.ServerConfig;
 import com.rossotti.lighting.ebay.model.account.paymentPolicy.PaymentPolicies;
@@ -37,8 +36,8 @@ import static com.rossotti.lighting.ebay.model.account.paymentPolicy.PaymentMeth
 import static com.rossotti.lighting.ebay.model.account.paymentPolicy.PaymentMethodTypeEnum.CREDIT_CARD;
 import static com.rossotti.lighting.ebay.model.account.paymentPolicy.RecipientAccountReferenceTypeEnum.PAYPAL_EMAIL;
 import static com.rossotti.lighting.ebay.model.common.TimeDurationUnitEnum.DAY;
-import static com.rossotti.ebay.util.TestUtil.createServerConfig;
-import static com.rossotti.ebay.util.TestUtil.readStringFromFile;
+import static com.rossotti.lighting.ebay.util.TestUtil.createServerConfig;
+import static com.rossotti.lighting.ebay.util.TestUtil.readStringFromFile;
 
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
@@ -47,8 +46,8 @@ import static org.springframework.http.HttpMethod.DELETE;
 
 @SpringBootTest
 public class PaymentPolicyClientTests {
-    private static final String PAYMENT_POLICY_JSON = "data/account/paymentPolicy.json";
-    private static final String PAYMENT_POLICIES_JSON = "data/account/paymentPolicies.json";
+    private static final String PAYMENT_POLICY_JSON = "ebay/data/account/paymentPolicy.json";
+    private static final String PAYMENT_POLICIES_JSON = "ebay/data/account/paymentPolicies.json";
     private static MockWebServer mockWebServer;
     private final BasicJsonTester json = new BasicJsonTester(this.getClass());
     @Autowired

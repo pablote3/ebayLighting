@@ -1,7 +1,7 @@
 package com.rossotti.ebay.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rossotti.ebay.config.ServerConfig;
+import com.rossotti.lighting.config.ServerConfig;
 import okhttp3.HttpUrl;
 import java.io.InputStream;
 import java.util.Optional;

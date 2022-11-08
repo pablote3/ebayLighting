@@ -1,9 +1,10 @@
 package com.rossotti.ebay.client.account;
 
-import com.rossotti.ebay.config.AppConfig;
-import com.rossotti.ebay.config.ServerConfig;
-import com.rossotti.ebay.model.account.paymentPolicy.PaymentPolicies;
-import com.rossotti.ebay.model.account.paymentPolicy.PaymentPolicy;
+import com.rossotti.lighting.ebay.client.account.PaymentPolicyClient;
+import com.rossotti.lighting.config.AppConfig;
+import com.rossotti.lighting.config.ServerConfig;
+import com.rossotti.lighting.ebay.model.account.paymentPolicy.PaymentPolicies;
+import com.rossotti.lighting.ebay.model.account.paymentPolicy.PaymentPolicy;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -27,15 +28,15 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import static com.rossotti.ebay.model.common.CategoryTypeEnum.ALL_EXCLUDING_MOTORS_VEHICLES;
-import static com.rossotti.ebay.model.common.MarketplaceIdEnum.EBAY_US;
-import static com.rossotti.ebay.model.account.paymentPolicy.PaymentInstrumentBrandEnum.AMERICAN_EXPRESS;
-import static com.rossotti.ebay.model.account.paymentPolicy.PaymentInstrumentBrandEnum.MASTERCARD;
-import static com.rossotti.ebay.model.account.paymentPolicy.PaymentInstrumentBrandEnum.VISA;
-import static com.rossotti.ebay.model.account.paymentPolicy.PaymentMethodTypeEnum.PAYPAL;
-import static com.rossotti.ebay.model.account.paymentPolicy.PaymentMethodTypeEnum.CREDIT_CARD;
-import static com.rossotti.ebay.model.account.paymentPolicy.RecipientAccountReferenceTypeEnum.PAYPAL_EMAIL;
-import static com.rossotti.ebay.model.common.TimeDurationUnitEnum.DAY;
+import static com.rossotti.lighting.ebay.model.common.CategoryTypeEnum.ALL_EXCLUDING_MOTORS_VEHICLES;
+import static com.rossotti.lighting.ebay.model.common.MarketplaceIdEnum.EBAY_US;
+import static com.rossotti.lighting.ebay.model.account.paymentPolicy.PaymentInstrumentBrandEnum.AMERICAN_EXPRESS;
+import static com.rossotti.lighting.ebay.model.account.paymentPolicy.PaymentInstrumentBrandEnum.MASTERCARD;
+import static com.rossotti.lighting.ebay.model.account.paymentPolicy.PaymentInstrumentBrandEnum.VISA;
+import static com.rossotti.lighting.ebay.model.account.paymentPolicy.PaymentMethodTypeEnum.PAYPAL;
+import static com.rossotti.lighting.ebay.model.account.paymentPolicy.PaymentMethodTypeEnum.CREDIT_CARD;
+import static com.rossotti.lighting.ebay.model.account.paymentPolicy.RecipientAccountReferenceTypeEnum.PAYPAL_EMAIL;
+import static com.rossotti.lighting.ebay.model.common.TimeDurationUnitEnum.DAY;
 import static com.rossotti.ebay.util.TestUtil.createServerConfig;
 import static com.rossotti.ebay.util.TestUtil.readStringFromFile;
 

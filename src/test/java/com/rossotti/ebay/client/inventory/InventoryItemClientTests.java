@@ -1,9 +1,10 @@
 package com.rossotti.ebay.client.inventory;
 
-import com.rossotti.ebay.config.AppConfig;
-import com.rossotti.ebay.config.ServerConfig;
-import com.rossotti.ebay.model.inventory.inventoryItem.InventoryItem;
-import com.rossotti.ebay.model.inventory.inventoryItem.InventoryItems;
+import com.rossotti.lighting.ebay.client.inventory.InventoryItemClient;
+import com.rossotti.lighting.config.AppConfig;
+import com.rossotti.lighting.config.ServerConfig;
+import com.rossotti.lighting.ebay.model.inventory.inventoryItem.InventoryItem;
+import com.rossotti.lighting.ebay.model.inventory.inventoryItem.InventoryItems;
 import com.rossotti.ebay.util.TestUtil;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -30,10 +31,10 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import static com.rossotti.ebay.model.inventory.inventoryItem.ConditionEnum.NEW;
-import static com.rossotti.ebay.model.inventory.inventoryItem.LengthUnitOfMeasureEnum.INCH;
-import static com.rossotti.ebay.model.inventory.inventoryItem.LocaleEnum.en_US;
-import static com.rossotti.ebay.model.inventory.inventoryItem.WeightUnitOfMeasureEnum.POUND;
+import static com.rossotti.lighting.ebay.model.inventory.inventoryItem.ConditionEnum.NEW;
+import static com.rossotti.lighting.ebay.model.inventory.inventoryItem.LengthUnitOfMeasureEnum.INCH;
+import static com.rossotti.lighting.ebay.model.inventory.inventoryItem.LocaleEnum.en_US;
+import static com.rossotti.lighting.ebay.model.inventory.inventoryItem.WeightUnitOfMeasureEnum.POUND;
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.PUT;
 

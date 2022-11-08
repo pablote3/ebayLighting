@@ -1,9 +1,10 @@
 package com.rossotti.ebay.client.account;
 
-import com.rossotti.ebay.config.AppConfig;
-import com.rossotti.ebay.config.ServerConfig;
-import com.rossotti.ebay.model.account.program.Program;
-import com.rossotti.ebay.model.account.program.Programs;
+import com.rossotti.lighting.ebay.client.account.OptedInProgramClient;
+import com.rossotti.lighting.config.AppConfig;
+import com.rossotti.lighting.config.ServerConfig;
+import com.rossotti.lighting.ebay.model.account.program.Program;
+import com.rossotti.lighting.ebay.model.account.program.Programs;
 import com.rossotti.ebay.util.TestUtil;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -26,8 +27,8 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import static com.rossotti.ebay.model.account.program.ProgramTypeEnum.OUT_OF_STOCK_CONTROL;
-import static com.rossotti.ebay.model.account.program.ProgramTypeEnum.SELLING_POLICY_MANAGEMENT;
+import static com.rossotti.lighting.ebay.model.account.program.ProgramTypeEnum.OUT_OF_STOCK_CONTROL;
+import static com.rossotti.lighting.ebay.model.account.program.ProgramTypeEnum.SELLING_POLICY_MANAGEMENT;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 

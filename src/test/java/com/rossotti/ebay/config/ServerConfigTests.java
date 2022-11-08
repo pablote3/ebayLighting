@@ -1,5 +1,6 @@
 package com.rossotti.ebay.config;
 
+import com.rossotti.lighting.config.ServerConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

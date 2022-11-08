@@ -1,9 +1,10 @@
 package com.rossotti.ebay.client.account;
 
-import com.rossotti.ebay.config.AppConfig;
-import com.rossotti.ebay.config.ServerConfig;
-import com.rossotti.ebay.model.account.fulfillmentPolicy.FulfillmentPolicies;
-import com.rossotti.ebay.model.account.fulfillmentPolicy.FulfillmentPolicy;
+import com.rossotti.lighting.ebay.client.account.FulfillmentPolicyClient;
+import com.rossotti.lighting.config.AppConfig;
+import com.rossotti.lighting.config.ServerConfig;
+import com.rossotti.lighting.ebay.model.account.fulfillmentPolicy.FulfillmentPolicies;
+import com.rossotti.lighting.ebay.model.account.fulfillmentPolicy.FulfillmentPolicy;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -29,13 +30,13 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import static com.rossotti.ebay.model.common.CategoryTypeEnum.ALL_EXCLUDING_MOTORS_VEHICLES;
-import static com.rossotti.ebay.model.common.CurrencyCodeEnum.USD;
-import static com.rossotti.ebay.model.common.MarketplaceIdEnum.EBAY_US;
-import static com.rossotti.ebay.model.account.fulfillmentPolicy.OptionTypeEnum.DOMESTIC;
-import static com.rossotti.ebay.model.account.fulfillmentPolicy.ShippingCostTypeEnum.CALCULATED;
-import static com.rossotti.ebay.model.account.fulfillmentPolicy.ShippingCostTypeEnum.FLAT_RATE;
-import static com.rossotti.ebay.model.common.TimeDurationUnitEnum.DAY;
+import static com.rossotti.lighting.ebay.model.common.CategoryTypeEnum.ALL_EXCLUDING_MOTORS_VEHICLES;
+import static com.rossotti.lighting.ebay.model.common.CurrencyCodeEnum.USD;
+import static com.rossotti.lighting.ebay.model.common.MarketplaceIdEnum.EBAY_US;
+import static com.rossotti.lighting.ebay.model.account.fulfillmentPolicy.OptionTypeEnum.DOMESTIC;
+import static com.rossotti.lighting.ebay.model.account.fulfillmentPolicy.ShippingCostTypeEnum.CALCULATED;
+import static com.rossotti.lighting.ebay.model.account.fulfillmentPolicy.ShippingCostTypeEnum.FLAT_RATE;
+import static com.rossotti.lighting.ebay.model.common.TimeDurationUnitEnum.DAY;
 
 import static com.rossotti.ebay.util.TestUtil.createServerConfig;
 import static com.rossotti.ebay.util.TestUtil.readStringFromFile;

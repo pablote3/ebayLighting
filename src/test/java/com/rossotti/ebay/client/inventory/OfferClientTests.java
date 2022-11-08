@@ -1,9 +1,10 @@
 package com.rossotti.ebay.client.inventory;
 
-import com.rossotti.ebay.config.AppConfig;
-import com.rossotti.ebay.config.ServerConfig;
-import com.rossotti.ebay.model.inventory.offer.Offer;
-import com.rossotti.ebay.model.inventory.offer.Offers;
+import com.rossotti.lighting.ebay.client.inventory.OfferClient;
+import com.rossotti.lighting.config.AppConfig;
+import com.rossotti.lighting.config.ServerConfig;
+import com.rossotti.lighting.ebay.model.inventory.offer.Offer;
+import com.rossotti.lighting.ebay.model.inventory.offer.Offers;
 import com.rossotti.ebay.util.TestUtil;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -29,12 +30,12 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import static com.rossotti.ebay.model.common.CurrencyCodeEnum.USD;
-import static com.rossotti.ebay.model.inventory.offer.FormatTypeEnum.FIXED_PRICE;
-import static com.rossotti.ebay.model.inventory.offer.ListingDurationEnum.GTC;
-import static com.rossotti.ebay.model.inventory.offer.ListingStatusEnum.ACTIVE;
-import static com.rossotti.ebay.model.common.MarketplaceIdEnum.EBAY_US;
-import static com.rossotti.ebay.model.inventory.offer.OfferStatusEnum.PUBLISHED;
+import static com.rossotti.lighting.ebay.model.common.CurrencyCodeEnum.USD;
+import static com.rossotti.lighting.ebay.model.inventory.offer.FormatTypeEnum.FIXED_PRICE;
+import static com.rossotti.lighting.ebay.model.inventory.offer.ListingDurationEnum.GTC;
+import static com.rossotti.lighting.ebay.model.inventory.offer.ListingStatusEnum.ACTIVE;
+import static com.rossotti.lighting.ebay.model.common.MarketplaceIdEnum.EBAY_US;
+import static com.rossotti.lighting.ebay.model.inventory.offer.OfferStatusEnum.PUBLISHED;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.HttpMethod.PUT;

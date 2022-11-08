@@ -1,4 +1,4 @@
-package com.rossotti.lighting.config.config;
+package com.rossotti.lighting.config;
 
 import com.rossotti.lighting.config.ServerConfig;
 import org.junit.jupiter.api.Test;

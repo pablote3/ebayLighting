@@ -1,7 +1,6 @@
-package com.rossotti.lighting.windward.model;
+package com.rossotti.lighting.sale.model;
 
 import lombok.Getter;
-
 @Getter
 public class Item {
     private String itemNumber;

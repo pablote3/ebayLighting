@@ -44,8 +44,8 @@ import static org.springframework.http.HttpMethod.DELETE;
 
 @SpringBootTest
 public class ReturnPolicyClientTests {
-    private static final String RETURN_POLICY_JSON = "ebay/data/account/returnPolicy.json";
-    private static final String RETURN_POLICIES_JSON = "ebay/data/account/returnPolicies.json";
+    private static final String RETURN_POLICY_JSON = "data/ebay/account/returnPolicy.json";
+    private static final String RETURN_POLICIES_JSON = "data/ebay/account/returnPolicies.json";
     private static MockWebServer mockWebServer;
     private final BasicJsonTester json = new BasicJsonTester(this.getClass());
     @Autowired

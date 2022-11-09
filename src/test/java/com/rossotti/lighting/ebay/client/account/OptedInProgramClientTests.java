@@ -33,7 +33,7 @@ import static org.springframework.http.HttpMethod.POST;
 
 @SpringBootTest
 public class OptedInProgramClientTests {
-    private static final String OPTED_IN_PROGRAMS_JSON = "ebay/data/account/optedInPrograms.json";
+    private static final String OPTED_IN_PROGRAMS_JSON = "data/ebay/account/optedInPrograms.json";
     private static MockWebServer mockWebServer;
     private final BasicJsonTester json = new BasicJsonTester(this.getClass());
     @Autowired

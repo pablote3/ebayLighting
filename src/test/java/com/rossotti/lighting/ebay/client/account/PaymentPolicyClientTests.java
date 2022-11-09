@@ -46,8 +46,8 @@ import static org.springframework.http.HttpMethod.DELETE;
 
 @SpringBootTest
 public class PaymentPolicyClientTests {
-    private static final String PAYMENT_POLICY_JSON = "ebay/data/account/paymentPolicy.json";
-    private static final String PAYMENT_POLICIES_JSON = "ebay/data/account/paymentPolicies.json";
+    private static final String PAYMENT_POLICY_JSON = "data/ebay/account/paymentPolicy.json";
+    private static final String PAYMENT_POLICIES_JSON = "data/ebay/account/paymentPolicies.json";
     private static MockWebServer mockWebServer;
     private final BasicJsonTester json = new BasicJsonTester(this.getClass());
     @Autowired

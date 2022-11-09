@@ -42,8 +42,8 @@ import static org.springframework.http.HttpMethod.DELETE;
 
 @SpringBootTest
 public class OfferClientTests {
-    private static final String OFFER_JSON = "ebay/data/inventory/offer.json";
-    private static final String OFFERS_JSON = "ebay/data/inventory/offers.json";
+    private static final String OFFER_JSON = "data/ebay/inventory/offer.json";
+    private static final String OFFERS_JSON = "data/ebay/inventory/offers.json";
     private static MockWebServer mockWebServer;
     private final BasicJsonTester json = new BasicJsonTester(this.getClass());
     @Autowired

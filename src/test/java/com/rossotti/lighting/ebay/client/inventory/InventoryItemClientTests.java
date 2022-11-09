@@ -39,8 +39,8 @@ import static org.springframework.http.HttpMethod.PUT;
 
 @SpringBootTest
 public class InventoryItemClientTests {
-    private static final String INVENTORY_ITEM_JSON = "ebay/data/inventory/inventoryItem.json";
-    private static final String INVENTORY_ITEMS_JSON = "ebay/data/inventory/inventoryItems.json";
+    private static final String INVENTORY_ITEM_JSON = "data/ebay/inventory/inventoryItem.json";
+    private static final String INVENTORY_ITEMS_JSON = "data/ebay/inventory/inventoryItems.json";
     private static final String GET = "GET";
     private static MockWebServer mockWebServer;
     private final BasicJsonTester json = new BasicJsonTester(this.getClass());

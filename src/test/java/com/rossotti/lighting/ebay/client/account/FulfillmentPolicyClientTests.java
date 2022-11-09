@@ -47,8 +47,8 @@ import static org.springframework.http.HttpMethod.DELETE;
 
 @SpringBootTest
 public class FulfillmentPolicyClientTests {
-    private static final String FULFILLMENT_POLICY_JSON = "ebay/data/account/fulfillmentPolicy.json";
-    private static final String FULFILLMENT_POLICIES_JSON = "ebay/data/account/fulfillmentPolicies.json";
+    private static final String FULFILLMENT_POLICY_JSON = "data/ebay/account/fulfillmentPolicy.json";
+    private static final String FULFILLMENT_POLICIES_JSON = "data/ebay/account/fulfillmentPolicies.json";
     private static final String USPS = "USPS";
     private static final String USPS_FIRST_CLASS = "USPSFirstClass";
     private static final String USPS_PARCEL = "USPSParcel";

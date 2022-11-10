@@ -1,4 +1,4 @@
-package com.rossotti.lighting.ebay.client.util;
+package com.rossotti.lighting.ebay.model.webClient;
 
 public enum QueryParamEnum {
     LIMIT ("limit"),

@@ -1,11 +1,11 @@
 package com.rossotti.lighting.ebay.client.inventory;
 
 import com.rossotti.lighting.ebay.client.BaseClient;
-import com.rossotti.lighting.ebay.client.util.QueryParam;
+import com.rossotti.lighting.ebay.model.webClient.QueryParam;
 import com.rossotti.lighting.config.AppConfig;
 import com.rossotti.lighting.config.ServerConfig;
-import com.rossotti.lighting.ebay.client.util.WebClientProperties;
-import com.rossotti.lighting.ebay.client.util.QueryParamEnum;
+import com.rossotti.lighting.ebay.model.webClient.WebClientProperties;
+import com.rossotti.lighting.ebay.model.webClient.QueryParamEnum;
 import com.rossotti.lighting.ebay.model.inventory.offer.Offer;
 import com.rossotti.lighting.ebay.model.inventory.offer.Offers;
 import org.springframework.http.HttpHeaders;

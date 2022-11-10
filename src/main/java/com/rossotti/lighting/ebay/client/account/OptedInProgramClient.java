@@ -3,7 +3,7 @@ package com.rossotti.lighting.ebay.client.account;
 import com.rossotti.lighting.ebay.client.BaseClient;
 import com.rossotti.lighting.config.AppConfig;
 import com.rossotti.lighting.config.ServerConfig;
-import com.rossotti.lighting.ebay.client.util.WebClientProperties;
+import com.rossotti.lighting.ebay.model.webClient.WebClientProperties;
 import com.rossotti.lighting.ebay.model.account.program.Program;
 import com.rossotti.lighting.ebay.model.account.program.Programs;
 import org.springframework.http.HttpMethod;

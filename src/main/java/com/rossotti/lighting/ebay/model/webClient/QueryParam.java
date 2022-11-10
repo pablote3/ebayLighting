@@ -1,4 +1,4 @@
-package com.rossotti.lighting.ebay.client.util;
+package com.rossotti.lighting.ebay.model.webClient;
 
 import lombok.Getter;
 import lombok.Setter;

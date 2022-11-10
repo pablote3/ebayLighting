@@ -1,7 +1,7 @@
 package com.rossotti.lighting.ebay.client;
 
-import com.rossotti.lighting.ebay.client.util.QueryParam;
-import com.rossotti.lighting.ebay.client.util.WebClientProperties;
+import com.rossotti.lighting.ebay.model.webClient.QueryParam;
+import com.rossotti.lighting.ebay.model.webClient.WebClientProperties;
 import com.rossotti.lighting.config.AppConfig;
 import com.rossotti.lighting.config.ServerConfig;
 import org.slf4j.Logger;

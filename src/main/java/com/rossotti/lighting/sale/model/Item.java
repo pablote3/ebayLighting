@@ -7,8 +7,7 @@ public class Item {
     private String partNumber;
     private String picture;
     private String lookupWords;
-    private String cat;
-    private String location;
+    private String catLocation;
     private String supplier;
     private String brand;
     private String shortDescription;

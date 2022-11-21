@@ -20,7 +20,7 @@ public class CsvUtilTest {
     }
     @Test
     void loadObjectList2() {
-        List<Item> items = CsvUtil.loadObjectList(Item.class, "data/sale/ebayExport.csv");
+        List<Item> items = CsvUtil.loadObjectList(Item.class, "data/sale/windwardExport.csv");
         assertThat(items, is(notNullValue()));
         assertThat(items.size(), is(3));
         assertThat(items.get(0).getItemNumber(), is("LL15525"));
